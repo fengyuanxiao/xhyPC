@@ -1,0 +1,65 @@
+.login-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 77px;
+  margin-bottom: 90px;
+}
+.login-header-left {
+  display: flex;
+  align-items: center;
+}
+.login-header-left > img {
+  width: 190px;
+  height: 49px;
+}
+.login-header-left > span {
+  font-size: 25px;
+  color: #884545;
+  font-weight: bold;
+}
+.login-header-right > span {
+  font-size: 20px;
+}
+.login-header-right > span:last-child {
+  color: #1c71ff;
+}
+
+/* content */
+.login-content {
+  padding: 40px 100px 80px;
+  background-color: rgba(255,255,255,0.4);
+  box-shadow: 0 0 20px 1px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  display: flex;
+}
+.content-left > img {
+  width: 50%;
+}
+.login-form {
+  max-width: 500px;
+}
+.login-form-forgot {
+  float: right;
+}
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #e96262;
+  border-color: #e96262;
+}
+.ant-checkbox-checked .ant-checkbox-inner:hover {
+  background-color: #e96262;
+  border-color: #e96262;
+}
+.login-form-button {
+  background-color: #e96262;
+  border-color: #e96262;
+  width: 100%;
+}
+.login-form-button:hover {
+  background-color: #eb4848;
+  border-color: #eb4848;
+}
+/* content 右边 */
+.content-right {
+  margin-top: 20px;
+}
