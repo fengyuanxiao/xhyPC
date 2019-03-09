@@ -1,8 +1,12 @@
+.login {
+  width: 1200px;
+  margin: 0 auto;
+}
 .login-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 77px;
+  height: 120px;
   margin-bottom: 90px;
 }
 .login-header-left {
@@ -10,28 +14,35 @@
   align-items: center;
 }
 .login-header-left > img {
-  width: 190px;
-  height: 49px;
+  padding-right: 20px;
 }
 .login-header-left > span {
   font-size: 25px;
-  color: #884545;
+  color: #b9554d;
   font-weight: bold;
 }
 .login-header-right > span {
   font-size: 20px;
 }
-.login-header-right > span:last-child {
-  color: #1c71ff;
+.login-header-right > a {
+  font-size: 20px;
 }
 
 /* content */
 .login-content {
-  padding: 40px 100px 80px;
+  width: 1000px;
+  height: 420px;
+  padding: 40px 90px 65px;
+  margin: 0 auto;
   background-color: rgba(255,255,255,0.4);
   box-shadow: 0 0 20px 1px rgba(0,0,0,0.1);
   border-radius: 10px;
   display: flex;
+}
+.content-left {
+  width: 67%;
+  background: url("../../imgs/login-bg.png") no-repeat;
+  background-position:8px -35px;
 }
 .content-left > img {
   width: 50%;
@@ -61,5 +72,6 @@
 }
 /* content 右边 */
 .content-right {
-  margin-top: 20px;
+  width: 33%;
+  margin-top: 10px;
 }
