@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Input, Tabs ,Button, Checkbox, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 
-import CodeLogin from './codeLogin';
+import CodeLogin from './codeLogin';          //已验证手机号登录方式
 // import axios from 'axios';
 import './login.css';
 
@@ -38,7 +38,7 @@ class Logins extends Component {
           </div>
           <div className="login-header-right">
             <span>没有账号，</span>
-            <Link to="/">立即注册</Link>
+            <Link to="/register">立即注册</Link>
           </div>
         </div>
         {/* content */}
@@ -78,7 +78,7 @@ class Logins extends Component {
                     <Button type="primary" htmlType="submit" className="login-form-button">
                       登录
                     </Button>
-                    或者 <Link to="">立即注册!</Link>
+                    或者 <Link to="/register">立即注册!</Link>
                   </Form.Item>
                 </Form>
               </TabPane>

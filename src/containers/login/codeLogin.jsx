@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input ,Button, Icon ,Row ,Col } from 'antd';
+import { Form, Input ,Button, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 
 import GetCode from '../../component/getCode';            //引入获取验证码组件
@@ -7,29 +7,17 @@ class CodeLogins extends Component {
   constructor() {
     super();
     this.state = {
-      getCodesState: true,        //为true 显示 获取验证码按钮
-      codeNum: 60,                //倒计时 60 秒
-      TestGetCode: "获取验证码",
-      vCoden: null,
-      placeholder: "请输入手机号",
     }
   }
 
-  // 短信验证码
-  getCodes = () => {
-    let states = this.state;
-    let pNumber = states.phoneNumbern;
-    let vCoden = states.vCoden;
-    let codeNum = states.codeNum;
-    let TestGetCode = states.TestGetCode;
-    let getCodesState = states.getCodesState;
-    GetCode( pNumber, vCoden, codeNum , getCodesState , TestGetCode )   //调用获取短信验证码
-  }
+  // 输入短信验证码
   vCode = (e) => {
+    console.log(e);
     this.setState({
       vCoden: e.target.value
     })
   }
+  // 输入电话号码
   phoneNumber = (e) => {
     this.setState({
       phoneNumbern: e.target.value
@@ -42,11 +30,13 @@ class CodeLogins extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        console.log(this.state.vCoden);
       }
     });
   }
 
   render() {
+    const { phoneNumbern, vCoden } = this.state;
     const { getFieldDecorator } = this.props.form;
     return(
       <div>
@@ -60,34 +50,44 @@ class CodeLogins extends Component {
           </Form.Item>
           <Form.Item>
             {/* 获取短信验证码组件 */}
-            {/* <GetCode /> */}
-            <Row gutter={16}>
+            {/* {
+              vCoden === null ?
+                getFieldDecorator('noteCode', {
+              rules: [{ required: true, message: '请输入短信验证码!' }],
+                })(
+              <GetCode phoneNumbern={phoneNumbern}  />
+                )
+              :
+              <GetCode phoneNumbern={phoneNumbern} vCode={this.vCode} />
+            } */}
+            <GetCode phoneNumbern={phoneNumbern}  />
+            {/* <Row gutter={16}>
               <Col span={14}>
                 {
-                  getFieldDecorator('captcha', {
-                    rules: [
-                    {
-                      required: true,
-                      message: '请输入短信验证码!'
-                    }
-                    ]
-                  })(<Input className="register-input" placeholder="请输入短信验证码" onChange={this.vCode} />)
+              getFieldDecorator('captcha', {
+              rules: [
+              {
+              required: true,
+              message: '请输入短信验证码!'
+              }
+              ]
+              })(<Input className="register-input" placeholder="请输入短信验证码" onChange={this.vCode} />)
                 }
               </Col>
               <Col span={10}>
                 {
-                  this.state.getCodesState
-                    ? <Button style={{ marginTop: '0' }} onClick={this.getCodes}>{ this.state.TestGetCode }</Button>
-                    : <Button style={{ marginTop: '0' }} disabled="disabled">{this.state.codeNum}秒</Button>
+              this.state.getCodesState
+              ? <Button style={{ marginTop: '0' }} onClick={this.getCodes}>{ this.state.TestGetCode }</Button>
+              : <Button style={{ marginTop: '0' }} disabled="disabled">{this.state.codeNum}秒</Button>
                 }
               </Col>
-            </Row>
+            </Row> */}
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" className="login-form-button">
               登录
             </Button>
-            或者 <Link to="/">立即注册!</Link>
+            或者 <Link to="/register">立即注册!</Link>
           </Form.Item>
         </Form>
       </div>
