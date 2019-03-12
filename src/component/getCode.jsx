@@ -6,6 +6,7 @@ import {
   Button,
   Row,
   Col,
+  Icon,
   message
 } from 'antd';
 message.config({
@@ -66,7 +67,7 @@ class getCodes extends Component {
     return (<div>
       <Row gutter={16}>
         <Col span={14}>
-          <Input className="register-input" placeholder="请输入手机验证码" onChange={this.props.vCode}/>
+          <Input className="register-input" prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请输入手机验证码" onChange={this.props.vCode}/>
         </Col>
         <Col span={10}>
           {

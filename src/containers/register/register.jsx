@@ -94,7 +94,7 @@ class Registers extends Component {
                 {getFieldDecorator('qq', {
                   rules: [{ required: true, message: '请输入QQ号码!' }],
                 })(
-                  <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="请输入QQ号" />
+                  <Input prefix={<Icon type="qq" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="请输入QQ号" />
                 )}
               </Form.Item>
               <Form.Item>
