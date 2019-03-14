@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Form, Input, Tabs ,Button, Checkbox, Icon } from 'antd';
+import { Form, Input, Tabs ,Button, Checkbox, Icon, message } from 'antd';
 import { Link } from 'react-router-dom';
 
 import CodeLogin from './codeLogin';          //已验证手机号登录方式
 // import axios from 'axios';
 import './login.css';
+
+const publics = require('../../component/publics'); //引入公共资源文件
+const phoneNum = publics.phoneNum; //储存手机号码正则
 
 // tabs
 const TabPane = Tabs.TabPane;
@@ -21,7 +24,13 @@ class Logins extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        console.log(values);
+        if ( !phoneNum.test(values.userName)) {
+          message.error("请输入正确的手机号码！")
+        } else {
+          // 登录成功跳转
+          this.props.history.push('../center_new/center_new')
+        }
       }
     });
   }

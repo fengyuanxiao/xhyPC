@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input ,Button, Icon } from 'antd';
+import { Form, Input ,Button, Icon, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import GetCode from '../../component/getCode';            //引入获取验证码组件
 
@@ -70,14 +70,28 @@ class Registers extends Component {
                 {getFieldDecorator('Rcode', {
                   rules: [{ required: true, message: '请输入正确的注册码!' }],
                 })(
-                  <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请扫描左侧二维码获取注册码" />
+                  <Input prefix={<Icon type="qrcode" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请扫描左侧二维码获取注册码" />
                 )}
               </Form.Item>
               <Form.Item>
                 {getFieldDecorator('cellNumber', {
                   rules: [{ required: true, message: '请输入正确的手机号!' }],
                 })(
-                  <Input onChange={this.phoneNumber} prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} maxLength={11} placeholder="请输入手机号" />
+                  <Input onChange={this.phoneNumber} prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />} maxLength={11} placeholder="请输入手机号" />
+                )}
+              </Form.Item>
+              <Form.Item>
+                {getFieldDecorator('tuCode', {
+                  rules: [{required: true,message: '请输入图形验证码!'}]
+                })(
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Input className="register-input" prefix={<Icon type="picture" style={{ color: 'rgba(0,0,0,.25)' }} />} onChange={ this.tuCodes } placeholder="请输入图形验证码"/>
+                    </Col>
+                    <Col span={12}>
+                      <img style={{ width: "100%" }} src={ require("../../imgs/captchaImg.png") } alt="图片验证码"/>
+                    </Col>
+                  </Row>
                 )}
               </Form.Item>
               <Form.Item>

@@ -36,7 +36,7 @@ class CodeLogins extends Component {
   }
 
   render() {
-    const { phoneNumbern, vCoden } = this.state;
+    const { phoneNumbern } = this.state;
     const { getFieldDecorator } = this.props.form;
     return(
       <div>

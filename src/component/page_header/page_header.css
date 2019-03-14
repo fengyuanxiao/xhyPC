@@ -1,0 +1,38 @@
+.box {
+  width: 100%;
+}
+.child {
+  width: 1200px;
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+  height: 30px;
+  line-height: 30px;
+}
+.child_left > span {
+  border-right: 1px solid #c0bdbd;
+  padding: 0 10px;
+}
+.child_left > a {
+  padding: 0 10px;
+}
+
+.child_right > span {
+  border-left: 1px solid #c0bdbd;
+  padding: 0 10px;
+}
+.child_right > a {
+  padding: 0 10px;
+}
+
+.child2 {
+  width: 1200px;
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+}
+.child2_right > a {
+  color: #e96262;
+  font-size: 20px;
+}
