@@ -1,0 +1,205 @@
+p {
+  margin: 0;
+}
+.commonalitys {
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+/* 技术服务市场 头部 */
+.content_box {
+  width: 100%;
+}
+.content_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 15px 20px;
+  border-radius: 5px;
+}
+.content_header {
+  display: flex;
+}
+.center_Img {
+  width: 13%;
+  padding-right: 20px;
+}
+.center_Img > img {
+  width: 100%;
+}
+.header_top_center {
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+.header_top_center > span {
+  font-size: 16px;
+  padding-right: 10px;
+}
+.header_top_center > i {
+  font-size: 22px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.header_top_center1 {
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+.header_top_center1 > button {
+  font-size: 12px;
+  margin: 0 15px;
+}
+.header_top_center1 > p:last-child {
+  padding-left: 70px;
+}
+.anquan > a {
+  padding: 0 8px;
+}
+.header_top_right > button {
+  font-size: 24px;
+  height: 55px;
+}
+.ant-btn-primary {
+  background-color: #e96262;
+  border-color: #e96262;
+}
+.ant-btn-primary:hover {
+  background-color: #eb4848;
+  border-color: #eb4848;
+}
+.ant-btn-danger {
+  border-color: #e96262;
+}
+.ant-btn-danger > a {
+  border-color: #e96262;
+}
+
+/* 我的押金、可用浮点、 邀请好友 */
+.content_top_next {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.content_top_next_left {
+  width: 63%;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 15px 20px;
+}
+.content_top_next_left_Child {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+.content_top_next_left_Child > div:first-child {
+  width: 65%;
+  border-right: 1px solid #ccc;
+  padding-right: 15px;
+}
+.content_top_next_left_Child > div:first-child > div {
+  font-size: 18px;
+  padding: 5px 0;
+}
+.content_top_next_left_Child > div:first-child > div > i {
+  padding-left: 10px;
+}
+.content_top_next_left_Child > div:last-child {
+  width: 35%;
+  text-align: center;
+  font-size: 17px;
+}
+.content_top_next_left_Child > div:last-child > p {
+  padding: 5px 0;
+}.content_top_next_left_Child > div:last-child > button {
+  margin: 5px 0;
+}
+.next_left_Child1 {
+  display: flex;
+  justify-content: space-between;
+}
+.next_left_Child1 > span {
+  font-size: 18px;
+  color: #eb4848;
+  font-weight: bold;
+}
+.deposit {
+  background-color: #e96262;
+  color: #fff
+}
+.deposit:hover {
+  background-color: #eb4848;
+  color: #fff
+}
+.content_top_next_left_button {
+  padding-top: 15px;
+  display: flex;
+  font-size: 17px;
+}
+.content_top_next_left_button > p {
+  padding-right: 20px;
+  color: #1890ff;
+  cursor: pointer;
+}
+.content_top_next_left_button > p > span > i {
+  padding-right: 5px;
+}
+.content_top_next_right {
+  width: 35%;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 15px 20px;
+}
+.content_top_next_right > p, .content_top_next_right_div {
+  padding: 5px 0;
+}
+.content_top_next_right > p:first-child {
+  font-size: 20px;
+}
+.content_top_next_right > p > span {
+  color: #e96262;
+}
+.content_top_next_right_div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.content_top_next_right_div > div > p {
+  padding: 5px 0;
+}
+.content_top_next_right_div > div > p > span {
+  color: #e96262;
+}
+
+/* 网站公告、常见问题 tabs */
+.ant-tabs {
+  background-color: #fff;
+}
+.ant-tabs-nav .ant-tabs-tab {
+  font-size: 14px;
+}
+.commonalitys_child {
+  padding: 0 20px 15px 20px;
+}
+.commonalitys_child > p {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+/* 待处理任务 */
+.shipment {
+  padding: 15px 20px;
+  background-color: #fff;
+}
+.pending_shop > a {
+  display: inline-block;
+  padding: 25px 15px;
+  background-color: #F5F5FA;
+  margin: 0 10px 10px 0;
+  border-radius: 5px;
+}
+.pending_shop > a > span {
+  color: #e96262;
+}

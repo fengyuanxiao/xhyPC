@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import PageHeader from '../../component/page_header/page_header';
 import Menus from '../../component/menus/menus';                            //左边导航栏
+import MyCenter from './myCenter/myCenter';                                 //右侧内容栏
 import './center_new.css'
 
 class Center_new extends Component {
@@ -22,7 +23,7 @@ class Center_new extends Component {
             </div>
             <div className="contents_right">
               {/* 子页面 */}
-
+              <MyCenter />
             </div>
           </div>
         </div>

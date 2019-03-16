@@ -21,7 +21,7 @@ class Menus extends Component {
     return(
       <Menu
         onClick={this.handleClick}
-        style={{ width: 256 }}
+        style={{ width: 256, borderRadius: 5 }}
         defaultOpenKeys={['sub1','sub2','sub4']}
         mode="inline"
       >

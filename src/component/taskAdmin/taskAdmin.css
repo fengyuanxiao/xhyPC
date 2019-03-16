@@ -1,0 +1,21 @@
+.commonalitys {
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+
+.shipment {
+  padding: 15px 20px;
+  background-color: #fff;
+}
+.login-form {
+  display: flex;
+  max-width: none;
+  flex-wrap: wrap;
+}
+.login-form > div {
+  margin-right: 30px;
+}
+.login-form > div:nth-child(6) {
+  margin-right: 0;
+}

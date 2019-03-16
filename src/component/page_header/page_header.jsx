@@ -28,7 +28,7 @@ class PageHeader extends Component {
             <span></span> */}
           </div>
           <div className="child2_right">
-            <Link to="/center_new">个人中心</Link>
+            <Link to="/center_new">Center</Link>
           </div>
         </div>
       </div>
