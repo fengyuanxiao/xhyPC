@@ -1,0 +1,51 @@
+.div_box {
+  display: flex;
+  justify-content: space-between;
+}
+.div_box_child {
+  width: 100%;
+  height: 170px;
+  background-color: #F9F9F9;
+  margin-bottom: 20px !important;
+}
+.div_box_child_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #cfcfcf;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+.div_box_child_top > div > img {
+  padding-right: 10px;
+}
+.div_box_child_top_right > span {
+  padding-left: 20px;
+}
+
+.div_box_child_buttom > div > img {
+  width: 70px;
+  height: 70px;
+  margin-right: 20px;
+}
+.div_box_child_buttom > div:nth-child(1) {
+  display: flex;
+  align-items: center;
+}
+.div_box_child_buttom > div > span {
+  color: #e96262;
+}
+
+/* 树桩鼠标移上吧变色 */
+.ant-tree li .ant-tree-node-content-wrapper.ant-tree-node-selected {
+  background-color: #ffefef;
+}
+
+/* 树状控件样式 */
+.ant-tree-node-content-wrapper {
+  width: 95%;
+}
+/* 分页 */
+.Fpage {
+  text-align: center;
+}

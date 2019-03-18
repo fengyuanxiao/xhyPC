@@ -61,7 +61,7 @@ class Logins extends Component {
             <Tabs defaultActiveKey="1" onChange={this.callback}>
               {/* 密码登录 */}
               <TabPane tab="密码登录" key="1">
-                <Form onSubmit={this.handleSubmit} className="login-form">
+                <Form onSubmit={this.handleSubmit} className="login-form loginPage">
                   <Form.Item>
                     {getFieldDecorator('userName', {
                       rules: [{ required: true, message: '请输入正确的账号!' }],

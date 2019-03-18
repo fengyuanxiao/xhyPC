@@ -40,7 +40,7 @@ class CodeLogins extends Component {
     const { getFieldDecorator } = this.props.form;
     return(
       <div>
-        <Form onSubmit={this.handleSubmit} className="login-form">
+        <Form onSubmit={this.handleSubmit} className="login-form loginPage">
           <Form.Item>
             {getFieldDecorator('userPhone', {
               rules: [{ required: true, message: '请输入正确的手机号码!' }],

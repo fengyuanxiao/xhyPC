@@ -66,13 +66,13 @@ class getCodes extends Component {
   render() {
     return (<div>
       <Row gutter={16}>
-        <Col span={14}>
-          <Input className="register-input" prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请输入手机验证码" onChange={this.props.vCode}/>
+        <Col span={15}>
+          <Input className="register-input" prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="输入手机验证码" onChange={this.props.vCode}/>
         </Col>
-        <Col span={10}>
+        <Col span={9}>
           {
             this.state.getCodesState
-              ? <Button style={{ marginTop: '0' }} onClick={this.getCodeBtn}>{ this.state.TestGetCode }</Button>
+              ? <Button style={{ marginTop: '0', fontSize: '12px', padding: '0 9px' }} onClick={this.getCodeBtn}>{ this.state.TestGetCode }</Button>
               : <Button style={{ marginTop: '0' }} disabled="disabled">{this.state.codeNum}秒</Button>
           }
         </Col>

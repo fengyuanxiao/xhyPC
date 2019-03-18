@@ -3,6 +3,10 @@ import { Tabs, Select, DatePicker, Form, Button} from 'antd';
 // import { Link } from 'react-router-dom';
 
 import TaskAdminComponent from './taskAdminComponents';
+import TaskAdminComponent2 from './taskAdminComponents2';
+import TaskAdminComponent3 from './taskAdminComponents3';
+import TaskAdminComponent4 from './TaskAdminComponents4';
+import TaskAdminComponent5 from './TaskAdminComponents5';
 
 import './taskAdmin.css';
 const TabPane = Tabs.TabPane;
@@ -25,6 +29,7 @@ class TaskAdminss extends Component {
         <hr></hr>
         <Tabs defaultActiveKey="1" onChange={this.callback} type="card">
           {/* 店铺越多 TabPane就越多 */}
+          {/* 待付款的任务 */}
           <TabPane tab="Task pending payment" key="1">
             {/* <div>
               三方：
@@ -87,17 +92,21 @@ class TaskAdminss extends Component {
             </div> */}
             <TaskAdminComponent />
           </TabPane>
+          {/* 进行中的任务 */}
           <TabPane tab="Task in progress" key="2">
-            <TaskAdminComponent />
+            <TaskAdminComponent2 />
           </TabPane>
+          {/* 已完成的任务 */}
           <TabPane tab="Completed tasks" key="3">
-            <TaskAdminComponent />
+            <TaskAdminComponent3 />
           </TabPane>
+          {/* 所有任务 */}
           <TabPane tab="All tasks" key="4">
-            <TaskAdminComponent />
+            <TaskAdminComponent4 />
           </TabPane>
+          {/* 今日订单 */}
           <TabPane tab="Today the order" key="5">
-            <TaskAdminComponent />
+            <TaskAdminComponent5 />
           </TabPane>
         </Tabs>
       </div>
