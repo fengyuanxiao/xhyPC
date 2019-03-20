@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import { Menu, Icon, Badge } from 'antd';
+import { Layout, Menu, Icon, Badge } from 'antd';
 import { Link } from 'react-router-dom';
+
+import MyCenter from '../../containers/center_new/myCenter/myCenter';           //个人中心页
+import MyGoods from '../../containers/center_new/myGoods/myGoods';              //我的shagnpingye
+import '../page_header/page_header.css';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
+const { Header, Content, Footer, Sider } = Layout;
 
 class Menus extends Component {
   constructor(props) {
@@ -14,10 +19,22 @@ class Menus extends Component {
   }
 
   handleClick = (e) => {
-    console.log(e);
+    let keydata = e.key;
+    // if ( keydata === 2 ) {
+    //
+    // } else {
+    //
+    // }
+    this.setState({
+      keydata
+    })
+    console.log(keydata);
+    // localStorage.setItem("key", e.key);
+    // console.log(localStorage.getItem("key"));
   }
 
   render() {
+    const { keydata } = this.state;
     return(
       <Menu
         onClick={this.handleClick}
@@ -34,7 +51,8 @@ class Menus extends Component {
           </MenuItemGroup>
         </SubMenu>
         <SubMenu key="sub2" title={<span><Icon type="shopping" /><span>MerchandiseAdmin</span></span>}>
-          <Menu.Item key="5">My Merchandise</Menu.Item>
+          <Menu.Item key="5"><Link to="/myGoods">My Merchandise</Link></Menu.Item>
+          {/* <Menu.Item key="5">My Merchandise</Menu.Item> */}
           <Menu.Item key="6">New Merchandise</Menu.Item>
           <SubMenu key="sub3" title="Submenu">
             <Menu.Item key="7">Option 7</Menu.Item>
@@ -50,6 +68,44 @@ class Menus extends Component {
           <Menu.Item key="14">Publish previous tasks</Menu.Item>
         </SubMenu>
       </Menu>
+      // <Layout>
+      //   <Sider style={{ marginRight: '20px', backgroundColor: '#fff' }}
+      //     breakpoint="lg"
+      //     collapsedWidth="0"
+      //     onBreakpoint={(broken) => { console.log(broken); }}
+      //     onCollapse={(collapsed, type) => { console.log(collapsed, type); }}
+      //   >
+      //     <Menu onClick={ this.handleClick } className="navs" style={{ backgroundColor: '#fff' }} theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+      //       <Menu.Item key="1">
+      //         <Icon type="user" />
+      //         <span className="nav-text">nav 1</span>
+      //       </Menu.Item>
+      //       <Menu.Item key="2">
+      //         <Icon type="video-camera" />
+      //         <span className="nav-text">nav 2</span>
+      //       </Menu.Item>
+      //       <Menu.Item key="3">
+      //         <Icon type="upload" />
+      //         <span className="nav-text">nav 3</span>
+      //       </Menu.Item>
+      //       <Menu.Item key="4">
+      //         <Icon type="user" />
+      //         <span className="nav-text">nav 4</span>
+      //       </Menu.Item>
+      //     </Menu>
+      //   </Sider>
+      //   <Layout>
+      //     <Content>
+      //       {
+      //         keydata === 2 ? <MyGoods /> : <MyCenter />
+      //       }
+      //       {/* <MyCenter /> */}
+      //     </Content>
+      //     <Footer style={{ textAlign: 'center' }}>
+      //       Ant Design ©2018 Created by Ant UED
+      //     </Footer>
+      //   </Layout>
+      // </Layout>
     )
   }
 }

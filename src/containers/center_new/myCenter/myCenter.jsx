@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import './myCenter.css';
 import { Icon, Button, Popover, Tabs, Badge } from 'antd';
 import { Link } from 'react-router-dom';
+
+import './myCenter.css';
 
 import TaskAdmins from '../../../component/taskAdmin/taskAdmin';
 

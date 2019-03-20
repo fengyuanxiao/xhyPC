@@ -8,7 +8,8 @@
   display: flex;
   padding-top: 20px;
 }
-.contents_left {
+.contents_left > .ant-menu-submenu-title {
+  font-size: 18px;
 }
 .contents_right {
   width: 100%;

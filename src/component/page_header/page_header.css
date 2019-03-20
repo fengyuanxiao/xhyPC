@@ -36,3 +36,11 @@
   color: #e96262;
   font-size: 20px;
 }
+
+/* menus组件的样式 */
+.ant-layout {
+  background-color: inherit;
+}
+.navs > li > span {
+  color: #000;
+}
