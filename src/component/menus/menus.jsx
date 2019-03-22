@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { Menu, Icon, Badge } from 'antd';
 import { Link } from 'react-router-dom';
 
-import MyCenter from '../../containers/center_new/myCenter/myCenter';           //个人中心页
-import MyGoods from '../../containers/center_new/myGoods/myGoods';              //我的shagnpingye
-import CompletedTasks from '../../containers/center_new/taskAdmins/CompletedTasks/completedTasks';      //已完成的任务
 import '../page_header/page_header.css';
 
 const SubMenu = Menu.SubMenu;
@@ -33,7 +30,7 @@ class Menus extends Component {
       >
         <SubMenu key="sub1" title={<span><Icon type="shop" /><span>ShopAdmin</span></span>}>
           <MenuItemGroup key="g1" title="Is binding">
-            <Menu.Item key="1" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}><Link to="/bind/taobao">taobao</Link><Badge count={1} style={{ backgroundColor: '#e96262' }} /></Menu.Item>
+            <Menu.Item key="1" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}><Link to="/bind/taobao" target="_blank">taobao</Link><Badge count={1} style={{ backgroundColor: '#e96262' }} /></Menu.Item>
           </MenuItemGroup>
           <MenuItemGroup key="g2" title="Go Shop Bind">
             <Menu.Item key="3"><Link style={{ color: '#1890ff' }} to="/">+ BindShop</Link></Menu.Item>

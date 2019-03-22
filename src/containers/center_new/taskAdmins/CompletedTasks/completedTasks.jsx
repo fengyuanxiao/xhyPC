@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import TaskAdminComponents from '../../../../component/taskAdmin/taskAdminComponents';              //daifukuanderenwu
-import TaskAdmins from '../../../../component/taskAdmin/taskAdmin';   
+// import TaskAdminComponents from '../../../../component/taskAdmin/taskAdminComponents';              //daifukuanderenwu
+import TaskAdmins from '../../../../component/taskAdmin/taskAdmin';                                 //任务管理组件
 import PageHeader from '../../../../component/page_header/page_header';                             //头部
 import Menus from '../../../../component/menus/menus';                                              //左边导航栏
 
