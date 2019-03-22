@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Icon, Badge } from 'antd';
+import { Menu, Icon, Badge } from 'antd';
 import { Link } from 'react-router-dom';
 
 import MyCenter from '../../containers/center_new/myCenter/myCenter';           //个人中心页
 import MyGoods from '../../containers/center_new/myGoods/myGoods';              //我的shagnpingye
+import CompletedTasks from '../../containers/center_new/taskAdmins/CompletedTasks/completedTasks';      //已完成的任务
 import '../page_header/page_header.css';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
-const { Header, Content, Footer, Sider } = Layout;
 
 class Menus extends Component {
   constructor(props) {
@@ -19,22 +19,11 @@ class Menus extends Component {
   }
 
   handleClick = (e) => {
-    let keydata = e.key;
-    // if ( keydata === 2 ) {
-    //
-    // } else {
-    //
-    // }
-    this.setState({
-      keydata
-    })
-    console.log(keydata);
-    // localStorage.setItem("key", e.key);
-    // console.log(localStorage.getItem("key"));
+
   }
 
   render() {
-    const { keydata } = this.state;
+    // const { keydata } = this.state;
     return(
       <Menu
         onClick={this.handleClick}
@@ -52,16 +41,10 @@ class Menus extends Component {
         </SubMenu>
         <SubMenu key="sub2" title={<span><Icon type="shopping" /><span>MerchandiseAdmin</span></span>}>
           <Menu.Item key="5"><Link to="/myGoods">My Merchandise</Link></Menu.Item>
-          {/* <Menu.Item key="5">My Merchandise</Menu.Item> */}
-          <Menu.Item key="6">New Merchandise</Menu.Item>
-          <SubMenu key="sub3" title="Submenu">
-            <Menu.Item key="7">Option 7</Menu.Item>
-            <Menu.Item key="8">Option 8</Menu.Item>
-          </SubMenu>
+          <Menu.Item key="6"><Link to="/addGoods">New Merchandise</Link></Menu.Item>
         </SubMenu>
         <SubMenu key="sub4" title={<span><Icon type="profile" /><span>TaskAdmin</span></span>}>
-          <Menu.Item key="9">TasksAdmin</Menu.Item>
-          <Menu.Item key="10">Completed tasks</Menu.Item>
+          <Menu.Item key="10"><Link to="/completedTasks">Completed tasks</Link></Menu.Item>
           <Menu.Item key="11">Task pending payment</Menu.Item>
           <Menu.Item key="12">Tasks to be processed</Menu.Item>
           <Menu.Item key="13">Task management </Menu.Item>

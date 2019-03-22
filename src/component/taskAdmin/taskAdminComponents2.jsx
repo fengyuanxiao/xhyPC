@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Tabs, Select, DatePicker, Form, Button} from 'antd';
+import { Select, DatePicker, Form, Button} from 'antd';
 
 import ChildComponent2 from './taskAdminComponents_Child/childComponent2';
 
 import './taskAdmin.css';
-const TabPane = Tabs.TabPane;
+// const TabPane = Tabs.TabPane;
 const Option = Select.Option;
 const { RangePicker } = DatePicker;
 

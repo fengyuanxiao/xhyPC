@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Tabs, Select, DatePicker, Form, Button} from 'antd';
-// import { Link } from 'react-router-dom';
+import { Tabs, Form} from 'antd';
 
 import TaskAdminComponent from './taskAdminComponents';
 import TaskAdminComponent2 from './taskAdminComponents2';
@@ -10,8 +9,6 @@ import TaskAdminComponent5 from './TaskAdminComponents5';
 
 import './taskAdmin.css';
 const TabPane = Tabs.TabPane;
-const Option = Select.Option;
-const { RangePicker } = DatePicker;
 
 class TaskAdminss extends Component {
   constructor() {
@@ -21,9 +18,8 @@ class TaskAdminss extends Component {
     }
   }
   render() {
-    const { getFieldDecorator } = this.props.form;
     return(
-      <div className="commonalitys shipment">
+      <div className="shipment" style={{ borderRadius: '5px' }}>
         {/* <h2>待处理的任务</h2>待付款的任务（7） 进行中的任务（1） 已完成的任务（0） 所有任务（9） 今日订单（0） */}
         <h2>TaskAdmins</h2>
         <hr></hr>
@@ -31,65 +27,6 @@ class TaskAdminss extends Component {
           {/* 店铺越多 TabPane就越多 */}
           {/* 待付款的任务 */}
           <TabPane tab="Task pending payment" key="1">
-            {/* <div>
-              三方：
-              <Select defaultValue="lucy" style={{ width: 180 }} onChange={this.handleChange}>
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
-              </Select>
-              </div>
-              <div>
-              地方：
-              <Select defaultValue="lucy" style={{ width: 260 }}>
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
-              </Select>
-              </div>
-              <div>
-              核桃仁和：
-              <Select defaultValue="lucy" style={{ width: 180 }}>
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
-              </Select>
-              </div>
-              <div>
-              地方：
-              <Select defaultValue="lucy" style={{ width: 120 }}>
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
-              </Select>
-              </div>
-              <div>
-              核桃仁和：
-              <Select defaultValue="lucy" style={{ width: 120 }}>
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
-              </Select>
-              </div>
-              <div>
-              核桃仁和：
-              <RangePicker
-                showTime={{ format: 'HH:mm' }}
-                format="YYYY-MM-DD HH:mm"
-                placeholder={['开始时间', '结束时间']}
-                onChange={this.onChange}
-                onOk={this.onOk}
-              />
-              </div>
-              <div>
-              核桃仁和：
-              <Select defaultValue="lucy" style={{ width: 120 }}>
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
-              </Select>
-              </div>
-              <div>
-              核桃仁和：
-              <Select defaultValue="lucy" style={{ width: 120 }}>
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
-              </Select>
-            </div> */}
             <TaskAdminComponent />
           </TabPane>
           {/* 进行中的任务 */}

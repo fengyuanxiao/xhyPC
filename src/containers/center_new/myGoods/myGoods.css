@@ -7,17 +7,15 @@
   border-radius: 5px;
   margin-bottom: 20px;
 }
-.mbx {
-}
 .my_goods {
   background-color: #fff;
   border-radius: 5px;
   padding: 15px 20px;
+  margin-bottom: 20px;
 }
 .my_goods > div {
   margin-bottom: 0;
   margin-right: 20px;
-
 }
 .my_goods > div:last-child {
   margin-right: 0;
@@ -32,5 +30,25 @@
   margin: 0 10px;
 }
 .sousuo {
-  width: 125px;
+  width: 145px;
+}
+
+/* 搜索shop */
+.goodsList {
+  background-color: #fff;
+  border-radius: 5px;
+}
+.deletes {
+  cursor: pointer;
+}
+.goodsBtn {
+  font-size: 12px;
+  padding: 0 8px;
+}
+.ant-table-tbody > tr > td {
+  padding: 16px 10px;
+}
+.goodsList > lu {
+  width: 100%;
+  text-align: center;
 }

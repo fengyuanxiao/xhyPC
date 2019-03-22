@@ -7,10 +7,14 @@ import Register from '../../containers/register/register';                      
 
 // 个人中心
 import Center_new from '../../containers/center_new/center_new';                //个人中心
-  // 绑定店铺
-  import Taobao from '../../containers/center_new/bind/taobao';                 //绑定taobao
-// 我的商品
-import MyGoods from '../../containers/center_new/myGoods/myGoods';              //我的商品
+  // bindshops
+  import Taobao from '../../containers/center_new/bind/taobao';                 //bindtaobao
+// MyGoods
+import MyGoods from '../../containers/center_new/myGoods/myGoods';              //myGoods
+// addGoods
+import AddGoods from '../../containers/center_new/addGoods/addGoods';           //addGoods
+
+import CompletedTasks from '../../containers/center_new/taskAdmins/CompletedTasks/completedTasks';      //已完成的任务
 
 class RoutersComponent extends Component {
   render() {
@@ -27,6 +31,11 @@ class RoutersComponent extends Component {
           <Route path="/bind/taobao" component={Taobao} />
           {/* 我的商品 */}
           <Route path="/myGoods" component={MyGoods} />
+          {/* addGoods */}
+          <Route path="/addGoods" component={AddGoods} />
+
+          {/* 已完成的任务 */}
+          <Route path="/completedTasks" component={CompletedTasks} />
         </div>
       </Router>
     )

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Button, Popover, Tabs, Badge } from 'antd';
+import { Icon, Button, Popover, Tabs } from 'antd';
 import { Link } from 'react-router-dom';
 
 import './myCenter.css';
@@ -138,7 +138,7 @@ class MyCenter extends Component {
           </TabPane>
         </Tabs>
         {/* 待处理任务 */}
-        <div className="commonalitys shipment">
+        <div className="commonalitys shipment" style={{ marginBottom: '20px' }}>
           {/* <h2>待处理的任务</h2> */}
           <h2>待处理的html代码</h2>
           <hr></hr>

@@ -94,7 +94,7 @@ class ChildComponent extends Component {
           </TreeNode>
         </Tree>
         {/* 分页功能 */}
-        <Pagination className="Fpage" onChange={this.paginaTions} onShowSizeChange={this.aaa} defaultPageSize={5} pageSize={5} defaultCurrent={1} total={50} />
+        <Pagination className="Fpage" onChange={this.paginaTions} onShowSizeChange={this.aaa} defaultCurrent={1} total={15} />
       </div>
     )
   }
