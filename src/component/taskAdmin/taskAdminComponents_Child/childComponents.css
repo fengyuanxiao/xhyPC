@@ -28,6 +28,22 @@
   height: 70px;
   margin-right: 20px;
 }
+.goodsImgs {
+  width: 70px;
+  height: 70px;
+  margin-right: 20px;
+}
+.publishTasks_css {
+  display: flex;
+  justify-content: space-between;
+}
+.publishTasks_css_child {
+  display: flex;
+  align-items: center;
+}
+.publishTasks_css > div > div > span {
+  color: #e96262;
+}
 .div_box_child_buttom > div:nth-child(1) {
   display: flex;
   align-items: center;

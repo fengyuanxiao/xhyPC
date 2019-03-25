@@ -14,7 +14,11 @@ import MyGoods from '../../containers/center_new/myGoods/myGoods';              
 // addGoods
 import AddGoods from '../../containers/center_new/addGoods/addGoods';           //addGoods
 
-import CompletedTasks from '../../containers/center_new/taskAdmins/CompletedTasks/completedTasks';      //已完成的任务
+import CompletedTasks from '../../containers/center_new/taskAdmins/CompletedTasks/completedTasks';      //已完成的Task
+import CompletedTasks2 from '../../containers/center_new/taskAdmins/CompletedTasks/completedTasks2';    //待付款的Task
+import CompletedTasks3 from '../../containers/center_new/taskAdmins/CompletedTasks/completedTasks3';    //待处理的task
+import CompletedTasks4 from '../../containers/center_new/taskAdmins/CompletedTasks/completedTasks4';    //全部task
+import PublishTasks from '../../containers/center_new/taskAdmins/CompletedTasks/publishTasks';          //一键fabu Task
 
 class RoutersComponent extends Component {
   render() {
@@ -36,6 +40,14 @@ class RoutersComponent extends Component {
 
           {/* 已完成的任务 */}
           <Route path="/completedTasks" component={CompletedTasks} />
+          {/* degndaifukuanderewnu */}
+          <Route path="/completedTasks2" component={CompletedTasks2} />
+          {/* 待处理的task */}
+          <Route path="/completedTasks3" component={CompletedTasks3} />
+          {/* all task */}
+          <Route path="/completedTasks4" component={CompletedTasks4} />
+          {/* 一键 fabu task */}
+          <Route path="/publishTasks" component={PublishTasks} />
         </div>
       </Router>
     )
