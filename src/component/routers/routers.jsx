@@ -20,6 +20,18 @@ import CompletedTasks3 from '../../containers/center_new/taskAdmins/CompletedTas
 import CompletedTasks4 from '../../containers/center_new/taskAdmins/CompletedTasks/completedTasks4';    //全部task
 import PublishTasks from '../../containers/center_new/taskAdmins/CompletedTasks/publishTasks';          //一键fabu Task
 
+// yaoqing 好友
+import InviteFriend from '../../containers/center_new/InviteFriends/inviteFriend';                      // yaoqing 好友奖励
+// yaoqinghaoyou 记录
+import InviteFriendR from '../../containers/center_new/InviteFriends/inviteFriendR';                    //yaoqinghaoyou 记录
+// 任务奖励记录
+import QuestRewards from '../../containers/center_new/InviteFriends/questRewards';                      //
+// 失效的奖励
+import LapsedReward from '../../containers/center_new/InviteFriends/lapsedReward';                      //
+
+// yajin 充值
+import TopUpDeposit from '../../containers/center_new/moneyRecord/Top-upDeposit';                       //
+
 class RoutersComponent extends Component {
   render() {
     return(
@@ -48,6 +60,18 @@ class RoutersComponent extends Component {
           <Route path="/completedTasks4" component={CompletedTasks4} />
           {/* 一键 fabu task */}
           <Route path="/publishTasks" component={PublishTasks} />
+
+          {/* yaoqinghaoyou jiangli */}
+          <Route path="/inviteFriend" component={InviteFriend} />
+          {/* yaoiqnghaoyou jilu */}
+          <Route path="/inviteFriendR" component={InviteFriendR} />
+          {/* 任务奖励记录 */}
+          <Route path="/questRewards" component={QuestRewards} />
+          {/* 失效的奖励 */}
+          <Route path="/lapsedReward" component={LapsedReward} />
+
+          {/* chognzhi 记录 */}
+          <Route path="/Top-upDeposit" component={TopUpDeposit} />
         </div>
       </Router>
     )

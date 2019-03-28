@@ -1,0 +1,51 @@
+.UpDeposit {
+  padding-top: 0;
+  margin-top: 20px;
+  display: block;
+}
+.UpDeposit_top {
+  padding: 15px 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.46);
+}
+.UpDeposit_header {
+  display: flex;
+  align-items: center;
+}
+.UpDeposit_header > h1 {
+  margin-bottom: 0;
+  margin-right: 10px;
+}
+.UpDeposit_table {
+  background-color: #fff;
+  margin-top: 5px;
+  padding: 10px 5px;
+  border: 2px solid #e96262;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+.UpDeposit_table > tbody > tr > td {
+  padding: 10px 15px;
+}
+.UpDeposit_table > tbody > tr > td:first-child {
+  background-color: #ffe5e5;
+  font-weight: bold;
+  color: #e96262;
+}
+.UpDeposit_table > tbody > tr > td > p {
+  padding: 8px 0;
+}
+.UpDeposit_table > tbody > tr > td > p > span {
+  color: #e96262;
+}
+.header_right {
+  font-size: 20px;
+}
+.header_right > tbody > tr > td > i {
+  color: #ffee52;
+  font-weight: bold;
+}
+.header_leftfonts {
+  color: #e96262;
+}

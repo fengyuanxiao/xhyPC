@@ -27,7 +27,7 @@ class Menus extends Component {
       <Menu
         onClick={this.handleClick}
         style={{ width: 256, borderRadius: 5 }}
-        defaultOpenKeys={['sub1','sub2','sub4','sub5']}
+        defaultOpenKeys={['sub1','sub2','sub4','sub5','sub6']}
         mode="inline"
       >
         <SubMenu key="sub1" title={<span><Icon type="shop" /><span>ShopAdmin</span></span>}>
@@ -50,11 +50,16 @@ class Menus extends Component {
           <Menu.Item key="5"><Link to="/publishTasks">Publish tasks with one click</Link></Menu.Item>
         </SubMenu>
         <SubMenu key="sub5" title={<span><Icon type="red-envelope" /><span>Invite Friends</span></span>}>
-          <Menu.Item key="10"><Link to="/completedTasks">Completed tasks</Link></Menu.Item>
-          <Menu.Item key="11"><Link to="/completedTasks2">Outstanding task</Link></Menu.Item>
-          <Menu.Item key="12"><Link to="/completedTasks3">Task in progress</Link></Menu.Item>
-          <Menu.Item key="13"><Link to="/completedTasks4">Task management</Link></Menu.Item>
-          <Menu.Item key="14"><Link to="/publishTasks">Publish tasks with one click</Link></Menu.Item>
+          <Menu.Item key="10"><Link to="/inviteFriend">Invite friends</Link></Menu.Item>
+          <Menu.Item key="11"><Link to="/inviteFriendR">Invite friends record</Link></Menu.Item>
+          <Menu.Item key="12"><Link to="/questRewards">Quest Rewards</Link></Menu.Item>
+          <Menu.Item key="13"><Link to="/lapsedReward">Lapsed reward</Link></Menu.Item>
+        </SubMenu>
+        <SubMenu key="sub6" title={<span><Icon type="red-envelope" /><span>Money record</span></span>}>
+          <Menu.Item key="14"><Link to="/Top-upDeposit" target="_blank">Top-up Deposit</Link></Menu.Item>
+          <Menu.Item key="15"><Link to="/inviteFriendR">Invite friends record</Link></Menu.Item>
+          <Menu.Item key="16"><Link to="/questRewards">Quest Rewards</Link></Menu.Item>
+          <Menu.Item key="17"><Link to="/lapsedReward">Lapsed reward</Link></Menu.Item>
         </SubMenu>
       </Menu>
     )

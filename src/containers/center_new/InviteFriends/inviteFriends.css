@@ -1,0 +1,67 @@
+.friendPage {
+  display: block;
+  text-align: center;
+}
+.friendPage > p {
+  padding: 10px 0;
+}
+.friendPage > h2 > span , p > span {
+  color: #e96262;
+}
+.friendPage > h3 {
+  margin-bottom: 0;
+}
+.friendPage > h3 > a {
+  font-size: 25px;
+}
+
+/* yaoqingjiangli */
+.jiangli {
+  display: block;
+}
+.friends_none {
+  display: block;
+}
+.jiangli > h2 {
+  padding: 10px 0 5px 0;
+  margin-bottom: 0;
+  background-color: #fcecec70;
+}
+.jiangli > p {
+  padding: 17px 0;
+  font-size: 16px;
+}
+.jiangli_table {
+  font-size: 16px;
+  text-align: center;
+}
+table {
+  width: 100%;
+}
+.jiangli_table > tbody > tr > td > span {
+  color: #e96262;
+}
+.jiangli_table > tbody > tr:first-child {
+  background-color: #e1e1e170;
+}
+.jiangli_table2 {
+  margin-bottom: 20px;
+}
+.jiangli_table2 > tbody > tr > td {
+  padding: 10px 15px;
+}
+.jiangli_table2 > tbody > tr > td > p {
+  padding: 8px 0;
+}
+.jiangli_table2 > tbody > tr > td > p > span {
+  color: #e96262;
+}
+
+.jiangli > h3 {
+  margin-top: 20px;
+}
+
+/* 邀请好友记录 */
+.friends_none > h2 {
+  margin-bottom: 20px;
+}
