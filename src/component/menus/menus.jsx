@@ -11,23 +11,30 @@ class Menus extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      selectedKeys: '',                                           //Menu当前选中的菜单项 key 数组
     }
+  }
+
+  componentWillMount() {
+    // 当前选中的菜单项 key 数组
+    this.setState({
+      selectedKeys: localStorage.getItem("key")
+    })
   }
 
   handleClick = (e) => {
     // console.log(e);
-    localStorage.setItem("key", e.key);
-    // this.props.history.push({pathname: '/taskHallPage', state: {token: response.data.token}});
+    localStorage.setItem("key", e.key);                           //储存menu 当前选中的key
   }
 
   render() {
-    // const { keydata } = this.state;
+    const { selectedKeys } = this.state;
     return(
       <Menu
         onClick={this.handleClick}
         style={{ width: 256, borderRadius: 5 }}
         defaultOpenKeys={['sub1','sub2','sub4','sub5','sub6']}
+        selectedKeys={[selectedKeys]}
         mode="inline"
       >
         <SubMenu key="sub1" title={<span><Icon type="shop" /><span>ShopAdmin</span></span>}>
@@ -57,8 +64,8 @@ class Menus extends Component {
         </SubMenu>
         <SubMenu key="sub6" title={<span><Icon type="red-envelope" /><span>Money record</span></span>}>
           <Menu.Item key="14"><Link to="/Top-upDeposit" target="_blank">Top-up Deposit</Link></Menu.Item>
-          <Menu.Item key="15"><Link to="/inviteFriendR">Invite friends record</Link></Menu.Item>
-          <Menu.Item key="16"><Link to="/questRewards">Quest Rewards</Link></Menu.Item>
+          <Menu.Item key="15"><Link to="/postpone">Postpone</Link></Menu.Item>
+          <Menu.Item key="16"><Link to="/yajinRecord">YajinRecord</Link></Menu.Item>
           <Menu.Item key="17"><Link to="/lapsedReward">Lapsed reward</Link></Menu.Item>
         </SubMenu>
       </Menu>

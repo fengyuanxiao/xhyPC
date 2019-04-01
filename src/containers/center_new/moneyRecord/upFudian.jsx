@@ -10,31 +10,25 @@ import PageHeader from '../../../component/page_header/page_header';            
 const RadioGroup = Radio.Group;                                   //单选框
 const RadioButton = Radio.Button;
 
-class TopUpDeposit extends Component {
+class UpFudian extends Component {
   constructor() {
     super();
     this.state = {
-      value: 1,                    //1表示yajin ,2 表示fudian
-
-      andMoney: 1179,              //daibiaoxuyao chognzhide fudian
+      value: 2,                   //1表示yajin ,2 表示fudian
+      andMoney: 500,              //daibiaoxuyao chognzhide fudian
+      payment: 1                  //支付方式
     };
   }
-  //充值浮点？
+
   onChange = (e) => {
     console.log('radio checked', e.target.value);
-    if ( e.target.value === 2 ) {
-      this.props.history.push("/upFudian");
+    if ( e.target.value === 1 ) {
+      this.props.history.push("/Top-upDeposit");
     }
     this.setState({
       value: e.target.value,
     });
   }
-
-  // 支付平台方式
-  pingtaiBtb = (e) => {
-    console.log('radio checked', e.target.value);
-  }
-
   // FudianBtn
   FudianBtn = (e) => {
     this.setState({
@@ -92,49 +86,38 @@ class TopUpDeposit extends Component {
                   </tr>
                 </tbody>
               </table>
-              {/* 充值条件 */}
-              <div className="UpDeposit_top">
+              {/* 1.xuanzechognzhijine */}
+              <div className="UpDeposit_top UpDeposit_top_bottom">
                 <div className="UpDeposit_header UpDeposit_center">
                   <h2>1.Please select recharge deposit or recharge point</h2>
                 </div>
                 <div className="UpDeposit_header_child">
-                  <p>当前押金余额：<span>474.26</span>元，符点余额<span>0.00</span>符点，当日剩余可充值额度：<span>40000</span>元</p>
+                  <p>edsgdsggh：<span>474.26</span>dfsghsdfdsg<span>0.00</span>sdfghdfsfgds：<span>40000</span>ddd</p>
                   <RadioGroup style={{ marginTop: '20px' }} onChange={this.onChange} value={this.state.value}>
                     <Radio className="upFont" value={1}>Top-up deposit</Radio>
                     <Radio className="upFont" value={2}>Prepaid phone operators point</Radio>
                   </RadioGroup>
                 </div>
-              </div>
-              {/* 充值方式 */}
-              <div className="UpDeposit_top UpDeposit_top_bottom">
-                <div className="UpDeposit_header UpDeposit_center">
-                  <h2>2.Please select recharge deposit or recharge point</h2>
-                </div>
-                <RadioGroup style={{ marginTop: '30px', marginBottom: '5px' }} onChange={this.pingtaiBtb} value={this.state.value}>
-                  <Radio className="upFont" value={1}>weixinzhifu</Radio>
-                  <Radio className="upFont" value={2}>zhifubaozhifu</Radio>
-                  <Radio className="upFont" value={3}>yinlian</Radio>
-                </RadioGroup>
-              </div>
-              {/* 选择充值金额 */}
-              <div className="UpDeposit_top UpDeposit_top_bottom">
-                <div className="UpDeposit_header UpDeposit_center">
-                  <h2>3.Please select recharge deposit or recharge point</h2>
-                </div>
-                <RadioGroup onChange={this.FudianBtn} style={{ marginLeft: '30px', width: '50%', marginTop: '20px' }} className="marginR-L" defaultValue="1179" size="large">
-                  <RadioButton value="1179">Hangzhou</RadioButton>
-                  <RadioButton value="2721">Shanghai</RadioButton>
-                  <RadioButton value="4124">Beijing</RadioButton>
-                  <RadioButton value="8986">Chengdu</RadioButton>
-                  <RadioButton value="14391">Beijing</RadioButton>
-                  <RadioButton value="16519">Chengdu</RadioButton>
-                  <RadioButton value="29845">Beijing</RadioButton>
-                  <RadioButton value="32625">Chengdu</RadioButton>
-                  <RadioButton value="38174">Chengdu</RadioButton>
+                <RadioGroup onChange={this.FudianBtn} className="marginR-L" defaultValue="500" size="large">
+                  <RadioButton value="100">Hangzhou</RadioButton>
+                  <RadioButton value="500">Shanghai</RadioButton>
+                  <RadioButton value="1000">Beijing</RadioButton>
+                  <RadioButton value="2000">Chengdu</RadioButton>
                 </RadioGroup>
                 <div className="recharge-number">
                   <p>nixuanzede<span>{andMoney}</span>fudian</p>
                   <p>xuyaozhifu：<span>{andMoney}</span>fuidan</p>
+                </div>
+              </div>
+              {/* 2.xuanzezhifufangshi */}
+              <div className="UpDeposit_top UpDeposit_top_bottom">
+                <div className="UpDeposit_header UpDeposit_center">
+                  <h2>2.Please select recharge deposit or recharge point</h2>
+                </div>
+                <div className="UpDeposit_header_child">
+                  <RadioGroup style={{ marginTop: '10px' }} value={this.state.payment}>
+                    <Radio className="upFont" value={1}>Top-up deposit</Radio>
+                  </RadioGroup>
                 </div>
                 <div className="tjBtn">
                   <Button type="primary">jkjdpop</Button>
@@ -147,4 +130,4 @@ class TopUpDeposit extends Component {
   }
 }
 
-export default TopUpDeposit
+export default UpFudian

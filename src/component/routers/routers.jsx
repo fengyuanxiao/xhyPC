@@ -30,7 +30,12 @@ import QuestRewards from '../../containers/center_new/InviteFriends/questRewards
 import LapsedReward from '../../containers/center_new/InviteFriends/lapsedReward';                      //
 
 // yajin 充值
-import TopUpDeposit from '../../containers/center_new/moneyRecord/Top-upDeposit';                       //
+import TopUpDeposit from '../../containers/center_new/moneyRecord/Top-upDeposit';                       //chongzhi yajin
+import UpFudian from '../../containers/center_new/moneyRecord/upFudian';                                //chognzhi fudian
+// 延长技术服务
+import Postpone from '../../containers/center_new/moneyRecord/postpone';                                //
+// 押金记录
+import YajinRecord from '../../containers/center_new/moneyRecord/yajinRecord';                          //
 
 class RoutersComponent extends Component {
   render() {
@@ -71,7 +76,14 @@ class RoutersComponent extends Component {
           <Route path="/lapsedReward" component={LapsedReward} />
 
           {/* chognzhi 记录 */}
+          {/* yajin chongzhi */}
           <Route path="/Top-upDeposit" component={TopUpDeposit} />
+          {/* chongzhi fudian */}
+          <Route path="/upFudian" component={UpFudian} />
+          {/* 延长技术服务 */}
+          <Route path="/postpone" component={Postpone} />
+          {/* 押金记录 */}
+          <Route path="/yajinRecord" component={YajinRecord} />
         </div>
       </Router>
     )

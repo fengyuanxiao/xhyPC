@@ -7,7 +7,6 @@
   padding: 15px 20px;
   background-color: #fff;
   border-radius: 5px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.46);
 }
 .UpDeposit_header {
   display: flex;
@@ -48,4 +47,119 @@
 }
 .header_leftfonts {
   color: #e96262;
+}
+.UpDeposit_center {
+  background-color: #f0f0f0;
+}
+.UpDeposit_center > h2 {
+  margin: 10px 0;
+}
+.UpDeposit_header_child {
+  padding-top: 30px;
+  padding-bottom: 25px;
+}
+.UpDeposit_header_child > p {
+  padding-left: 10px;
+  font-size: 16px;
+}
+.upFont {
+  font-size: 19px;
+  font-weight: bold;
+}
+.marginR-L > label {
+  width: 140px;
+  height: 50px !important;
+  line-height: 50px !important;
+  margin: 10px 15px;
+  text-align: center;
+  border-radius: 5px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px 1px rgba(0,0,0,0.1);
+}
+.recharge-number {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 0 10px 1px rgba(0,0,0,0.1);
+  border-radius:5px;
+  padding: 20px 25px;
+  font-size: 18px;
+}
+.recharge-number > p > span {
+  color: #e96262;
+}
+.recharge-number > p:last-child {
+  font-weight: bold;
+}
+.tjBtn {
+  width: 100%;
+  text-align: center;
+}
+.tjBtn > button {
+  font-size: 30px;
+  height: 60px;
+  padding: 0 30px;
+  margin: 45px 0;
+}
+
+/* 延长技术服务 */
+.hrs {
+  margin: 20px 0;
+}
+.langFuwu {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 50px;
+}
+.langFuwu > div {
+  width: 15%;
+  text-align: center;
+}
+.langFuwu > div > label {
+  width: 100%;
+  border-radius: 4px !important;
+}
+.langFuwu > div > div {
+  text-align: center;
+  border-bottom: 1px solid #d9d9d9;
+  border-left: 1px solid #d9d9d9;
+  border-right: 1px solid #d9d9d9;
+  border-radius: 0 0 4px 4px;
+  padding: 20px 10px;
+}
+.langFuwu > div > div > p:first-child {
+  margin-bottom: 10px;
+}
+.dinggou {
+  padding: 20px 10px;
+  background-color: #f6f6f6;
+  display: flex;
+}
+.tjBtn {
+  margin-top: 70px;
+}
+
+/* 资金记录 */
+.yajin_header {
+  display: flex;
+  align-items: center;
+}
+.yajin_header > span {
+  color: rgb(233, 98, 98);
+  font-weight: bold;
+}
+.yajin_center {
+  padding: 20px 20px 40px 20px;
+}
+.yajin_center_tab {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+}
+.yajin_center_tab > p {
+  display: flex;
+  align-items: center;
+  margin-right: 35px;
 }
