@@ -29,7 +29,9 @@ class Logins extends Component {
           message.error("请输入正确的手机号码！")
         } else {
           // 登录成功跳转
-          this.props.history.push('../center_new/center_new')
+          this.props.history.push('../center_new/center_new');
+          // 删除指定的key储存值
+          localStorage.removeItem("key")
         }
       }
     });

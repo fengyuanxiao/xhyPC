@@ -33,7 +33,7 @@ class Menus extends Component {
       <Menu
         onClick={this.handleClick}
         style={{ width: 256, borderRadius: 5 }}
-        defaultOpenKeys={['sub1','sub2','sub4','sub5','sub6']}
+        defaultOpenKeys={['sub1','sub2','sub4','sub5','sub6','sub7']}
         selectedKeys={[selectedKeys]}
         mode="inline"
       >
@@ -62,11 +62,16 @@ class Menus extends Component {
           <Menu.Item key="12"><Link to="/questRewards">Quest Rewards</Link></Menu.Item>
           <Menu.Item key="13"><Link to="/lapsedReward">Lapsed reward</Link></Menu.Item>
         </SubMenu>
-        <SubMenu key="sub6" title={<span><Icon type="red-envelope" /><span>Money record</span></span>}>
+        <SubMenu key="sub6" title={<span><Icon type="money-collect" /><span>Money record</span></span>}>
           <Menu.Item key="14"><Link to="/Top-upDeposit" target="_blank">Top-up Deposit</Link></Menu.Item>
           <Menu.Item key="15"><Link to="/postpone">Postpone</Link></Menu.Item>
           <Menu.Item key="16"><Link to="/yajinRecord">YajinRecord</Link></Menu.Item>
-          <Menu.Item key="17"><Link to="/lapsedReward">Lapsed reward</Link></Menu.Item>
+          <Menu.Item key="17"><Link to="/recharge">Recharge</Link></Menu.Item>
+        </SubMenu>
+        <SubMenu key="sub7" title={<span><Icon type="user" /><span>Account information </span></span>}>
+          <Menu.Item key="18"><Link to="/blacklist">Blacklist</Link></Menu.Item>
+          <Menu.Item key="19"><Link to="/basicXinxi">BasicXinxi</Link></Menu.Item>
+          <Menu.Item key="20"><Link to="/yajinRecord">YajinRecord</Link></Menu.Item>
         </SubMenu>
       </Menu>
     )

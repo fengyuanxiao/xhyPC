@@ -1,0 +1,29 @@
+.blacklist_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.blacklist_top_child {
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 基本信息 */
+.basicXinxi_top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 0;
+}
+.basicXinxi_top > div:first-child {
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.basicXinxi_top > p:last-child {
+  color: #1890ff;
+  cursor: pointer;
+}

@@ -1,3 +1,4 @@
+// 充值记录
 import React, { Component } from 'react';
 import { Breadcrumb, Icon, Tabs, Input, Button, Table } from 'antd';
 import { Link } from 'react-router-dom';
@@ -10,7 +11,7 @@ import './updeposit.css';
 const TabPane = Tabs.TabPane;                                                   //标签页
 const { Column } = Table;                                          //表格
 
-class YajinRecord extends Component {
+class Recharge extends Component {
   constructor() {
     super();
     this.state = {
@@ -38,59 +39,21 @@ class YajinRecord extends Component {
       reward: 'developer',
       operation: 'sdsd'
     }];
-    //tixian记录
-    const deposit = [{
-      key: '1',
-      date: 'John',
-      inviteNumber: 'Brown',
-      didOrder: 32,
-      youOrdered: 'New York No. 1 Lake Park',
-      reward: 'developer',
-    },{
-      key: '2',
-      date: 'John',
-      inviteNumber: 'Brown',
-      didOrder: 32,
-      youOrdered: 'New York No. 1 Lake Park',
-      reward: 'developer',
-    }];
     // fudian记录
   const fudian = [{
     key: '1',
     date: 'John',
     inviteNumber: 'Brown',
     didOrder: 32,
-    youOrdered: 'New York No. 1 Lake Park',
-    reward: 'developer',
-    operation: 'sdsd'
   },{
     key: '2',
     date: 'John',
     inviteNumber: 'Brown',
     didOrder: 32,
-    youOrdered: 'New York No. 1 Lake Park',
-    reward: 'developer',
-    operation: 'sdsd'
-  }];
-  //延长技术服务
-  const langs = [{
-    key: '1',
-    date: 'John',
-    inviteNumber: 'Brown',
-    didOrder: 32,
-    youOrdered: 'New York No. 1 Lake Park',
-  },{
-    key: '2',
-    date: 'John',
-    inviteNumber: 'Brown',
-    didOrder: 32,
-    youOrdered: 'New York No. 1 Lake Park',
   }];
     this.setState({
       data,
-      deposit,
       fudian,
-      langs,
     })
   }
 
@@ -99,7 +62,7 @@ class YajinRecord extends Component {
   }
 
   render() {
-    const { data, deposit, fudian, langs } = this.state;
+    const { data, fudian } = this.state;
     return(
       <div>
         {/* 头部组件 */}
@@ -191,40 +154,7 @@ class YajinRecord extends Component {
                   </Table>
                 </TabPane>
                 <TabPane tab="Tab 2" key="2">
-                  <Table dataSource={deposit}>
-                    <Column
-                      title="Date"
-                      dataIndex="date"
-                      key="date"
-                    />
-                    <Column
-                      title="InviteNumber"
-                      dataIndex="inviteNumber"
-                      key="inviteNumber"
-                    />
-                    <Column
-                      title="DidOrder"
-                      dataIndex="didOrder"
-                      key="didOrder"
-                    />
-                    <Column
-                      title="YouOrdered"
-                      dataIndex="youOrdered"
-                      key="youOrdered"
-                    />
-                    <Column
-                      title="Reward"
-                      dataIndex="reward"
-                      key="reward"
-                    />
-                  </Table>
-                </TabPane>
-                <TabPane tab="Tab 3" key="3">
                   <div className="yajin_center_tab">
-                    <p>
-                      <span>dsfds：</span>
-                      <Input />
-                    </p>
                     <p>
                       <span>itme：</span>
                       <Input />
@@ -252,45 +182,6 @@ class YajinRecord extends Component {
                       dataIndex="didOrder"
                       key="didOrder"
                     />
-                    <Column
-                      title="YouOrdered"
-                      dataIndex="youOrdered"
-                      key="youOrdered"
-                    />
-                    <Column
-                      title="Reward"
-                      dataIndex="reward"
-                      key="reward"
-                    />
-                    <Column
-                      title="Operation"
-                      key="operation"
-                      dataIndex="operation"
-                    />
-                  </Table>
-                </TabPane>
-                <TabPane tab="Tab 4" key="4">
-                  <Table dataSource={langs}>
-                    <Column
-                      title="Date"
-                      dataIndex="date"
-                      key="date"
-                    />
-                    <Column
-                      title="InviteNumber"
-                      dataIndex="inviteNumber"
-                      key="inviteNumber"
-                    />
-                    <Column
-                      title="DidOrder"
-                      dataIndex="didOrder"
-                      key="didOrder"
-                    />
-                    <Column
-                      title="YouOrdered"
-                      dataIndex="youOrdered"
-                      key="youOrdered"
-                    />
                   </Table>
                 </TabPane>
               </Tabs>
@@ -302,4 +193,4 @@ class YajinRecord extends Component {
   }
 }
 
-export default YajinRecord
+export default Recharge

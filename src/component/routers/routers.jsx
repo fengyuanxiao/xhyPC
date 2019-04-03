@@ -36,6 +36,14 @@ import UpFudian from '../../containers/center_new/moneyRecord/upFudian';        
 import Postpone from '../../containers/center_new/moneyRecord/postpone';                                //
 // 押金记录
 import YajinRecord from '../../containers/center_new/moneyRecord/yajinRecord';                          //
+// 提现记录
+import Recharge from '../../containers/center_new/moneyRecord/recharge';                                //
+
+// 账号信息
+  // 黑名单
+import Blacklist from '../../containers/center_new/accounts/blacklist';                                   //
+// 基本信息
+import BasicXinxi from '../../containers/center_new/accounts/basicXinxi';                                 //
 
 class RoutersComponent extends Component {
   render() {
@@ -84,6 +92,14 @@ class RoutersComponent extends Component {
           <Route path="/postpone" component={Postpone} />
           {/* 押金记录 */}
           <Route path="/yajinRecord" component={YajinRecord} />
+          {/* 提现记录 */}
+          <Route path="/recharge" component={Recharge} />
+
+          {/* 账号信息 */}
+          {/* 黑名单 */}
+          <Route path="/blacklist" component={Blacklist} />
+          {/* 基本信息 */}
+          <Route path="/basicXinxi" component={BasicXinxi} />
         </div>
       </Router>
     )
