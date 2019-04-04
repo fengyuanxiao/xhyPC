@@ -42,7 +42,7 @@ class Menus extends Component {
             <Menu.Item key="6" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}><Link to="/bind/taobao" target="_blank">taobao</Link><Badge count={1} style={{ backgroundColor: '#e96262' }} /></Menu.Item>
           </MenuItemGroup>
           <MenuItemGroup key="g2" title="Go Shop Bind">
-            <Menu.Item key="7"><Link style={{ color: '#1890ff' }} to="/">+ BindShop</Link></Menu.Item>
+            <Menu.Item key="7"><Link style={{ color: '#1890ff' }} to="/bind/taobao" target="_blank">+ BindShop</Link></Menu.Item>
           </MenuItemGroup>
         </SubMenu>
         <SubMenu key="sub2" title={<span><Icon type="shopping" /><span>MerchandiseAdmin</span></span>}>
