@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Breadcrumb, Icon, Button, Tabs } from 'antd';
+import { Breadcrumb, Icon, Button, Tabs, Badge } from 'antd';
 import { Link } from 'react-router-dom';
 
 
@@ -49,14 +49,20 @@ class PageTaobao extends Component {
             </div>
             <div className="contents_left">
               <div className="boxPadding" style={{ marginBottom: 0, borderBottom: '1px solid #ccc' }}>
-                <span></span>
-                <span></span>
+                <span>Shops Admin</span>
+                <span>Bind shop</span>
               </div>
-              <Tabs defaultActiveKey="1" tabPosition={'left'} onChange={this.callback}>
-                <TabPane tab={"Tab 1"} key="1">Content of Tab Pane 1</TabPane>
-                <TabPane tab="Tab 2" key="2">Content of Tab Pane 2</TabPane>
-                <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
-                <TabPane tab="Tab 4" key="4">Content of Tab Pane 4</TabPane>
+              <Tabs className="tabContent" defaultActiveKey="1" tabPosition={'left'} onChange={this.callback}>
+                <TabPane tab={<div className="tabBind"><span>123dsfge</span><Badge count={2} /></div>} key="1">
+                  <h2>一.Bind shops xuzhi</h2>
+                  <p>1.Each account can be bound to 14 major platforms, including taobao, Tmall, jd, yihaodian, jumei, amazon, dangdang, paipai, alibaba, mogujie, meilishuo, gome, suning, and pengduo. Each platform can be bound to 3 stores at most (the bound stores are valid for a long time).</p>
+                  <p>2.Each account can be bound to 14 major platforms, including taobao, Tmall, jd, yihaodian, jumei, amazon, dangdang, paipai, alibaba, mogujie, meilishuo, </p>
+                  <h2>二.And bind Shops</h2>
+
+                </TabPane>
+                <TabPane tab={<div className="tabBind"><span>123dsfge</span><Badge count={2} /></div>} key="2">Content of Tab Pane 2</TabPane>
+                <TabPane tab={<div className="tabBind"><span>123dsfge</span><Badge count={2} /></div>} key="3">Content of Tab Pane 3</TabPane>
+                <TabPane tab={<div className="tabBind"><span>123dsfge</span><Badge count={2} /></div>} key="4">Content of Tab Pane 4</TabPane>
               </Tabs>
             </div>
             <div className="contents_right">

@@ -1,3 +1,13 @@
 .binds {
   display: block;
 }
+.tabBind {
+  display: flex;
+  align-items: center;
+}
+.tabContent {
+  padding-top: 15px;
+}
+.tabBind > span:first-child {
+  padding-right: 20px;
+}
