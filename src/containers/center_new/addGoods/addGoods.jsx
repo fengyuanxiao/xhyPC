@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import PageHeader from '../../../component/page_header/page_header';            //页面头部
 import Menus from '../../../component/menus/menus';                             //左边导航栏
+import AddGoodComponent from './addGoodComponent';
 
 import './addGoods.css';                                                        //引入的样式
 
@@ -126,131 +127,7 @@ class AddGoodss extends Component {
                 </Breadcrumb>
               </div>
               {/* 发布 goods */}
-              <div className="goodsCss">
-                <h2>Goods message </h2>
-                <Form className="addGoods_form" onSubmit={this.handleSubmit}>
-                  <Form.Item
-                    label="阿萨德是"
-                    className="form_item"
-                  >
-                    {getFieldDecorator('note', {
-                      rules: [{ required: true, message: 'Please input your note!' }],
-                    })(
-                      <Input placeholder="shopsLink" />
-                    )}
-                  </Form.Item>
-                  <Form.Item
-                    label="Gender"
-                  >
-                    {getFieldDecorator('gender', {
-                      rules: [{ required: true, message: 'Please select your gender!' }],
-                    })(
-                      <Select placeholder="shops" initialValue="lucy" style={{ width: 250 }} onChange={this.handleChange}>
-                        <Option value="jack">Jack</Option>
-                        <Option value="lucy">Lucy</Option>
-                        <Option value="Yiminghe">yiminghe</Option>
-                      </Select>
-                    )}
-                  </Form.Item>
-                  <Form.Item
-                    label="睡懒觉了"
-                    className="form_item"
-                  >
-                    {getFieldDecorator('babyName', {
-                      rules: [{ required: true, message: 'Please input your babyName!' }],
-                    })(
-                      <Input placeholder="shopsLink" />
-                    )}
-                  </Form.Item>
-                  <Form.Item label="Baby name">
-                    <div className="uploads">
-                      <Upload
-                        action="//jsonplaceholder.typicode.com/posts/"
-                        listType="picture-card"
-                        fileList={fileList}
-                        onPreview={this.handlePreview}
-                        onChange={this.handleUpload}
-                      >
-                        {fileList.length >= 3 ? null : uploadButton}
-                      </Upload>
-                      <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                        <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                      </Modal>
-                    </div>
-                  </Form.Item>
-                  {/* 单选框 */}
-                  <Form.Item label="Specifications" className="form_item" style={{ display: 'flex', alignItems: 'center' }}>
-                    <RadioGroup className="radio_child" onChange={this.radioBtn1} value={this.state.value1}>
-                      <Radio value={1}>多少个大概</Radio>
-                      <Radio value={2}>自定义
-                        <Input className="radio_input" placeholder="如：color" />
-                        <Input className="radio_input" placeholder="如：size" />
-                      </Radio>
-                    </RadioGroup>
-                  </Form.Item>
-                  {/* 单价，件数 */}
-                  <Form.Item label="Specifications" className="form_item">
-                    {getFieldDecorator('moneys', {
-                      rules: [{ required: true, message: 'Please input your babyName!' }],
-                    })(
-                      <div className="xaidanMoney">
-                        <p>
-                          <Input className="xaidanMoney_input" placeholder="如：size" />
-                          <span> money</span>
-                        </p>
-                        <p>
-                          <span>的数据：</span>
-                          <Input className="xaidanMoney_input" placeholder="如：size" />
-                          <span> and </span>
-                          <span className="xaidanMoney_span">（dg rg rg werfqwefdqwdwqd dfwaf）</span>
-                        </p>
-                      </div>
-                    )}
-                  </Form.Item>
-                  {/* expressage */}
-                  <Form.Item label="Specificatsdsions" className="form_item">
-                    {getFieldDecorator('moneys', {
-                      rules: [{ required: true, message: 'Please input your babyName!' }],
-                    })(
-                      <div className="xaidanMoney">
-                        <p>
-                          <Input className="xaidanMoney_input" placeholder="如：size" />
-                          <span className="xaidanMoney_span">（几多的价格的观点，大概的感觉文件柜欧文）</span>
-                        </p>
-                      </div>
-                    )}
-                  </Form.Item>
-                  {/* expressage 单选框 */}
-                  <Form.Item label="Specifications" className="form_item" style={{ display: 'flex', alignItems: 'center' }}>
-                    <RadioGroup className="radio_child" onChange={this.radioBtn2} value={this.state.value2}>
-                      <Radio value={1}>多少个大概</Radio>
-                      <Radio value={2}>
-                        <span>自定义</span>
-                        <span className="xaidanMoney_span">（几多的价格的观点，大概的感觉文件柜欧文）</span>
-                      </Radio>
-                    </RadioGroup>
-                  </Form.Item>
-                  {/* card 复选框 */}
-                  <Form.Item label="Specifications" className="form_item" style={{ display: 'flex', alignItems: 'center', height: '30px' }}>
-                    <Checkbox.Group style={{ width: '100%' }} onChange={this.checkboxBtn}>
-                      <Row style={{ paddingTop: '10px' }}>
-                        <Col span={6}><Checkbox value="A">jksdjgodd</Checkbox></Col>
-                        <Col span={6}><Checkbox value="B">
-                          <span>自定义</span>
-                          {/* <span className="xaidanMoney_span">（几多的价格的观点，大概的感觉文件柜欧文）</span> */}
-                        </Checkbox></Col>
-                        <span className="xaidanMoney_span">（几多的价格的观点，大概的感觉文件柜欧文）</span>
-                      </Row>
-                    </Checkbox.Group>
-                  </Form.Item>
-                  <p className="button_p">djiodjgsdoujopwejjfoiwejmlkjoiujio</p>
-                  {/* 提交按钮 */}
-                  <Form.Item className="submit_btn">
-                    <Button className="bottom_btns" type="danger" ghost>danger</Button>
-                    <Button className="bottom_btns" type="primary" htmlType="submit">Submit</Button>
-                  </Form.Item>
-                </Form>
-              </div>
+              <AddGoodComponent />
             </div>
           </div>
         </div>

@@ -11,8 +11,10 @@ import Center_new from '../../containers/center_new/center_new';                
   import Taobao from '../../containers/center_new/bind/taobao';                 //bindtaobao
 // MyGoods
 import MyGoods from '../../containers/center_new/myGoods/myGoods';              //myGoods
-// addGoods
+// 新增 addGoods
 import AddGoods from '../../containers/center_new/addGoods/addGoods';           //addGoods
+// 发布goods
+import ReleaseTask from '../../containers/center_new/release/releaseTask';      //releaseTask
 
 import CompletedTasks from '../../containers/center_new/taskAdmins/CompletedTasks/completedTasks';      //已完成的Task
 import CompletedTasks2 from '../../containers/center_new/taskAdmins/CompletedTasks/completedTasks2';    //待付款的Task
@@ -62,6 +64,8 @@ class RoutersComponent extends Component {
           <Route path="/myGoods" component={MyGoods} />
           {/* addGoods */}
           <Route path="/addGoods" component={AddGoods} />
+          {/* 新增goods */}
+          <Route path="/releaseTask" component={ReleaseTask} />
 
           {/* 已完成的任务 */}
           <Route path="/completedTasks" component={CompletedTasks} />

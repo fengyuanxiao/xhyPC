@@ -57,8 +57,31 @@ class PageTaobao extends Component {
                   <h2>一.Bind shops xuzhi</h2>
                   <p>1.Each account can be bound to 14 major platforms, including taobao, Tmall, jd, yihaodian, jumei, amazon, dangdang, paipai, alibaba, mogujie, meilishuo, gome, suning, and pengduo. Each platform can be bound to 3 stores at most (the bound stores are valid for a long time).</p>
                   <p>2.Each account can be bound to 14 major platforms, including taobao, Tmall, jd, yihaodian, jumei, amazon, dangdang, paipai, alibaba, mogujie, meilishuo, </p>
-                  <h2>二.And bind Shops</h2>
-
+                  <h2 style={{ paddingTop: '20px' }}>二.And bind Shops</h2>
+                  {/* Binds */}
+                  <table className="jiangli_table2" border="1">
+                    <tbody>
+                      <tr>
+                        <td style={{ backgroundColor: '#F4FAFF' }}>
+                          <p>Buyer incentives</p>
+                          <p>Buyer incentives</p>
+                          <p>Buyer incentives</p>
+                          <p>Buyer incentives</p>
+                          <p>Buyer incentives</p>
+                        </td>
+                        <td>
+                          <p>Invite friends to complete the first task, reward <span>10</span> points;</p>
+                          <p>For each successful completion of friend's second order, the inviter will get a reward: <span>1</span> point/order</p>
+                          <p>Invite friends to complete the first task, reward <span>10</span> points;</p>
+                          <p>Invite friends to complete the first task, reward <span>10</span> points;</p>
+                          <p>Invite friends to complete the first task, reward <span>10</span> points;</p>
+                        </td>
+                        <td>
+                          <p>Buyer incentives</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </TabPane>
                 <TabPane tab={<div className="tabBind"><span>123dsfge</span><Badge count={2} /></div>} key="2">Content of Tab Pane 2</TabPane>
                 <TabPane tab={<div className="tabBind"><span>123dsfge</span><Badge count={2} /></div>} key="3">Content of Tab Pane 3</TabPane>

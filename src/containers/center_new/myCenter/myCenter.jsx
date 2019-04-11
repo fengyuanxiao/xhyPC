@@ -54,7 +54,7 @@ class MyCenter extends Component {
             </div>
           </div>
           <div className="header_top_right">
-            <Button type="primary">老翁就就</Button>
+            <Button type="primary"><Link to="/releaseTask" target="_blank">老翁就就</Link></Button>
           </div>
         </div>
         {/* 我的押金、可用浮点、邀请好友 */}

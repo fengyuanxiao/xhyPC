@@ -1,0 +1,41 @@
+.release {
+  display: block;
+}
+.releasetop {
+  display: flex;
+  padding: 15px 20px;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.releasetop > div > i {
+  color: #e96262;
+  font-size: 22px;
+}
+.releasetop_span {
+  color: #e96262;
+  font-size: 18px;
+  padding-right: 50px;
+}
+
+.releaseHeader {
+  padding: 0 20px;
+  border-radius: 5px;
+}
+.releaseSpan {
+  font-size: 20px;
+}
+
+/* 单选框 */
+.releaseLabel > label {
+  font-size: 19px;
+  padding: 0 30px;
+}
+
+.typestyle > div {
+  box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  margin-top: 20px;
+}
