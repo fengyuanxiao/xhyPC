@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Breadcrumb, Icon, Select, Form, Button, Input, Upload, Modal, Radio, Checkbox, Row, Col } from 'antd';
-import { Link } from 'react-router-dom';
+import { Icon, Select, Form, Button, Input, Upload, Modal, Radio, Checkbox, Row, Col } from 'antd';
+// import { Link } from 'react-router-dom';
 
 
 import './addGoods.css';                                                        //引入的样式

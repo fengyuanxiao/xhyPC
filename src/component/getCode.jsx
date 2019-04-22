@@ -9,6 +9,7 @@ import {
   Icon,
   message
 } from 'antd';
+import { _getCode } from './api';
 message.config({
   top: 200,
 });
@@ -43,23 +44,37 @@ class getCodes extends Component {
     } else if (!phoneNum.test(phoneNumbern)) {
       message.error("请输入正确的手机号码！");
     } else {
-      // 倒计时 获取短信验证码
-      let codeNum = dataCode_.codeNum;
-      const timer = setInterval(() => {
-      this_.setState({
-        getCodesState:false,
-        codeNum: (codeNum--)
-        }, () => {
-            if (codeNum === 0) {
-            clearInterval(timer);
-            this_.setState({
-              getCodesState: true,
-              codeNum: 60,
-              TestGetCode: "重新获取"
+      // 将用户输入的值 存入块中
+      let datas = {
+        mobile: phoneNumbern,
+      }
+      _getCode(datas)
+      .then(res => {
+        // console.log(res.data.code);
+        if (res.data.code === 200) {
+          // 倒计时 获取短信验证码
+          let codeNum = dataCode_.codeNum;
+          const timer = setInterval(() => {
+          this_.setState({
+            getCodesState:false,
+            codeNum: (codeNum--)
+            }, () => {
+                if (codeNum === 0) {
+                clearInterval(timer);
+                this_.setState({
+                  getCodesState: true,
+                  codeNum: 60,
+                  TestGetCode: "重新获取"
+                })
+              }
             })
-          }
-        })
-      }, 1000)
+          }, 1000)
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
       }
   }
 

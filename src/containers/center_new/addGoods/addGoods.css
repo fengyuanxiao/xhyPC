@@ -1,6 +1,7 @@
 .goodsCss {
   padding: 15px 20px;
   background-color: #fff;
+  border-radius: 5px;
 }
 .goodsCss > h2 {
   padding-bottom: 10px;

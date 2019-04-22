@@ -1,6 +1,6 @@
 // 发布goods
 import React, { Component } from 'react';
-import { Breadcrumb, Icon, Alert, Button, Tabs, Radio } from 'antd';
+import { Breadcrumb, Icon, Button, Tabs, Radio, Modal, Input, Table } from 'antd';
 import { Link } from 'react-router-dom';
 
 import PageHeader from '../../../component/page_header/page_header';           //头部
@@ -13,13 +13,75 @@ import './release.css';
 const TabPane = Tabs.TabPane;                   //Tabs标签页
 const RadioGroup = Radio.Group;                 //单选框
 
+const columns = [{
+  title: 'Name',
+  dataIndex: 'name',
+}, {
+  title: 'Age',
+  dataIndex: 'age',
+}, {
+  title: 'Address',
+  dataIndex: 'address',
+}, {
+  title: 'jin Teim',
+  dataIndex: 'teims'
+}, {
+  title: 'Cao zuo',
+  dataIndex: 'buttons'
+}];
+
 class ReleaseTask extends Component  {
   constructor() {
     super();
     this.state = {
-      value: 1,
-      addGoodsNum: false,
+      value: 1,                                   //选择哪个平台类型
+      visible: false,                             //visible 为true 的时候  弹出对话框
+      addGoodsNum: false,                         //点击新增按钮 addGoodsNum为 true
+      commodity_div: false,                       //从商品库选择商品 commodity_div 为true 显示出来
+      data: null,
     }
+  }
+
+  componentWillMount() {
+    const data = [{
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park',
+      teims: 'recently',
+      buttons: <Button>bt</Button>
+    }, {
+      key: '2',
+      name: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park',
+      teims: 'recently',
+      buttons: <Button>bt</Button>
+    }, {
+      key: '3',
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sidney No. 1 L',
+      teims: 'recently',
+      buttons: <Button>bt</Button>
+    }, {
+      key: '4',
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sidke Park',
+      teims: 'recently',
+      buttons: <Button>bt</Button>
+    }, {
+      key: '5',
+      name: 'Joe Black',
+      age: 32,
+      address: 'Si. 1 Lake Park',
+      teims: 'recently',
+      buttons: <Button>bt</Button>
+    }];
+    this.setState({
+      data: data,
+    })
   }
 
   // 单选框 选择pingtai
@@ -32,19 +94,28 @@ class ReleaseTask extends Component  {
 
   // xuanze goodsBtn
   xuanzeBtn = () => {
-    console.log(123);
+    this.setState({
+      visible: true,
+    });
+  }
+  // 关闭对话框
+  handleCancel = (e) => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
   }
 
   // xinjianbaobei
   addGoodsBtn = () => {
     console.log(456);
     this.setState({
-      addGoodsNum: !this.state.addGoodsNum,
+      addGoodsNum: !this.state.addGoodsNum,                     //更改addGoodsNum 状态
     })
   }
 
   render() {
-    const { value, addGoodsNum } = this.state;
+    const { value, addGoodsNum, commodity_div, data } = this.state;
     return(
       <div>
         {/* 头部组件 */}
@@ -99,19 +170,61 @@ class ReleaseTask extends Component  {
                   <Type2 />
                 }
                 <h2>2.Xuan ze goods</h2>
-                <Button onClick={ this.xuanzeBtn }>jdioowljh</Button>
-                <Button onClick={ this.addGoodsBtn }>addGoods</Button>
+                <Button className="goodsBtns" onClick={ this.xuanzeBtn }>jdioowljh</Button>
+                <Button className="goodsBtns" onClick={ this.addGoodsBtn }>addGoods</Button>
+                {/* commodity_div为true的时候 商品库选择的模板则会显示出来 */}
+                {
+                  commodity_div ?
+                    <div className="addGoodComponents_style">
+                      <div className="commodity_div">
+                        <p>
+                          <img src={require('../../../imgs/taobao.png')} alt='typeTu'/>
+                          <span>shops：niunius</span>
+                        </p>
+                        <p>bianji</p>
+                      </div>
+                      <div className="commodity_div commodity_div1">
+                        <div style={{ display: 'flex', alignItems:'center' }}>
+                          <img src={require('../../../imgs/taobao.png')} alt='typeTu'/>
+                          <p>safgg5446464</p>
+                        </div>
+                        <p>ds：ew</p>
+                        <p>ds：ew</p>
+                        <p>ds：ew</p>
+                        <p>ds：ew</p>
+                        <p>sdfsw</p>
+                      </div>
+                    </div>
+                  :
+                    ""
+                }
+
+                {/* addGoodsNum为true的时候 显示新增goods模板 */}
                 {
                   addGoodsNum ?
-                    <div style={{ boxShadow: '0 0 8px 1px rgba(0,0,0,0.2)' }}>
+                    <div className="addGoodComponents_style">
                       <AddGoodComponent />
                     </div>
                   :
                     ""
                 }
-                <div>
+                {/* 3.解决方案 */}
+                <div className="typestyle">
                   <h2>3.guanjianchi fankgjioajo</h2>
-                  <span>dfsdgsdg</span>
+                  {/* <div className="key_scheme">
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                  </div> */}
+                  <div className="key_scheme">
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                  </div>
                 </div>
                 <div>
 
@@ -122,6 +235,35 @@ class ReleaseTask extends Component  {
             </Tabs>
           </div>
         </div>
+
+
+        <Modal
+          title="Basic Modal"
+          visible={this.state.visible}
+          footer={null}
+          onCancel={this.handleCancel}
+          wrapClassName="modal_Width"
+          style={{ width: '70%' }}
+        >
+          <div className="yajin_center_tab">
+            <p>
+              <span>dsfds：</span>
+              <Input />
+            </p>
+            <p>
+              <span>itme：</span>
+              <Input />
+              <span>-</span>
+              <Input />
+            </p>
+            <p>
+              <Button>sad</Button>
+              <Button>ret</Button>
+            </p>
+          </div>
+          {/* 选择goods */}
+          <Table columns={columns} dataSource={data} size="middle" />
+        </Modal>
       </div>
     )
   }

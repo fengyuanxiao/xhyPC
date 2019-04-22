@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Breadcrumb, Icon, Table, Button, Input, Modal } from 'antd';
+import { Breadcrumb, Icon, Modal } from 'antd';
 import { Link } from 'react-router-dom';
 
 import './accounts.css';
@@ -76,7 +76,7 @@ class BasicXinxi extends Component {
                 <div className="basicXinxi_top">
                   <div>
                     <Icon type="check" />
-                    <span>// QUESTION: djk</span>
+                    <span>QUESTION: djk</span>
                   </div>
                   <p>prom</p>
                   <p onClick={this.showModal}>go to YajinRecord >></p>
@@ -85,7 +85,7 @@ class BasicXinxi extends Component {
                 <div className="basicXinxi_top">
                   <div>
                     <Icon type="check" />
-                    <span>// QUESTION: djk</span>
+                    <span>QUESTION: djk</span>
                   </div>
                   <p>prom</p>
                   <p onClick={this.showModal}>goly jinRecord >></p>
@@ -94,7 +94,7 @@ class BasicXinxi extends Component {
                 <div className="basicXinxi_top">
                   <div>
                     <Icon type="check" />
-                    <span>// QUESTION: djk</span>
+                    <span>QUESTION: djk</span>
                   </div>
                   <p>prom</p>
                   <p onClick={this.showModal}>o Yajirytt >></p>

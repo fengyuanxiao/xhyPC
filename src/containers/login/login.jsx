@@ -3,7 +3,7 @@ import { Form, Input, Tabs ,Button, Checkbox, Icon, message } from 'antd';
 import { Link } from 'react-router-dom';
 
 import CodeLogin from './codeLogin';          //已验证手机号登录方式
-// import axios from 'axios';
+import { _login } from '../../component/api';
 import './login.css';
 
 const publics = require('../../component/publics'); //引入公共资源文件
@@ -11,6 +11,8 @@ const phoneNum = publics.phoneNum; //储存手机号码正则
 
 // tabs
 const TabPane = Tabs.TabPane;
+// var cookie = document.cookie;                  //或cookie储存
+// console.log(cookie);
 
 class Logins extends Component {
   constructor() {
@@ -19,17 +21,46 @@ class Logins extends Component {
     }
   }
 
+  componentDidMount () {
+      this.props.form.setFieldsValue({
+      mobile: localStorage.getItem("mobile"),        //获取本地账号
+      pwd: localStorage.getItem("pwd"),              //获取本地密码
+    })
+  }
+
   // 登录提交按钮
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values);
-        if ( !phoneNum.test(values.userName)) {
+        // console.log(values);
+        if ( !phoneNum.test(values.mobile)) {
           message.error("请输入正确的手机号码！")
         } else {
-          // 登录成功跳转
-          this.props.history.push('../center_new/center_new');
+          // ajax
+          _login(values)
+          .then(res => {
+            // console.log(res.data);
+            if ( res.data.code === 200 ) {
+              message.success(res.data.msg);
+                // 保存token到本地
+                localStorage.setItem("tokens", res.data.data.token);
+              if ( values.remember ) {                                      //记住密码勾选执行下面
+                localStorage.setItem("mobile", values.mobile);              //将账号保存到本地
+                localStorage.setItem("pwd", values.pwd);               //将密码保存到本地
+              } else {                                                      //记住密码没有勾选
+                localStorage.removeItem("mobile");                          //删除本地账号密码
+                localStorage.removeItem("pwd");
+              }
+              // 登录成功跳转
+              this.props.history.push('../center_new/center_new');
+            } else {
+              message.warning(res.data.msg)
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
           // 删除指定的key储存值
           localStorage.removeItem("key")
         }
@@ -65,14 +96,14 @@ class Logins extends Component {
               <TabPane tab="密码登录" key="1">
                 <Form onSubmit={this.handleSubmit} className="login-form loginPage">
                   <Form.Item>
-                    {getFieldDecorator('userName', {
+                    {getFieldDecorator('mobile', {
                       rules: [{ required: true, message: '请输入正确的账号!' }],
                     })(
-                      <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="小跳蛙账号\已验证的手机号" />
+                      <Input maxLength={11} prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="小跳蛙账号\已验证的手机号" />
                     )}
                   </Form.Item>
                   <Form.Item>
-                    {getFieldDecorator('password', {
+                    {getFieldDecorator('pwd', {
                       rules: [{ required: true, message: '请输入正确的密码!' }],
                     })(
                       <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />

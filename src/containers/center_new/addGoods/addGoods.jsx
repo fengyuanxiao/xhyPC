@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Breadcrumb, Icon, Select, Form, Button, Input, Upload, Modal, Radio, Checkbox, Row, Col } from 'antd';
+import { Breadcrumb, Icon, Form} from 'antd';
 import { Link } from 'react-router-dom';
 
 import PageHeader from '../../../component/page_header/page_header';            //页面头部
@@ -7,9 +7,6 @@ import Menus from '../../../component/menus/menus';                             
 import AddGoodComponent from './addGoodComponent';
 
 import './addGoods.css';                                                        //引入的样式
-
-const Option = Select.Option;                                                   //选择框
-const RadioGroup = Radio.Group;                                                 //单选框
 
 class AddGoodss extends Component {
   constructor() {
@@ -76,19 +73,7 @@ class AddGoodss extends Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
-    const { previewVisible, previewImage, fileList, port } = this.state;
-    const uploadButton = (
-      <div>
-        <Icon type="plus" />
-        {
-          port ?
-            <div className="ant-upload-text">Mobile</div>
-          :
-          <div className="ant-upload-text">PC</div>
-        }
-      </div>
-    );
+    // const { port } = this.state;
     return(
       <div>
         {/* 头部组件 */}

@@ -39,3 +39,34 @@
   border-radius: 5px;
   margin-top: 20px;
 }
+.goodsBtns {
+  margin: 20px 20px;
+  font-size: 18px;
+}
+.commodity_div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 15px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
+}
+.commodity_div1 {
+  border: none;
+  padding: 35px 0;
+}
+.addGoodComponents_style {
+  box-shadow: 0 0 8px 1px rgba(0,0,0,0.2);
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+.modal_Width > div {
+  width: 70% !important;
+}
+.key_scheme {
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
