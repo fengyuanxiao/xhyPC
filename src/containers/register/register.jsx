@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Input ,Button, Icon, Row, Col, message } from 'antd';
+import { Form, Input ,Button, Icon, message } from 'antd';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import GetCode from '../../component/getCode';            //引入获取验证码组件
 import { _register } from '../../component/api';
 import '../../component/api';
@@ -55,7 +54,7 @@ class Registers extends Component {
             // console.log(res.data)
             if ( res.data.code === 200 ) {
               message.success(res.data.msg);
-              this.props.history.push('../login/login');
+              this.props.history.push('/');
             } else {
               message.warning(res.data.msg)
             }
@@ -70,7 +69,7 @@ class Registers extends Component {
   }
 
   render() {
-    const { phoneNumbern, phoneCode } = this.state;
+    const { phoneNumbern, } = this.state;
     const { getFieldDecorator } = this.props.form;
     return(
       <div className="login">

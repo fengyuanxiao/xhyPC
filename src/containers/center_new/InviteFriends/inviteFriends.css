@@ -51,7 +51,11 @@ table {
   padding: 10px 15px;
 }
 .jiangli_table2 > tbody > tr > td > p {
+  border-bottom: 1px solid #908e8e;
   padding: 8px 0;
+}
+.jiangli_table2 > tbody > tr > td > p:last-child {
+  border-bottom: none;
 }
 .jiangli_table2 > tbody > tr > td > p > span {
   color: #e96262;

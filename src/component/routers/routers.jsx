@@ -4,11 +4,12 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 // Login
 import Login from '../../containers/login/login';                               //登录页面
 import Register from '../../containers/register/register';                      //注册页面
+import FindPasswords from '../../containers/find_password/find_password';       //忘记密码
 
 // 个人中心
 import Center_new from '../../containers/center_new/center_new';                //个人中心
   // bindshops
-  import Taobao from '../../containers/center_new/bind/taobao';                 //bindtaobao
+  import BindShops from '../../containers/center_new/bind/bindShops';                 //bindtaobao
 // MyGoods
 import MyGoods from '../../containers/center_new/myGoods/myGoods';              //myGoods
 // 新增 addGoods
@@ -56,10 +57,11 @@ class RoutersComponent extends Component {
           <Route exact path="/" component={Login} />
           {/* 注册页面 */}
           <Route path='/register' component={Register} />
+          <Route path='/find_password' component={FindPasswords} />
           {/* 个人中心 */}
           <Route path='/center_new' component={Center_new} />
           {/* 绑定taobao */}
-          <Route path="/bind/taobao" component={Taobao} />
+          <Route path="/bind/bindShops" component={BindShops} />
           {/* 我的商品 */}
           <Route path="/myGoods" component={MyGoods} />
           {/* addGoods */}

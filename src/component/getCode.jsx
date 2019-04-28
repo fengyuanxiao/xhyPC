@@ -27,6 +27,12 @@ class getCodes extends Component {
       placeholder: "请输入手机号",
     }
   }
+  // 处理内存泄露
+  componentWillUnmount = () => {
+    this.setState = (state,callback)=>{
+      return;
+    };
+  }
 
   // 输入短信验证码
   vCode = (e) => {
@@ -37,6 +43,7 @@ class getCodes extends Component {
 
   getCodeBtn = () => {
     let phoneNumbern = this.props.phoneNumbern;         //保存输入的手机号码
+    let newAdmin = this.props.newAdmin;
     let dataCode_ = this.state;
     let this_ = this;   //存入  this
     if (phoneNumbern === undefined) {
@@ -47,6 +54,7 @@ class getCodes extends Component {
       // 将用户输入的值 存入块中
       let datas = {
         mobile: phoneNumbern,
+        status: newAdmin === 1 ? 1 : 2,
       }
       _getCode(datas)
       .then(res => {
@@ -69,6 +77,9 @@ class getCodes extends Component {
               }
             })
           }, 1000)
+          message.success(res.data.msg)
+        } else {
+          message.warning(res.data.msg)
         }
       })
       .catch(err => {

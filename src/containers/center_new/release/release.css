@@ -38,10 +38,13 @@
   box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);
   border-radius: 5px;
   margin-top: 20px;
+  margin-bottom: 50px;
 }
 .goodsBtns {
   margin: 20px 20px;
   font-size: 18px;
+  width: 150px;
+  height: 50px;
 }
 .commodity_div {
   display: flex;
@@ -69,4 +72,103 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+.Keyword_3 {
+  padding: 20px 17px;
+}
+.Keyword_3_header {
+  display: flex;
+  align-items: center;
+}
+.addKeyword {
+  padding-left: 20px;
+  cursor: pointer;
+}
+.addKeyword > span {
+  margin-left: 5px;
+}
+.inputs {
+  width: 35%;
+}
+.inputs_child {
+  width: 70%;
+  margin: 0 15px 0 10px;
+}
+.inputs_child1 {
+  width: 75%;
+}
+.inputsWB {
+  width: 45%;
+  margin-right: 25px;
+}
+.Keyword_3_child1 {
+  padding: 0 20px 15px;
+  background-color: #FAFBFD;
+  margin: 20px 15px;
+}
+.Keyword_3_child1 > div {
+  padding-top: 15px;
+}
+.keyword_input {
+  display: flex;
+  align-items: center;
+  padding-top: 15px;
+}
+.keyword_input > input {
+  margin: 0 15px;
+}
+.keyword_input > p {
+  padding-left: 60px;
+  color: #007eff;
+}
+.releaseBtnok {
+  text-align: center;
+}
+.releaseBtnok > button {
+  font-size: 23px;
+  height: 50px;
+  width: 110px;
+  margin: 0 30px;
+}
+.goodsKu {
+  display: flex;
+  justify-content: space-between;
+  background-color: #F8F8F8;
+  padding: 10px 0;
+  margin-bottom: 6px;
+}
+.goodsKu_bottom {
+  background-color: #FCFCFC;
+}
+.advanced {
+  padding-left: 50px;
+  background-color: #F1F6FA;
+  border: 1px solid #EBF1F7;
+  padding: 10px 15px;
+  margin-top: 18px;
+  margin-left: 50px;
+}
+.advanced_child {
+  display: flex;
+}
+.advanced_child > span:first-child {
+  margin-right: 15px;
+}
+.triangle_border_up{
+    width:0;
+    height:0;
+    border-width:0 30px 30px;
+    border-color:transparent transparent #333;/*透明 透明  灰*/
+    position:relative;
+}
+.triangle_border_up span{
+    display:block;
+    width:0;
+    height:0;
+    border-width:0 20px 20px;
+    border-style:solid;
+    border-color:transparent transparent #F1F6FA;/*透明 透明  黄*/
+    position:absolute;
+    top:-19px;
+    left:160px;
 }

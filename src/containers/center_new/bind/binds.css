@@ -11,3 +11,44 @@
 .tabBind > span:first-child {
   padding-right: 20px;
 }
+.addShopsBtn {
+  width: 100%;
+  text-align: center;
+  margin-top: 60px;
+}
+.addShopsBtn > button {
+  font-size: 20px;
+  height: 50px;
+}
+.bind_box {
+  box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  padding: 10px 10px;
+  margin-top: 30px;
+}
+.new_header {
+  display: flex;
+  align-items: center;
+}
+.new_header > p {
+  border-radius: 5px;
+  padding: 0 20px;
+  margin-right: 20px;
+  border: 2px solid #d9d9d9;
+  line-height: 25px;
+  color: #ff8a4a;
+  font-weight: bold;
+  font-size: 18px;
+}
+.new_headerChild {
+  padding-left: 20px;
+}
+.form_divs {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+.form_divs > img {
+  padding-left: 15%;
+  padding-top: 15px;
+}

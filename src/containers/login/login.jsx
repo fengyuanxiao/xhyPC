@@ -3,7 +3,7 @@ import { Form, Input, Tabs ,Button, Checkbox, Icon, message } from 'antd';
 import { Link } from 'react-router-dom';
 
 import CodeLogin from './codeLogin';          //已验证手机号登录方式
-import { _login } from '../../component/api';
+import { _login } from '../../component/api'; //引入ajax接口
 import './login.css';
 
 const publics = require('../../component/publics'); //引入公共资源文件
@@ -116,7 +116,7 @@ class Logins extends Component {
                     })(
                       <Checkbox>记住密码</Checkbox>
                     )}
-                    <Link className="login-form-forgot" to="/">忘记密码</Link>
+                    <Link className="login-form-forgot" to="/find_password">忘记密码</Link>
                     <Button type="primary" htmlType="submit" className="login-form-button">
                       登录
                     </Button>

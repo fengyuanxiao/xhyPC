@@ -1,112 +1,66 @@
 // 发布goods
 import React, { Component } from 'react';
-import { Breadcrumb, Icon, Button, Tabs, Radio, Modal, Input, Table } from 'antd';
+import { Breadcrumb, Icon, Button, Tabs, Radio, Modal, Input } from 'antd';
 import { Link } from 'react-router-dom';
 
 import PageHeader from '../../../component/page_header/page_header';           //头部
 import AddGoodComponent from '../addGoods/addGoodComponent';                       //添加新商品
-import Type1 from './type1';                  //taobao
-import Type2 from './type2';                  //taobao
+import Type1 from './type1';                                                //taobao
+import Type2 from './type2';                                                //taobao
+import KeywordComponent from './keyword/keyword';                             //KeywordComponent
+import { _Publishindex } from '../../../component/api';                        //引入ajax接口
 
 import './release.css';
 
 const TabPane = Tabs.TabPane;                   //Tabs标签页
 const RadioGroup = Radio.Group;                 //单选框
 
-const columns = [{
-  title: 'Name',
-  dataIndex: 'name',
-}, {
-  title: 'Age',
-  dataIndex: 'age',
-}, {
-  title: 'Address',
-  dataIndex: 'address',
-}, {
-  title: 'jin Teim',
-  dataIndex: 'teims'
-}, {
-  title: 'Cao zuo',
-  dataIndex: 'buttons'
-}];
-
 class ReleaseTask extends Component  {
   constructor() {
     super();
     this.state = {
-      value: 1,                                   //选择哪个平台类型
-      visible: false,                             //visible 为true 的时候  弹出对话框
+      spell: 1,                                   //单选框的值 选择哪个平台类型
+      keyword: 1,                                 //是否多关键词
+      visible: false,                             //visible 为true 的时候  弹出商品库
       addGoodsNum: false,                         //点击新增按钮 addGoodsNum为 true
       commodity_div: false,                       //从商品库选择商品 commodity_div 为true 显示出来
-      data: null,
+      data: null,                                 //商品库
+      commodity1: 2,                              //为1的时候 不显示关键词方案编辑板
     }
   }
 
   componentWillMount() {
-    const data = [{
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      teims: 'recently',
-      buttons: <Button>bt</Button>
-    }, {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      teims: 'recently',
-      buttons: <Button>bt</Button>
-    }, {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 L',
-      teims: 'recently',
-      buttons: <Button>bt</Button>
-    }, {
-      key: '4',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidke Park',
-      teims: 'recently',
-      buttons: <Button>bt</Button>
-    }, {
-      key: '5',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Si. 1 Lake Park',
-      teims: 'recently',
-      buttons: <Button>bt</Button>
-    }];
-    this.setState({
-      data: data,
+    _Publishindex()
+    .then(res => {
+      console.log(res.data.data);
+    })
+    .catch(err => {
+      console.log(err);
     })
   }
 
   // 单选框 选择pingtai
-  onChange = (e) => {
+  onSpell = (e) => {
     console.log('radio checked', e.target.value);
     this.setState({
-      value: e.target.value,
+      spell: e.target.value,
     });
   }
 
-  // xuanze goodsBtn
+  // 从商品库中选择商品
   xuanzeBtn = () => {
     this.setState({
       visible: true,
     });
   }
-  // 关闭对话框
+  // 关闭商品库框
   handleCancel = (e) => {
-    console.log(e);
     this.setState({
       visible: false,
     });
   }
 
-  // xinjianbaobei
+  // xinzengbaobei
   addGoodsBtn = () => {
     console.log(456);
     this.setState({
@@ -114,8 +68,12 @@ class ReleaseTask extends Component  {
     })
   }
 
+  // 发布下一步
+  handleSubmit = () => {
+  }
+
   render() {
-    const { value, addGoodsNum, commodity_div, data } = this.state;
+    const { spell, addGoodsNum, commodity_div, commodity1 } = this.state;
     return(
       <div>
         {/* 头部组件 */}
@@ -156,7 +114,7 @@ class ReleaseTask extends Component  {
               <TabPane tab={<span className="releaseSpan">第三步：支付</span>} disabled key="3">Tab 3</TabPane> */}
               <TabPane tab={<span className="releaseSpan">gwee</span>} key="1">
                 <h2>1.Select the platform and task type</h2>
-                <RadioGroup className="releaseLabel" onChange={this.onChange} value={this.state.value}>
+                <RadioGroup className="releaseLabel" onChange={this.onSpell} value={spell}>
                   <Radio value={1}>taobao</Radio>
                   <Radio value={2}>tianmao</Radio>
                   <Radio value={3}>jingdong</Radio>
@@ -164,7 +122,7 @@ class ReleaseTask extends Component  {
                 </RadioGroup>
                 {/* 判断单选框 平台类型显示 */}
                 {
-                  value === 1 || value === 2 ?
+                  spell === 1 || spell === 2 ?
                     <Type1 />
                   :
                   <Type2 />
@@ -211,20 +169,19 @@ class ReleaseTask extends Component  {
                 {/* 3.解决方案 */}
                 <div className="typestyle">
                   <h2>3.guanjianchi fankgjioajo</h2>
-                  {/* <div className="key_scheme">
-                    <span>1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>5</span>
-                  </div> */}
-                  <div className="key_scheme">
-                    <span>1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>5</span>
-                  </div>
+                  {/* 在商品库选中了商品 则会显示方案编辑板 */}
+                  {
+                    commodity1 === 1 ?
+                      <div className="key_scheme">
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                        <span>4</span>
+                        <span>5</span>
+                      </div>
+                    :
+                    <KeywordComponent />
+                  }
                 </div>
                 <div>
 
@@ -233,6 +190,10 @@ class ReleaseTask extends Component  {
               <TabPane tab={<span className="releaseSpan">yjk7y</span>} disabled key="2">Tab 2</TabPane>
               <TabPane tab={<span className="releaseSpan">ykll,</span>} disabled key="3">Tab 3</TabPane>
             </Tabs>
+            <div style={{ padding: '50px 0' }} className="releaseBtnok">
+              <Button>取消</Button>
+              <Button onClick={this.handleSubmit} type="primary">下一步</Button>
+            </div>
           </div>
         </div>
 
@@ -262,7 +223,25 @@ class ReleaseTask extends Component  {
             </p>
           </div>
           {/* 选择goods */}
-          <Table columns={columns} dataSource={data} size="middle" />
+          <div>
+            <div className="goodsKu">
+              <span>1</span>
+              <span>2</span>
+              <span>3</span>
+              <span>4</span>
+              <span>5</span>
+            </div>
+            <div>
+              <p><img src={require('../../../imgs/taobao.png')} alt="types"/></p>
+              <div className="goodsKu_bottom">
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <span>5</span>
+              </div>
+            </div>
+          </div>
         </Modal>
       </div>
     )
