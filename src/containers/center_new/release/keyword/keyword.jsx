@@ -1,14 +1,14 @@
-// 发布goods
 import React, { Component } from 'react';
-import { Icon, Button, Radio, Input, Checkbox, Row, Col, Form, message } from 'antd';
-import { Link } from 'react-router-dom';
+import { Icon, Button, Radio, Input, Checkbox, Row, Col, Form, message,Select  } from 'antd';
+// import { Link } from 'react-router-dom';
+// import KeyDatas from './keyDatas';
 
 const RadioGroup = Radio.Group;                 //单选框
 const { TextArea } = Input;                     //文本框
 const CheckboxGroup = Checkbox.Group;           //复选框默认选中
+const Option = Select.Option;
 const plainOptions1 = ['Checkbox1dsfdfdsfds'];
 const plainOptions2 = ['21321321'];
-const plainOptions3 = ['Checkbox2'];
 let nums = [1];                     //app关键字组数
 let nums1 = [1];                    //淘口令组数
 let nums2 = [1];                     //pc关键字组数
@@ -27,6 +27,7 @@ class KeywordComponents extends Component  {
       nums: [1],                                  //app关键字组数
       nums1: [1],                                 //淘口令组数
       nums2: [1],                                 //pc关键字组数
+      advancedNum: 0,
     }
   }
 
@@ -68,13 +69,13 @@ class KeywordComponents extends Component  {
 
   // onKeyword 单  或者 多
   onKeyword1 = (e) => {
-    console.log('radio checked', e.target.value);
+    // console.log('radio checked', e.target.value);
     this.setState({
       keyword1: e.target.value,
     });
   }
   onKeyword2 = (e) => {
-    console.log('radio checked', e.target.value);
+    // console.log('radio checked', e.target.value);
     this.setState({
       keyword2: e.target.value,
     });
@@ -148,10 +149,28 @@ class KeywordComponents extends Component  {
 
   // 高级设置
   advancedSetupApp_keyword = (index) => {
+    // this.setState({
+    //   advancedNum: index,
+    // })
+    // if ( this.state.advancedNum === index ) {
+    //   this.setState({
+    //     advancedShow: !this.state.advancedShow,
+    //   })
+    // }
+    if ( index === 0 ) {
+      this.setState({
+        advancedShow1: !this.state.advancedShow1,
+      })
+    } else if ( index === 1 ) {
+      this.setState({
+        advancedShow2: !this.state.advancedShow2,
+      })
+    } else {
+      this.setState({
+        advancedShow3: !this.state.advancedShow3,
+      })
+    }
     console.log(index);
-    this.setState({
-      advancedShow: index,
-    })
   }
   // 高级设置里面的
   // 折扣服务
@@ -161,14 +180,6 @@ class KeywordComponents extends Component  {
       val: e,
     })
   }
-  ss = (index) => {
-    console.log(index);
-    if (index) {
-
-    } else {
-
-    }
-  }
 
 
   handleSubmit = (e) => {
@@ -176,25 +187,12 @@ class KeywordComponents extends Component  {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log(values);
-        let app_keywords = [values.appKeyword0,values.appKeyword1,values.appKeyword2,values.appKeyword3,values.appKeyword4];
-        let app_words = [values.appWords0,values.appWords1,values.appWords2,values.appWords3,values.appWords4];
-        let taokoulings = [values.taokouling0,values.taokouling1,values.taokouling2,values.taokouling3];
-        let pc_keywords = [values.pcKeyword0,values.pcKeyword1,values.pcKeyword2,values.pcKeyword3,values.pcKeyword4];
-        let pc_words = [values.pcWords0,values.pcWords1,values.pcWords2,values.pcWords3,values.pcWords4];
-        const munDatas = {
-          app_keywords: app_keywords,
-          app_words: app_words,
-          taokoulings: taokoulings,
-          pc_keywords: pc_keywords,
-          pc_words: pc_words,
-        }
-        console.log(munDatas);
       }
     });
   }
 
   render() {
-    const { keyword1,keyword2,appPick,pcPick,keywordPick,taokouling, nums, nums1, advancedShow } = this.state;
+    const { keyword1,appPick,keywordPick,taokouling, nums, nums1 } = this.state;
     const { getFieldDecorator } = this.props.form;
     return(
       <div>
@@ -223,13 +221,16 @@ class KeywordComponents extends Component  {
                       <Radio value={2}>gwef（kdsfopspp）</Radio>
                     </RadioGroup>
                   </div>
+                  {/* keyword1为1 显示单关键字，为2 则显示多关键字 */}
                   {
                     keyword1 === 1?
+                      // 单关键词
                       nums.map((itme,index) => {
                         return(
                           <div key={index}>
+                            {/* 关键词组 */}
                             <Form.Item style={{ marginBottom: '0' }}>
-                              {getFieldDecorator('appKeyword'+index, {
+                              {getFieldDecorator('search_key_world'+index, {
                                 rules: [{ required: keywordPick ? true : false , message: '不能为空，请填写搜索关键词!' }],
                               })(
                                 <div className="keyword_input">
@@ -238,25 +239,28 @@ class KeywordComponents extends Component  {
                                     <Input index={index} className="inputs_child" />
                                     <Button disabled={index === 0 ? 'disabled' : ''} onClick={()=>this.deteKeyword(index)}>删除</Button>
                                   </div>
-                                  <p className="addKeyword" onClick={()=>this.advancedSetupApp_keyword(index)}>高级设置></p>
+                                  {/* <p className="addKeyword" onClick={()=>this.advancedSetupApp_keyword(index)}>高级设置></p> */}
                                 </div>
                               )}
                             </Form.Item>
-                            {
-                              advancedShow === index ?
-                                <div>
-                                  <div className="triangle_border_up">
-                                    <span></span>
-                                  </div>
-                                  <div className="advanced">
-                                    <div className="advanced_child">
-                                      <span>12313465：</span>
-                                      <Checkbox.Group style={{ width: '100%' }} onClick={()=>this.ss(index)} onChange={this.discountBtn}>
+                            {/* 折扣服务 */}
+                            <div>
+                              <div className="triangle_border_up">
+                                <span></span>
+                              </div>
+                              <div className="advanced">
+                                <div className="advanced_child">
+                                  <span>折扣萨达：</span>
+                                  <Form.Item style={{ width: '85%', marginBottom: '0' }}>
+                                    {getFieldDecorator("search_discount_text"+index, {
+                                      initialValue: [],
+                                    })(
+                                      <Checkbox.Group style={{ width: '100%' }} onChange={this.discountBtn}>
                                         <Row>
-                                          <Col span={4}><Checkbox value="A">低级</Checkbox></Col>
-                                          <Col span={4}><Checkbox value="B">BASD</Checkbox></Col>
-                                          <Col span={4}><Checkbox value="C">CSD</Checkbox></Col>
-                                          <Col span={4}><Checkbox value="D">DSD</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="A">A</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="B">B</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="C">C</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="D">D</Checkbox></Col>
                                           <Col span={4}><Checkbox value="E">E</Checkbox></Col>
                                           <Col span={4}><Checkbox value="F">F</Checkbox></Col>
                                           <Col span={4}><Checkbox value="G">G</Checkbox></Col>
@@ -267,50 +271,360 @@ class KeywordComponents extends Component  {
                                           <Col span={4}><Checkbox value="L">L</Checkbox></Col>
                                         </Row>
                                       </Checkbox.Group>
-                                    </div>
-                                  </div>
+                                    )}
+                                  </Form.Item>
                                 </div>
-                              :
-                              ''
-                            }
+                                {/* 筛选分类 */}
+                                <div className="advanced_child">
+                                  <span>筛选：</span>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('search_classify0'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input style={{ width: '100%' }} index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('search_classify1'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input style={{ width: '100%' }} index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('search_classify2'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input style={{ width: '100%' }} index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('search_classify3'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input style={{ width: '100%' }} index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <span>最多筛选</span>
+                                </div>
+                                {/* 排序方式 */}
+                                <div className="advanced_child">
+                                  <span>排序：</span>
+                                  <Form.Item style={{ width: '15%', margin: '0 25px 0 0' }}>
+                                    {getFieldDecorator('search_order_way'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Select placeholder="综合排序">
+                                        <Option value="销量排序">销量排序</Option>
+                                        <Option value="从高到低">从高到低</Option>
+                                        <Option value="从低到高">从低到高</Option>
+                                      </Select>
+                                    )}
+                                  </Form.Item>
+                                  <span>价格：</span>
+                                  <Form.Item  className="zhekoucss">
+                                    {getFieldDecorator('search_max_price'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <span>元 -</span>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('search_min_price'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <span style={{ marginRight: '25px' }}>元</span>
+                                  <span>dsjojji：</span>
+                                  <Form.Item style={{ width: '15%', margin: '0 25px 0 0' }}>
+                                    {getFieldDecorator('search_send_addr'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Select placeholder="全国">
+                                        <Option value="北京">北京</Option>
+                                        <Option value="上海">上海</Option>
+                                        <Option value="广东">广东</Option>
+                                        <Option value="江西">江西</Option>
+                                        <Option value="上饶">上饶</Option>
+                                        <Option value="九江">九江</Option>
+                                      </Select>
+                                    )}
+                                  </Form.Item>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         )
                       })
                     :
+                    // 多关键词
                     nums.map((itme,index) => {
                       return(
                         <div key={index}>
-                          <Form.Item style={{ marginBottom: '0' }}>
-                            {getFieldDecorator('appKeyword'+index, {
-                              rules: [{ required: keywordPick ? true : false , message: '不能为空，请填写搜索关键词!' }],
-                            })(
-                              <div>
-                                <div className="keyword_input">
-                                  <span>Keyword{index+1}：sousuoci</span>
-                                  <div className="inputs">
-                                    <Input index={index} className="inputs_child" />
-                                    <Button disabled={index === 0 ? 'disabled' : ''} onClick={()=>this.deteKeyword(index)}>删除</Button>
+                          {/* 关键词组 */}
+                          <div>
+                            <Form.Item style={{ marginBottom: '0' }}>
+                              {getFieldDecorator('search_key_world'+index, {
+                                rules: [{ required: keywordPick ? true : false , message: '不能为空，请填写搜索关键词!' }],
+                              })(
+                                <div>
+                                  <div className="keyword_input">
+                                    <span>Keyword{index+1}：sousuoci</span>
+                                    <div className="inputs">
+                                      <Input index={index} className="inputs_child" />
+                                      <Button disabled={index === 0 ? 'disabled' : ''} onClick={()=>this.deteKeyword(index)}>删除</Button>
+                                    </div>
+                                    {/* <p className="addKeyword" onClick={this.advancedSetup}>高级设置></p> */}
                                   </div>
-                                  <p className="addKeyword" onClick={this.advancedSetup}>高级设置></p>
+                                </div>
+                              )}
+                            </Form.Item>
+                            {/* 折扣服务 */}
+                            <div>
+                              <div className="triangle_border_up">
+                                <span></span>
+                              </div>
+                              <div className="advanced">
+                                <div className="advanced_child">
+                                  <span>折扣萨达：</span>
+                                  <Form.Item style={{ width: '85%', marginBottom: '0' }}>
+                                    {getFieldDecorator("search_discount_text"+index, {
+                                      initialValue: [],
+                                    })(
+                                      <Checkbox.Group style={{ width: '100%' }} onChange={this.discountBtn}>
+                                        <Row>
+                                          <Col span={4}><Checkbox value="A">A</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="B">B</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="C">C</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="D">D</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="E">E</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="F">F</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="G">G</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="H">H</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="I">I</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="J">J</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="K">K</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="L">L</Checkbox></Col>
+                                        </Row>
+                                      </Checkbox.Group>
+                                    )}
+                                  </Form.Item>
+                                </div>
+                                {/* 筛选分类 */}
+                                <div className="advanced_child">
+                                  <span>筛选：</span>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('search_classify0'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input style={{ width: '100%' }} index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('search_classify1'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input style={{ width: '100%' }} index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('search_classify2'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input style={{ width: '100%' }} index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('search_classify3'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input style={{ width: '100%' }} index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <span>最多筛选</span>
+                                </div>
+                                {/* 排序方式 */}
+                                <div className="advanced_child">
+                                  <span>排序：</span>
+                                  <Form.Item style={{ width: '15%', margin: '0 25px 0 0' }}>
+                                    {getFieldDecorator('search_order_way'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Select placeholder="综合排序">
+                                        <Option value="销量排序">销量排序</Option>
+                                        <Option value="从高到低">从高到低</Option>
+                                        <Option value="从低到高">从低到高</Option>
+                                      </Select>
+                                    )}
+                                  </Form.Item>
+                                  <span>价格：</span>
+                                  <Form.Item  className="zhekoucss">
+                                    {getFieldDecorator('search_max_price'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <span>元 -</span>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('search_min_price'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <span style={{ marginRight: '25px' }}>元</span>
+                                  <span>dsjojji：</span>
+                                  <Form.Item style={{ width: '15%', margin: '0 25px 0 0' }}>
+                                    {getFieldDecorator('search_send_addr'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Select placeholder="全国">
+                                        <Option value="北京">北京</Option>
+                                        <Option value="上海">上海</Option>
+                                        <Option value="广东">广东</Option>
+                                        <Option value="江西">江西</Option>
+                                        <Option value="上饶">上饶</Option>
+                                        <Option value="九江">九江</Option>
+                                      </Select>
+                                    )}
+                                  </Form.Item>
                                 </div>
                               </div>
-                            )}
-                          </Form.Item>
-                          <Form.Item style={{ marginBottom: '0', paddingLeft: '60px' }}>
-                            {getFieldDecorator('appWords'+index, {
-                              rules: [{ required: true, message: '不能为空，请填写成交关键词!' }],
-                            })(
-                              <div>
-                                <div className="keyword_input">
-                                  <span>chengjiao{index+1}</span>
-                                  <div className="inputs">
-                                    <Input style={{ width: '75%' }} index={index} className="inputs_child" />
+                            </div>
+                          </div>
+                          {/* 成交词组 */}
+                          <div>
+                            <Form.Item style={{ marginBottom: '0', paddingLeft: '60px' }}>
+                              {getFieldDecorator('make_key_world'+index, {
+                                rules: [{ required: true, message: '不能为空，请填写成交关键词!' }],
+                              })(
+                                <div>
+                                  <div className="keyword_input">
+                                    <span>chengjiao{index+1}</span>
+                                    <div className="inputs">
+                                      <Input style={{ width: '75%' }} index={index} className="inputs_child" />
+                                    </div>
+                                    {/* <p style={{ paddingLeft: '82px' }} className="addKeyword" onClick={this.advancedSetup}>高级设置></p> */}
                                   </div>
-                                  <p style={{ paddingLeft: '82px' }} className="addKeyword" onClick={this.advancedSetup}>高级设置></p>
+                                </div>
+                              )}
+                            </Form.Item>
+                            {/* 折扣服务 */}
+                            <div>
+                              <div className="triangle_border_up">
+                                <span></span>
+                              </div>
+                              <div className="advanced">
+                                <div className="advanced_child">
+                                  <span>12313465：</span>
+                                  <Form.Item style={{ width: '85%', marginBottom: '0' }}>
+                                    {getFieldDecorator("make_discount_text"+index, {
+                                      initialValue: [],
+                                    })(
+                                      <Checkbox.Group style={{ width: '100%' }} onChange={this.discountBtn}>
+                                        <Row>
+                                          <Col span={4}><Checkbox value="A">A</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="B">B</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="C">C</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="D">D</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="E">E</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="F">F</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="G">G</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="H">H</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="I">I</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="J">J</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="K">K</Checkbox></Col>
+                                          <Col span={4}><Checkbox value="L">L</Checkbox></Col>
+                                        </Row>
+                                      </Checkbox.Group>
+                                    )}
+                                  </Form.Item>
+                                </div>
+                                <div className="advanced_child">
+                                  <span>筛选：</span>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('make_classify0'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input style={{ width: '100%' }} index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('make_classify1'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input style={{ width: '100%' }} index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('make_classify2'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input style={{ width: '100%' }} index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('make_classify3'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input style={{ width: '100%' }} index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <span>最多筛选</span>
+                                </div>
+                                <div className="advanced_child">
+                                  <span>排序：</span>
+                                  <Form.Item style={{ width: '15%', margin: '0 25px 0 0' }}>
+                                    {getFieldDecorator('make_order_way'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Select placeholder="综合排序">
+                                        <Option value="销量排序">销量排序</Option>
+                                        <Option value="从高到低">从高到低</Option>
+                                        <Option value="从低到高">从低到高</Option>
+                                      </Select>
+                                    )}
+                                  </Form.Item>
+                                  <span>价格：</span>
+                                  <Form.Item  className="zhekoucss">
+                                    {getFieldDecorator('make_max_price'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <span>元 -</span>
+                                  <Form.Item className="zhekoucss">
+                                    {getFieldDecorator('make_min_price'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Input index={index} className="inputs_childs" />
+                                    )}
+                                  </Form.Item>
+                                  <span style={{ marginRight: '25px' }}>元</span>
+                                  <span>dsjojji：</span>
+                                  <Form.Item style={{ width: '15%', margin: '0 25px 0 0' }}>
+                                    {getFieldDecorator('make_send_addr'+index, {
+                                      rules: [{ required: false , message: '不能为空，请填写搜索关键词!' }],
+                                    })(
+                                      <Select placeholder="全国">
+                                        <Option value="北京">北京</Option>
+                                        <Option value="上海">上海</Option>
+                                        <Option value="广东">广东</Option>
+                                        <Option value="江西">江西</Option>
+                                        <Option value="上饶">上饶</Option>
+                                        <Option value="九江">九江</Option>
+                                      </Select>
+                                    )}
+                                  </Form.Item>
                                 </div>
                               </div>
-                            )}
-                          </Form.Item>
+                            </div>
+                          </div>
                         </div>
                       )
                     })
@@ -330,7 +644,7 @@ class KeywordComponents extends Component  {
                     nums1.map((itme,index) => {
                       return(
                         <Form.Item key={index} style={{ marginBottom: '0' }}>
-                          {getFieldDecorator('taokouling'+index, {
+                          {getFieldDecorator('tao_kl'+index, {
                             rules: [{ required: taokouling ? true : false, message: '不能为空，请填写商品淘口令!' }],
                           })(
                             <div>
@@ -360,89 +674,9 @@ class KeywordComponents extends Component  {
               ''
             }
             {/* PC 查 */}
-            <CheckboxGroup style={{ paddingTop: '15px' }} options={plainOptions3} defaultValue={['Checkbox2']} onChange={this.onChange3}>Checkbox2</CheckboxGroup>
-            {/* pcPick为1的时候 显示一下内容 */}
-            {
-              pcPick ?
-                <div className="Keyword_3_child1">
-                  <RadioGroup onChange={this.onKeyword2} value={keyword2}>
-                    <Radio value={1}>jkkj（klkl;kdfsfe）</Radio>
-                    <Radio value={2}>gwef（kdsfopspp）</Radio>
-                  </RadioGroup>
-                  {
-                    keyword2 === 1?
-                      nums2.map((itme,index) => {
-                        return(
-                          <Form.Item key={index} style={{ marginBottom: '0' }}>
-                            {getFieldDecorator('pcKeyword'+index, {
-                              rules: [{ required:true , message: '不能为空，请填写搜索关键词!' }],
-                            })(
-                              <div className="keyword_input">
-                                <span>Keyword{index+1}：sousuoci</span>
-                                <div className="inputs">
-                                  <Input index={index} className="inputs_child" />
-                                  <Button disabled={index === 0 ? 'disabled' : ''} onClick={()=>this.deteKeyword1(index)}>删除</Button>
-                                </div>
-                                <p className="addKeyword" onClick={this.advancedSetup}>高级设置></p>
-                              </div>
-                            )}
-                          </Form.Item>
-                        )
-                      })
-                    :
-                    nums2.map((itme,index) => {
-                      return(
-                        <div key={index}>
-                          <Form.Item style={{ marginBottom: '0' }}>
-                            {getFieldDecorator('pcKeyword'+index, {
-                              rules: [{ required: keywordPick ? true : false , message: '不能为空，请填写搜索关键词!' }],
-                            })(
-                              <div>
-                                <div className="keyword_input">
-                                  <span>Keyword{index+1}：sousuoci</span>
-                                  <div className="inputs">
-                                    <Input index={index} className="inputs_child" />
-                                    <Button disabled={index === 0 ? 'disabled' : ''} onClick={()=>this.deteKeyword1(index)}>删除</Button>
-                                  </div>
-                                  <p className="addKeyword" onClick={this.advancedSetup}>高级设置></p>
-                                </div>
-                              </div>
-                            )}
-                          </Form.Item>
-                          <Form.Item style={{ marginBottom: '0', paddingLeft: '60px' }}>
-                            {getFieldDecorator('pcWords'+index, {
-                              rules: [{ required: true, message: '不能为空，请填写成交关键词!' }],
-                            })(
-                              <div>
-                                <div className="keyword_input">
-                                  <span>chengjiao{index+1}</span>
-                                  <div className="inputs">
-                                    <Input style={{ width: '75%' }} index={index} className="inputs_child" />
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                          </Form.Item>
-                        </div>
-                      )
-                    })
-                  }
-                  {
-                    nums2.length === 5 ?
-                      ''
-                    :
-                    <div onClick={this.addKeywords1} className="addKeyword">
-                      <Icon type="plus-circle" theme="twoTone" />
-                      <span>tianjia（第三方第三方）</span>
-                    </div>
-                  }
-                </div>
-              :
-                ''
-            }
             <Form.Item style={{ margin: '20px 0 15px 0', textAlign: 'center' }}>
               <Button style={{ width: '10%', height: '50px', fontSize: '19px' }} type="primary" htmlType="submit" className="login-form-button">
-                登录
+                保存
               </Button>
             </Form.Item>
           </Form>

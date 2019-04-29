@@ -97,6 +97,14 @@
 .inputs_child1 {
   width: 75%;
 }
+.inputs_childs {
+  margin: 0;
+}
+.zhekoucss {
+  margin-bottom: 0;
+  width: 10%;
+  margin-right: 10px;
+}
 .inputsWB {
   width: 45%;
   margin-right: 25px;
@@ -150,9 +158,10 @@
 }
 .advanced_child {
   display: flex;
+  align-items: center;
 }
 .advanced_child > span:first-child {
-  margin-right: 15px;
+  margin-right: 10px;
 }
 .triangle_border_up{
     width:0;
