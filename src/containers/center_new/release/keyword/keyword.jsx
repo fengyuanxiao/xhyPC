@@ -6,7 +6,7 @@ import { Icon, Button, Radio, Input, Checkbox, Row, Col, Form, message,Select  }
 const RadioGroup = Radio.Group;                 //单选框
 const { TextArea } = Input;                     //文本框
 const CheckboxGroup = Checkbox.Group;           //复选框默认选中
-const Option = Select.Option;
+const Option = Select.Option;                   //选择器
 const plainOptions1 = ['Checkbox1dsfdfdsfds'];
 const plainOptions2 = ['21321321'];
 let nums = [1];                     //app关键字组数
@@ -27,7 +27,6 @@ class KeywordComponents extends Component  {
       nums: [1],                                  //app关键字组数
       nums1: [1],                                 //淘口令组数
       nums2: [1],                                 //pc关键字组数
-      advancedNum: 0,
     }
   }
 
@@ -148,38 +147,30 @@ class KeywordComponents extends Component  {
   }
 
   // 高级设置
-  advancedSetupApp_keyword = (index) => {
-    // this.setState({
-    //   advancedNum: index,
-    // })
-    // if ( this.state.advancedNum === index ) {
-    //   this.setState({
-    //     advancedShow: !this.state.advancedShow,
-    //   })
-    // }
-    if ( index === 0 ) {
-      this.setState({
-        advancedShow1: !this.state.advancedShow1,
-      })
-    } else if ( index === 1 ) {
-      this.setState({
-        advancedShow2: !this.state.advancedShow2,
-      })
-    } else {
-      this.setState({
-        advancedShow3: !this.state.advancedShow3,
-      })
-    }
-    console.log(index);
-  }
-  // 高级设置里面的
-  // 折扣服务
-  discountBtn = (e) => {
-    console.log(e);
-    this.setState({
-      val: e,
-    })
-  }
+  // advancedSetupApp_keyword = (index) => {
+  //   if ( index === 0 ) {
+  //     this.setState({
+  //       advancedShow1: !this.state.advancedShow1,
+  //     })
+  //   } else if ( index === 1 ) {
+  //     this.setState({
+  //       advancedShow2: !this.state.advancedShow2,
+  //     })
+  //   } else {
+  //     this.setState({
+  //       advancedShow3: !this.state.advancedShow3,
+  //     })
+  //   }
+  //   console.log(index);
+  // }
+  // // 高级设置里面的
+  // // 折扣服务
+  // discountBtn = (e) => {
+  //   console.log(e);
+  //   this.setState({
+  //     val: e,
+  //   })
+  // }
 
 
   handleSubmit = (e) => {
@@ -236,8 +227,8 @@ class KeywordComponents extends Component  {
                                 <div className="keyword_input">
                                   <span>Keyword{index+1}：sousuoci</span>
                                   <div className="inputs">
-                                    <Input index={index} className="inputs_child" />
-                                    <Button disabled={index === 0 ? 'disabled' : ''} onClick={()=>this.deteKeyword(index)}>删除</Button>
+                                    <Input placeholder="关键词" className="inputs_child" />
+                                    <Button disabled={index === 0 ? 'disabled' : ''} type="primary" onClick={()=>this.deteKeyword(index)}>删除</Button>
                                   </div>
                                   {/* <p className="addKeyword" onClick={()=>this.advancedSetupApp_keyword(index)}>高级设置></p> */}
                                 </div>
@@ -374,8 +365,8 @@ class KeywordComponents extends Component  {
                                   <div className="keyword_input">
                                     <span>Keyword{index+1}：sousuoci</span>
                                     <div className="inputs">
-                                      <Input index={index} className="inputs_child" />
-                                      <Button disabled={index === 0 ? 'disabled' : ''} onClick={()=>this.deteKeyword(index)}>删除</Button>
+                                      <Input  placeholder="关键词" className="inputs_child" />
+                                      <Button disabled={index === 0 ? 'disabled' : ''} type="primary" onClick={()=>this.deteKeyword(index)}>删除</Button>
                                     </div>
                                     {/* <p className="addKeyword" onClick={this.advancedSetup}>高级设置></p> */}
                                   </div>
@@ -506,7 +497,7 @@ class KeywordComponents extends Component  {
                                   <div className="keyword_input">
                                     <span>chengjiao{index+1}</span>
                                     <div className="inputs">
-                                      <Input style={{ width: '75%' }} index={index} className="inputs_child" />
+                                      <Input style={{ width: '75%' }}  placeholder="成交词" className="inputs_child" />
                                     </div>
                                     {/* <p style={{ paddingLeft: '82px' }} className="addKeyword" onClick={this.advancedSetup}>高级设置></p> */}
                                   </div>

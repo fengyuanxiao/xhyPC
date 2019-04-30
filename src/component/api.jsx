@@ -3,6 +3,7 @@ import axios from 'axios';
 const api = "";            //接口固定地址
 const tokens = localStorage.getItem("tokens");
 // http://www.594sj.cn/index.php
+
 // 注册页面接口调用
 export function _register(data) {
   return axios.post(api+'/merchant/Reg/index', data)
@@ -47,6 +48,14 @@ export function _shopList() {
 // 发布任务显示平台和任务类型
 export function _Publishindex() {
   return axios.get(api+'/merchant/Publish/index', {headers: {AppAuthorization: tokens}})
+}
+// 商品库宝贝列表
+export function _GoodsInfoList(data, page) {
+  return axios.post(api+'/merchant/Publish/GoodsInfoList?page_now='+page, data, {headers: {AppAuthorization: tokens}})
+}
+// 添加商品时通过商品链接获取商品信息
+export function _getnfo(data) {
+  return axios.post(api+'/merchant/Publish/getinfo',data, {headers: {AppAuthorization: tokens}})
 }
 
 

@@ -5,21 +5,17 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 class Type1 extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
 
     }
   }
-
-  FudianBtn = (e) => {
-    console.log(e.target.value);
-  }
-
+  
   render() {
     return(
       <div>
-        <RadioGroup onChange={this.FudianBtn} defaultValue="1" size="large" className="marginR-L langFuwu typestyle">
+        <RadioGroup onChange={this.props.FudianBtn} defaultValue="1" size="large" className="marginR-L langFuwu typestyle">
           <div>
             <RadioButton value="1">
               Hangzhou

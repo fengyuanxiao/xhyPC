@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Icon, Select, Form, Button, Input, Upload, Modal, Radio, Checkbox, Row, Col } from 'antd';
 // import { Link } from 'react-router-dom';
+import { _getnfo } from '../../../component/api';                        //引入ajax接口
 
 
 import './addGoods.css';                                                        //引入的样式
@@ -62,6 +63,29 @@ class addGoodComponents extends Component {
     console.log(e);
   }
 
+  // 添加商品时通过商品链接获取商品信息
+  getNfo = () => {
+    let url = {
+      url: this.state.shopURL,
+    }
+    _getnfo(url)
+    .then(res => {
+      console.log(res.data.data);
+      this.setState({
+         goodMsg: res.data.data,
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+  onShopURL = (e) => {  //商品链接
+    console.log(e.target.value);
+    this.setState({
+      shopURL: e.target.value,
+    })
+  }
+
   // from表单提交按钮
   handleSubmit = (e) => {
     e.preventDefault();
@@ -97,7 +121,10 @@ class addGoodComponents extends Component {
             {getFieldDecorator('note', {
               rules: [{ required: true, message: 'Please input your note!' }],
             })(
-              <Input placeholder="shopsLink" />
+              <div style={{ display: 'flex' }}>
+                <Input onChange={this.onShopURL} placeholder="shopsLink" />
+                <Button onClick={this.getNfo} style={{ marginLeft: '20px' }} type="primary">getGoods xinxi</Button>
+              </div>
             )}
           </Form.Item>
           <Form.Item
