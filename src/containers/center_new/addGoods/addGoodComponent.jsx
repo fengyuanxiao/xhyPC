@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Icon, Select, Form, Button, Input, Upload, Modal, Radio, Checkbox, Row, Col } from 'antd';
-// import { Link } from 'react-router-dom';
+import { Icon, Select, Form, Button, Input, Upload, Modal, Radio, Checkbox, Row, Col, message } from 'antd';
+import { Link } from 'react-router-dom';
 import { _getnfo } from '../../../component/api';                        //引入ajax接口
 
 
@@ -31,17 +31,71 @@ class addGoodComponents extends Component {
   handleCancel = () => this.setState({ previewVisible: false })
   // 查看图片按钮
   handlePreview = (file) => {
+    console.log(file);
     this.setState({
       previewImage: file.url || file.thumbUrl,
       previewVisible: true,
     });
   }
   // 上传图片按钮
-  handleUpload = ({ fileList }) => {
+  handleUpload = ({fileList}) => {
     console.log(fileList);
     this.setState({
       fileList,
-      port: true,
+    })
+    if (fileList.length === 0) {
+      this.setState({
+        port: false,
+      })
+    } else {
+      this.setState({
+        port: true,
+      })
+    }
+  }
+  // 添加商品时通过商品链接获取商品信息
+  getNfo = () => {
+    if ( this.state.shopURL ) {
+      let url = {
+        url: this.state.shopURL,
+      }
+      _getnfo(url)
+      .then(res => {
+          console.log(res.data.data);
+          // 获取数据填入到form表单中
+          this.props.form.setFieldsValue({
+            goods_name: res.data.data.goods_name,
+          })
+          if (this.state.fileList) {          //图片数组长度为true 上传按钮处改为 Mobile
+            this.setState({
+              port: true,
+            })
+          }
+          // 商品链接获取的商品主图
+          this.setState({
+             fileList: [
+               {
+                 url:res.data.data.img1,
+                 uid: '1',
+               },
+               {
+                 url:res.data.data.img2,
+                 uid: '2',
+               }
+             ],
+          })
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    } else {
+      message.error("请输入商品链接")
+    }
+  }
+  onShopURL = (e) => {  //商品链接
+    // console.log(e.target.value);
+    this.setState({
+      shopURL: e.target.value,
     })
   }
 
@@ -63,28 +117,6 @@ class addGoodComponents extends Component {
     console.log(e);
   }
 
-  // 添加商品时通过商品链接获取商品信息
-  getNfo = () => {
-    let url = {
-      url: this.state.shopURL,
-    }
-    _getnfo(url)
-    .then(res => {
-      console.log(res.data.data);
-      this.setState({
-         goodMsg: res.data.data,
-      })
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
-  onShopURL = (e) => {  //商品链接
-    console.log(e.target.value);
-    this.setState({
-      shopURL: e.target.value,
-    })
-  }
 
   // from表单提交按钮
   handleSubmit = (e) => {
@@ -133,18 +165,21 @@ class addGoodComponents extends Component {
             {getFieldDecorator('gender', {
               rules: [{ required: true, message: 'Please select your gender!' }],
             })(
-              <Select placeholder="shops" initialValue="lucy" style={{ width: 250 }} onChange={this.handleChange}>
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
-                <Option value="Yiminghe">yiminghe</Option>
-              </Select>
+              <div>
+                <Select placeholder="shops" initialValue="lucy" style={{ width: 250, marginRight:'10px' }} onChange={this.handleChange}>
+                  <Option value="jack">Jack</Option>
+                  <Option value="lucy">Lucy</Option>
+                  <Option value="Yiminghe">yiminghe</Option>
+                </Select>
+                <Link to="/bind/bindShops">+ bingShops</Link>
+              </div>
             )}
           </Form.Item>
           <Form.Item
             label="睡懒觉了"
             className="form_item"
           >
-            {getFieldDecorator('babyName', {
+            {getFieldDecorator('goods_name', {
               rules: [{ required: true, message: 'Please input your babyName!' }],
             })(
               <Input placeholder="shopsLink" />
@@ -166,6 +201,33 @@ class addGoodComponents extends Component {
               </Modal>
             </div>
           </Form.Item>
+          {/* <Form.Item
+            label="Baby name"
+            >
+            {getFieldDecorator('images', {
+              rules: [{ required: false, message: '请上传必要截图截图!' }],
+            })(
+              <div>
+            {
+            fileList ?
+            fileList.map((item, index) => {
+            return(
+            <img style={{ width: '20%', paddingRight: '10px' }} key={index} src={item.url} alt="goodstu"/>
+            )
+            })
+            :
+            ''
+            }
+            <ImagePicker
+            length={3}
+            files={fileList}
+            onChange={this.handleUpload}
+            onImageClick={(index, fs) => console.log(index, fs)}
+            selectable={fileList.length < 3}
+            />
+              </div>
+            )}
+          </Form.Item> */}
           {/* 单选框 */}
           <Form.Item label="Specifications" className="form_item" style={{ display: 'flex', alignItems: 'center' }}>
             <RadioGroup className="radio_child" onChange={this.radioBtn1} value={this.state.value1}>

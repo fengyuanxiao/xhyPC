@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import { Breadcrumb, Icon, Button, Tabs, Radio, Modal, Input, Select, Pagination } from 'antd';
 import { Link } from 'react-router-dom';
 
-import PageHeader from '../../../component/page_header/page_header';           //头部
-import AddGoodComponent from '../addGoods/addGoodComponent';                       //添加新商品
+import PageHeader from '../../../component/page_header/page_header';         //头部
+import AddGoodComponent from '../addGoods/addGoodComponent';                 //添加新商品
 import Type1 from './type1';                                                //taobao
 import Type2 from './type2';                                                //taobao
 import KeywordComponent from './keyword/keyword';                             //KeywordComponent
+import AppreciationServe from './appreciation/appreciationServe';            //增值服务
 import { _Publishindex, _GoodsInfoList } from '../../../component/api';                        //引入ajax接口
 
 import './release.css';
@@ -55,6 +56,19 @@ class ReleaseTask extends Component  {
     .catch(err => {
       console.log(err);
     })
+  }
+  // 发布task进度步骤
+  onTabs = (key) => {
+    // console.log(key);
+    if ( key === '1' ) {
+      this.setState({
+        recentlyShow: true,
+      })
+    } else {
+      this.setState({
+        recentlyShow: false,
+      })
+    }
   }
 
   // 单选框 选择pingtai
@@ -139,7 +153,12 @@ class ReleaseTask extends Component  {
   }
   // xinzengbaobei
   addGoodsBtn = () => {
-    console.log(456);
+    this.setState({
+      addGoodsNum: !this.state.addGoodsNum,                     //更改addGoodsNum 状态
+    })
+  }
+  // 编辑baobei
+  compileGoods = () => {
     this.setState({
       addGoodsNum: !this.state.addGoodsNum,                     //更改addGoodsNum 状态
     })
@@ -150,7 +169,7 @@ class ReleaseTask extends Component  {
   }
 
   render() {
-    const { spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,page_count,newGoodsLists,publish_type } = this.state;
+    const { recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,page_count,newGoodsLists,publish_type } = this.state;
     return(
       <div>
         {/* 头部组件 */}
@@ -176,19 +195,26 @@ class ReleaseTask extends Component  {
                 </Breadcrumb.Item>
               </Breadcrumb>
             </div>
-            <div className="releasetop">
-              <div>
-                <Icon type="alert" />
-                <span className="releasetop_span">Hil lkKowiwy sojlij</span>
-                <span>jo</span>
-              </div>
-              <Button>Click to expand the previous task</Button>
-            </div>
+            {/* 最近发布任务内容  一键发布 */}
+            {
+              recentlyShow ?
+                <div className="releasetop">
+                  <div>
+                    <Icon type="alert" />
+                    <span className="releasetop_span">Hil lkKowiwy sojlij</span>
+                    <span>jo</span>
+                  </div>
+                  <Button>Click to expand the previous task</Button>
+                </div>
+              :
+                ''
+            }
             <h1 style={{ color: '#e96262' }}>releaseTask</h1>
-            <Tabs className="releaseHeader" defaultActiveKey="1">
+            <Tabs onChange={this.onTabs} className="releaseHeader" defaultActiveKey="2">
               {/* <TabPane tab={<span className="releaseSpan">第一步：选择任务类型和商品信息</span>} key="1">Tab 1</TabPane>
                 <TabPane tab={<span className="releaseSpan">第二步：设置活动计划和增值服务</span>} disabled key="2">Tab 2</TabPane>
               <TabPane tab={<span className="releaseSpan">第三步：支付</span>} disabled key="3">Tab 3</TabPane> */}
+              {/* 第一步 */}
               <TabPane tab={<span className="releaseSpan">gwee</span>} key="1">
                 <h2>1.Select the platform and task type</h2>
                 <RadioGroup className="releaseLabel" onChange={this.onSpell} value={spell}>
@@ -234,7 +260,7 @@ class ReleaseTask extends Component  {
                               <img src={item.icon_img} alt='typeTu'/>
                               <span>taoba：{item.store_name}</span>
                             </p>
-                            <p>bianji</p>
+                            <p onClick={this.compileGoods}>编辑</p>
                           </div>
                           <div className="commodity_div commodity_div1">
                             <div style={{ display: 'flex', alignItems:'center' }}>
@@ -293,7 +319,11 @@ class ReleaseTask extends Component  {
                   </div>
                 }
               </TabPane>
-              <TabPane tab={<span className="releaseSpan">yjk7y</span>} disabled key="2">Tab 2</TabPane>
+              {/* 第二步 */}
+              <TabPane tab={<span className="releaseSpan">yjk7y</span>} key="2">
+                <AppreciationServe />
+              </TabPane>
+              {/* 第三步 */}
               <TabPane tab={<span className="releaseSpan">ykll,</span>} disabled key="3">Tab 3</TabPane>
             </Tabs>
             <div style={{ padding: '50px 0' }} className="releaseBtnok">

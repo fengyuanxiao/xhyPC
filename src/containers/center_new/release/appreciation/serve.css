@@ -1,0 +1,82 @@
+.first_header {
+  padding: 0 15px 25px 25px;
+}
+.first_header > label {
+  font-size: 17px;
+  padding-bottom: 10px;
+}
+.colors {
+  color: #e96262;
+}
+.first_table {
+  width: 100%;
+  border: 1px solid #cfcfcf;
+  text-align: center;
+}
+/* .first_table > tbody > tr {
+  height: 45px;
+}
+.first_table > tbody > tr:first-child {
+  background-color: #F5F5FA;
+}
+.first_table > tbody > tr > td {
+  border-bottom: 1px solid #cfcfcf;
+  border-right: 1px solid #cfcfcf;
+  line-height: 45px;
+}
+.first_table > tbody > tr > td:first-child {
+  width: 20%;
+} */
+table {
+  display: block;
+  border: 1px solid;
+}
+tbody {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+th, td {
+  display: block;
+  border-bottom: 1px solid #cfcfcf;
+  border-right: 1px solid #cfcfcf;
+  line-height: 48px;
+}
+tr {
+  display: block;
+  float: left;
+  width: 20%;
+}
+.bgslash {
+  background: url("../../../../imgs/slash.png") no-repeat center center;
+}
+/* .first_table > tbody > tr > td:last-child {
+  border-bottom: none;
+} */
+.bgslash > p {
+  line-height: 24px;
+  padding: 0 8px;
+}
+.p_heigth {
+  height: 48px;
+}
+.first_table > tbody > tr > td > p:first-child {
+  text-align: right;
+}
+.first_table > tbody > tr > td > p:last-child {
+  text-align: left;
+}
+.tdI {
+  position: absolute;
+  right: 3px;
+  font-size: 20px;
+}
+.addplan {
+  display: flex;
+  align-items: center;
+}
+.addplan > td > div {
+  padding: 51px;
+  font-size: 25px;
+  cursor: pointer;
+}

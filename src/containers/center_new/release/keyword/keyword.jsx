@@ -105,7 +105,7 @@ class KeywordComponents extends Component  {
   addNewPassword = () => {
     nums1.push(1)
     // console.log(nums);
-    if ( nums1.length <= 4 ) {
+    if ( nums1.length <= 5 ) {
       this.setState({
         nums1: nums1,
       })
@@ -642,7 +642,7 @@ class KeywordComponents extends Component  {
                               <div style={{ display: 'flex', paddingLeft: '50px' }}>
                                 <span>jklj{index+1}：</span>
                                 <TextArea className="inputsWB" rows={4} />
-                                <Button disabled={index === 0 ? 'disabled' : ''} onClick={()=>this.deteNewPassword(index)}>删除</Button>
+                                <Button disabled={index === 0 ? 'disabled' : ''} type="primary" onClick={()=>this.deteNewPassword(index)}>删除</Button>
                               </div>
                             </div>
                           )}
@@ -651,12 +651,12 @@ class KeywordComponents extends Component  {
                     })
                   }
                   {
-                    nums1.length === 4 ?
+                    nums1.length === 5 ?
                       ''
                     :
                     <div onClick={this.addNewPassword} className="addKeyword">
                       <Icon type="plus-circle" theme="twoTone" />
-                      <span>tianjia（最多4组）</span>
+                      <span>tianjia（最多5组）</span>
                     </div>
                   }
                   <div style={{ paddingBottom: '15px' }}><Checkbox>21“3213”21dgfdsfgregrg</Checkbox></div>
