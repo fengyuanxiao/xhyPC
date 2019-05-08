@@ -16,9 +16,9 @@ class addGoodComponents extends Component {
       previewVisible: false,                                                    //关闭观看图片状态
       previewImage: '',
       fileList: [],                                                             //没有默认图片，空数组
-      port: false,                                                              //为false PC端，true 移动端
       value1: 1,                                                                //单选框选中的值
       value2: 1,
+      mobileImg: '手机主图一',                                                   //手机主图一 文字
     }
   }
 
@@ -43,13 +43,17 @@ class addGoodComponents extends Component {
     this.setState({
       fileList,
     })
-    if (fileList.length === 0) {
+    if ( fileList.length === 0 ) {
       this.setState({
-        port: false,
+        mobileImg: '手机主图一',
+      })
+    } else if ( fileList.length === 1 ) {
+      this.setState({
+        mobileImg: '手机主图二',
       })
     } else {
       this.setState({
-        port: true,
+        mobileImg: '手机主图三',
       })
     }
   }
@@ -130,16 +134,11 @@ class addGoodComponents extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { previewVisible, previewImage, fileList, port } = this.state;
+    const { previewVisible, previewImage, fileList, mobileImg } = this.state;
     const uploadButton = (
       <div>
         <Icon type="plus" />
-        {
-          port ?
-            <div className="ant-upload-text">Mobile</div>
-          :
-          <div className="ant-upload-text">PC</div>
-        }
+        <div className="ant-upload-text">{mobileImg}</div>
       </div>
     );
     return(

@@ -57,6 +57,10 @@ export function _GoodsInfoList(data, page) {
 export function _getnfo(data) {
   return axios.post(api+'/merchant/Publish/getinfo',data, {headers: {AppAuthorization: tokens}})
 }
+// 新建/编辑关键词词方案
+export function _holdKeyWay(data) {
+  return axios.post(api+'/merchant/Publish/holdKeyWay',data, {headers: {AppAuthorization: tokens}})
+}
 
 
 // global.constants = {

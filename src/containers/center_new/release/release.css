@@ -138,6 +138,7 @@
   color: #007eff;
 }
 .releaseBtnok {
+  width: 100%;
   text-align: center;
 }
 .releaseBtnok > button {

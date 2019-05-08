@@ -1,6 +1,6 @@
 // 发布goods
 import React, { Component } from 'react';
-import { Breadcrumb, Icon, Button, Tabs, Radio, Modal, Input, Select, Pagination } from 'antd';
+import { Breadcrumb, Icon, Button, Tabs, Radio, Modal, Input, Select, Pagination, message } from 'antd';
 import { Link } from 'react-router-dom';
 
 import PageHeader from '../../../component/page_header/page_header';         //头部
@@ -136,7 +136,10 @@ class ReleaseTask extends Component  {
   }
   // 商品库选中的商品
   goodSelectBtn = (id) => {
-    console.log(id);
+    // console.log(id);
+    this.setState({
+      goods_id: id,
+    })
     let goodsLists = this.state.goodsLists;
     for (let i = 0; i < goodsLists.length; i++) {
       if ( goodsLists[i].id === id ) {
@@ -151,17 +154,39 @@ class ReleaseTask extends Component  {
       commodity_div: true,                //显示选中的商品块
     });
   }
-  // xinzengbaobei
+  // 新增baobei
   addGoodsBtn = () => {
     this.setState({
-      addGoodsNum: !this.state.addGoodsNum,                     //更改addGoodsNum 状态
+      addGoodsNum: true,                     //更改addGoodsNum 状态
     })
   }
   // 编辑baobei
   compileGoods = () => {
     this.setState({
-      addGoodsNum: !this.state.addGoodsNum,                     //更改addGoodsNum 状态
+      addGoodsNum: true,                     //更改addGoodsNum 状态
     })
+  }
+  addGoodsNumShow = () => {
+    this.setState({
+      addGoodsNum: false,
+    })
+  }
+
+  // 子组件控制父组件的状态，
+  hiddenFangan = () => {
+    this.setState({
+      commodity1: 1,              ////为1的时候 不显示关键词方案编辑板 商品关键词或成交词编辑板
+    })
+  }
+  // 新增关键词方案
+  showCommodity1 = () => {
+    if ( this.state.commodity_div ) {
+      this.setState({
+        commodity1: 2,
+      })
+    } else {
+      message.warning('先从商品库选择宝贝！');
+    }
   }
 
   // 发布下一步
@@ -169,7 +194,7 @@ class ReleaseTask extends Component  {
   }
 
   render() {
-    const { recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,page_count,newGoodsLists,publish_type } = this.state;
+    const { goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,page_count,newGoodsLists,publish_type } = this.state;
     return(
       <div>
         {/* 头部组件 */}
@@ -260,7 +285,7 @@ class ReleaseTask extends Component  {
                               <img src={item.icon_img} alt='typeTu'/>
                               <span>taoba：{item.store_name}</span>
                             </p>
-                            <p onClick={this.compileGoods}>编辑</p>
+                            <p style={{ cursor: 'pointer' }} onClick={this.compileGoods}>编辑</p>
                           </div>
                           <div className="commodity_div commodity_div1">
                             <div style={{ display: 'flex', alignItems:'center' }}>
@@ -288,7 +313,8 @@ class ReleaseTask extends Component  {
                 {/* addGoodsNum为true的时候 显示新增goods模板 */}
                 {
                   addGoodsNum ?
-                    <div className="addGoodComponents_style">
+                    <div style={{ position: 'relative' }} className="addGoodComponents_style">
+                      <Icon onClick={this.addGoodsNumShow} style={{ position: 'absolute', right: '0', fontSize: '20px', padding: '10px' }} type="close" />
                       <AddGoodComponent />
                     </div>
                   :
@@ -314,10 +340,20 @@ class ReleaseTask extends Component  {
                           <span>操作</span>
                         </div>
                       :
-                      <KeywordComponent />
+                      <KeywordComponent goods_id={goods_id} hidden={this.hiddenFangan} />
+                    }
+                    {
+                      commodity1 === 1 ?
+                        <Button onClick={this.showCommodity1} style={{ marginBottom: '20px' }} type="danger">新增关键词方案</Button>
+                      :
+                        ''
                     }
                   </div>
                 }
+                <div style={{ padding: '50px 0' }} className="releaseBtnok">
+                  <Button>取消</Button>
+                  <Button onClick={this.handleSubmit} type="primary">下一步</Button>
+                </div>
               </TabPane>
               {/* 第二步 */}
               <TabPane tab={<span className="releaseSpan">yjk7y</span>} key="2">
@@ -326,10 +362,6 @@ class ReleaseTask extends Component  {
               {/* 第三步 */}
               <TabPane tab={<span className="releaseSpan">ykll,</span>} disabled key="3">Tab 3</TabPane>
             </Tabs>
-            <div style={{ padding: '50px 0' }} className="releaseBtnok">
-              <Button>取消</Button>
-              <Button onClick={this.handleSubmit} type="primary">下一步</Button>
-            </div>
           </div>
         </div>
 

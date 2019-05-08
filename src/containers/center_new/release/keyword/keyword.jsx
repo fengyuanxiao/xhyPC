@@ -1,29 +1,28 @@
 import React, { Component } from 'react';
 import { Icon, Button, Radio, Input, Checkbox, Row, Col, Form, message,Select  } from 'antd';
-// import { Link } from 'react-router-dom';
-// import KeyDatas from './keyDatas';
+import { _holdKeyWay } from '../../../../component/api';                        //引入ajax接口
 
 const RadioGroup = Radio.Group;                 //单选框
 const { TextArea } = Input;                     //文本框
 const CheckboxGroup = Checkbox.Group;           //复选框默认选中
 const Option = Select.Option;                   //选择器
 const plainOptions1 = ['Checkbox1dsfdfdsfds'];
-const plainOptions2 = ['21321321'];
+const plainOptions2 = ['通过“关键词”查找宝贝'];
 let nums = [1];                     //app关键字组数
 let nums1 = [1];                    //淘口令组数
 let nums2 = [1];                     //pc关键字组数
 
 class KeywordComponents extends Component  {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       spell: 1,                                   //单选框的值 选择哪个平台类型
-      keyword1: 1,                                 //是否多关键词
-      keyword2: 1,                                 //是否多关键词
+      keyword1: 1,                                //是否多关键词
       appPick: 1,                                 //app找查goods
-      keywordPick: 1,                             //是否通过keyword找查
-      pcPick: 1,                                 //pc找查goods
-      taokouling: 0,                              //淘口令
+      keywordPick: true,                          //是否通过“关键词”查找宝贝
+      pcPick: 1,                                  //pc找查goods
+      is_kouling_search: false,                   //淘口令
+      is_qrcode_search: false,                    //是否二维码搜索宝贝
       nums: [1],                                  //app关键字组数
       nums1: [1],                                 //淘口令组数
       nums2: [1],                                 //pc关键字组数
@@ -41,6 +40,10 @@ class KeywordComponents extends Component  {
     });
   }
 
+  // 关闭关键词方案
+  hiddenFangan = () => {
+    this.props.hidden()
+  }
   // 查找baobei方案
   onChange1 = (e) => {
     this.setState({
@@ -59,7 +62,12 @@ class KeywordComponents extends Component  {
   }
   onChange4 = () => {
     this.setState({
-      taokouling: !this.state.taokouling,
+      is_kouling_search: !this.state.is_kouling_search,
+    })
+  }
+  onChange5 = () => {
+    this.setState({
+      is_qrcode_search: !this.state.is_qrcode_search,
     })
   }
   // 方案名称
@@ -71,12 +79,6 @@ class KeywordComponents extends Component  {
     // console.log('radio checked', e.target.value);
     this.setState({
       keyword1: e.target.value,
-    });
-  }
-  onKeyword2 = (e) => {
-    // console.log('radio checked', e.target.value);
-    this.setState({
-      keyword2: e.target.value,
     });
   }
   // APP 找查 添加addKeywords
@@ -145,48 +147,34 @@ class KeywordComponents extends Component  {
       })
     }
   }
-
-  // 高级设置
-  // advancedSetupApp_keyword = (index) => {
-  //   if ( index === 0 ) {
-  //     this.setState({
-  //       advancedShow1: !this.state.advancedShow1,
-  //     })
-  //   } else if ( index === 1 ) {
-  //     this.setState({
-  //       advancedShow2: !this.state.advancedShow2,
-  //     })
-  //   } else {
-  //     this.setState({
-  //       advancedShow3: !this.state.advancedShow3,
-  //     })
-  //   }
-  //   console.log(index);
-  // }
-  // // 高级设置里面的
-  // // 折扣服务
-  // discountBtn = (e) => {
-  //   console.log(e);
-  //   this.setState({
-  //     val: e,
-  //   })
-  // }
-
-
+  // 表单提交
   handleSubmit = (e) => {
     e.preventDefault(e);
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        values.goods_id = this.props.goods_id;                          //任务宝贝ID
+        values.is_key_world_search = this.state.keywordPick;            //是否关键词搜索宝贝
+        values.is_kouling_search = this.state.is_kouling_search;        //是否淘口令搜索宝贝
+        values.is_qrcode_search = this.state.is_qrcode_search;          //是否二维码搜索宝贝
+        values.phone_key_word_type = this.state.keyword1;               //关键词类型
         console.log(values);
+        _holdKeyWay(values)
+        .then(res=> {
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        })
       }
     });
   }
 
   render() {
-    const { keyword1,appPick,keywordPick,taokouling, nums, nums1 } = this.state;
+    const { keyword1,appPick,keywordPick,is_kouling_search, nums, nums1 } = this.state;
     const { getFieldDecorator } = this.props.form;
     return(
-      <div>
+      <div style={{ position: 'relative' }}>
+        <Icon onClick={this.hiddenFangan} style={{ position: 'absolute', right: '0', fontSize: '20px', padding: '10px' }} type="close" />
         <div className="Keyword_3">
           <Form onSubmit={this.handleSubmit} className="login-form loginPage">
             <Form.Item style={{ marginBottom: '10px' }}>
@@ -205,7 +193,7 @@ class KeywordComponents extends Component  {
             {/* appPick为1的时候 显示一下内容 */}
             {
               appPick ?
-                <div className="Keyword_3_child1"><CheckboxGroup options={plainOptions2} onChange={this.onChange2} defaultValue={['21321321']}>21321321</CheckboxGroup>
+                <div className="Keyword_3_child1"><CheckboxGroup options={plainOptions2} onChange={this.onChange2} defaultValue={['通过“关键词”查找宝贝']}>通过“关键词”查找宝贝</CheckboxGroup>
                   <div>
                     <RadioGroup onChange={this.onKeyword1} value={keyword1}>
                       <Radio value={1}>jkkj（klkl;kdfsfe）</Radio>
@@ -629,14 +617,14 @@ class KeywordComponents extends Component  {
                       <span>tianjia（最多5组）</span>
                     </div>
                   }
-                  <div style={{ paddingBottom: '15px' }}><Checkbox onChange={this.onChange4}>21“3213”21</Checkbox></div>
+                  <div style={{ paddingBottom: '15px' }}><Checkbox onChange={this.onChange4}>通过“淘口令”查找宝贝</Checkbox></div>
                   {/* 循环口令长度 */}
                   {
                     nums1.map((itme,index) => {
                       return(
                         <Form.Item key={index} style={{ marginBottom: '0' }}>
                           {getFieldDecorator('tao_kl'+index, {
-                            rules: [{ required: taokouling ? true : false, message: '不能为空，请填写商品淘口令!' }],
+                            rules: [{ required: is_kouling_search ? true : false, message: '不能为空，请填写商品淘口令!' }],
                           })(
                             <div>
                               <div style={{ display: 'flex', paddingLeft: '50px' }}>
@@ -659,7 +647,7 @@ class KeywordComponents extends Component  {
                       <span>tianjia（最多5组）</span>
                     </div>
                   }
-                  <div style={{ paddingBottom: '15px' }}><Checkbox>21“3213”21dgfdsfgregrg</Checkbox></div>
+                  <div style={{ paddingBottom: '15px' }}><Checkbox onChange={this.onChange5}>通过“宝贝二维码”查找商品，选择后系统将自动生成二维码供买手使用</Checkbox></div>
                 </div>
               :
               ''
