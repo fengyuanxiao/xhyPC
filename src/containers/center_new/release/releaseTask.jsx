@@ -51,6 +51,7 @@ class ReleaseTask extends Component  {
       this.setState({
         goodsLists: res.data.data.list,                                         //商品列表
         page_count: res.data.data.page_count,                                   //商品总页数
+        total: res.data.data.total,                                             //商品总条数
       })
     })
     .catch(err => {
@@ -122,9 +123,10 @@ class ReleaseTask extends Component  {
     let platform = {  //存储平台类型 传给后台
       platform: this.state.spell,
     }
+    // 分页调用接口
     _GoodsInfoList(platform, pageNumber)
     .then(res => {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       this.setState({
         goodsLists: res.data.data.list,                                         //商品列表
       })
@@ -132,7 +134,7 @@ class ReleaseTask extends Component  {
     .catch(err => {
       console.log(err);
     })
-    console.log('Page: ', pageNumber);
+    // console.log('Page: ', pageNumber);
   }
   // 商品库选中的商品
   goodSelectBtn = (id) => {
@@ -194,7 +196,7 @@ class ReleaseTask extends Component  {
   }
 
   render() {
-    const { goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,page_count,newGoodsLists,publish_type } = this.state;
+    const { total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
     return(
       <div>
         {/* 头部组件 */}
@@ -428,7 +430,7 @@ class ReleaseTask extends Component  {
               :
               ''
             }
-            <Pagination className="paginations" defaultPageSize={3} showQuickJumper defaultCurrent={1} total={page_count} onChange={this.onPagination} />
+            <Pagination className="paginations" defaultPageSize={3} showQuickJumper defaultCurrent={1} total={total} onChange={this.onPagination} />
           </div>
         </Modal>
       </div>

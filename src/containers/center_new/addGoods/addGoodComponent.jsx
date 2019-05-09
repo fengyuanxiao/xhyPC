@@ -22,6 +22,10 @@ class addGoodComponents extends Component {
     }
   }
 
+  componentWillMount() {
+
+  }
+
   // xuanze shops
   handleChange = (value) => {
     console.log(`selected ${value}`);
@@ -146,45 +150,46 @@ class addGoodComponents extends Component {
         <h2>Goods message </h2>
         <Form className="addGoods_form" onSubmit={this.handleSubmit}>
           <Form.Item
-            label="阿萨德是"
+            label="宝贝链接"
             className="form_item"
           >
             {getFieldDecorator('note', {
-              rules: [{ required: true, message: 'Please input your note!' }],
+              rules: [{ required: true, message: '请输入宝贝链接!' }],
             })(
               <div style={{ display: 'flex' }}>
-                <Input onChange={this.onShopURL} placeholder="shopsLink" />
+                <Input onChange={this.onShopURL} placeholder="请输入宝贝链接" />
                 <Button onClick={this.getNfo} style={{ marginLeft: '20px' }} type="primary">getGoods xinxi</Button>
               </div>
             )}
           </Form.Item>
-          <Form.Item
-            label="Gender"
-          >
-            {getFieldDecorator('gender', {
-              rules: [{ required: true, message: 'Please select your gender!' }],
-            })(
-              <div>
-                <Select placeholder="shops" initialValue="lucy" style={{ width: 250, marginRight:'10px' }} onChange={this.handleChange}>
+          <div>
+            <Form.Item
+              label="店铺名称"
+              style={{ display: 'flex' }}
+            >
+              {getFieldDecorator('gender', {
+                rules: [{ required: true, message: '请选择店铺!' }],
+              })(
+                <Select placeholder="请选择店铺" style={{ width: 250, marginRight:'10px' }} onChange={this.handleChange}>
                   <Option value="jack">Jack</Option>
                   <Option value="lucy">Lucy</Option>
                   <Option value="Yiminghe">yiminghe</Option>
                 </Select>
-                <Link to="/bind/bindShops">+ bingShops</Link>
-              </div>
-            )}
-          </Form.Item>
+              )}
+            </Form.Item>
+            <Link style={{ paddingTop: '9px' }} to="/bind/bindShops">+ bingShops</Link>
+          </div>
           <Form.Item
-            label="睡懒觉了"
+            label="宝贝名称"
             className="form_item"
           >
             {getFieldDecorator('goods_name', {
-              rules: [{ required: true, message: 'Please input your babyName!' }],
+              rules: [{ required: true, message: '请输入宝贝名称!' }],
             })(
-              <Input placeholder="shopsLink" />
+              <Input placeholder="请输入宝贝名称" />
             )}
           </Form.Item>
-          <Form.Item label="Baby name">
+          <Form.Item label="宝贝主图">
             <div className="uploads">
               <Upload
                 action="//jsonplaceholder.typicode.com/posts/"
@@ -228,75 +233,75 @@ class addGoodComponents extends Component {
             )}
           </Form.Item> */}
           {/* 单选框 */}
-          <Form.Item label="Specifications" className="form_item" style={{ display: 'flex', alignItems: 'center' }}>
+          <Form.Item label="下单指定规格" className="form_item" style={{ display: 'flex', alignItems: 'center' }}>
             <RadioGroup className="radio_child" onChange={this.radioBtn1} value={this.state.value1}>
-              <Radio value={1}>多少个大概</Radio>
+              <Radio value={1}>任意规格</Radio>
               <Radio value={2}>自定义
-                <Input className="radio_input" placeholder="如：color" />
-                <Input className="radio_input" placeholder="如：size" />
+                <Input className="radio_input" placeholder="如：颜色" />
+                <Input className="radio_input" placeholder="如：尺码" />
               </Radio>
             </RadioGroup>
           </Form.Item>
           {/* 单价，件数 */}
-          <Form.Item label="Specifications" className="form_item">
+          <Form.Item label="宝贝下单价" className="form_item">
             {getFieldDecorator('moneys', {
               rules: [{ required: true, message: 'Please input your babyName!' }],
             })(
               <div className="xaidanMoney">
                 <p>
                   <Input className="xaidanMoney_input" placeholder="如：size" />
-                  <span> money</span>
+                  <span> 元</span>
                 </p>
                 <p>
-                  <span>的数据：</span>
-                  <Input className="xaidanMoney_input" placeholder="如：size" />
-                  <span> and </span>
-                  <span className="xaidanMoney_span">（dg rg rg werfqwefdqwdwqd dfwaf）</span>
+                  <span>每单拍：</span>
+                  <Input className="xaidanMoney_input" />
+                  <span> 件 </span>
+                  <span className="xaidanMoney_span">（出于安全，建议每单不要超过两件）</span>
                 </p>
               </div>
             )}
           </Form.Item>
           {/* expressage */}
-          <Form.Item label="Specificatsdsions" className="form_item">
+          <Form.Item label="搜索页面展示价格" className="form_item">
             {getFieldDecorator('moneys', {
               rules: [{ required: true, message: 'Please input your babyName!' }],
             })(
               <div className="xaidanMoney">
                 <p>
                   <Input className="xaidanMoney_input" placeholder="如：size" />
-                  <span className="xaidanMoney_span">（几多的价格的观点，大概的感觉文件柜欧文）</span>
+                  <span className="xaidanMoney_span">非必填，如该商品有满减、促销、多规格等情况，请填写此金额</span>
                 </p>
               </div>
             )}
           </Form.Item>
           {/* expressage 单选框 */}
-          <Form.Item label="Specifications" className="form_item" style={{ display: 'flex', alignItems: 'center' }}>
+          <Form.Item label="宝贝下单时是否包邮" className="form_item" style={{ display: 'flex', alignItems: 'center' }}>
             <RadioGroup className="radio_child" onChange={this.radioBtn2} value={this.state.value2}>
-              <Radio value={1}>多少个大概</Radio>
+              <Radio value={1}>不包邮</Radio>
               <Radio value={2}>
-                <span>自定义</span>
-                <span className="xaidanMoney_span">（几多的价格的观点，大概的感觉文件柜欧文）</span>
+                <span>包邮</span>
+                <span className="xaidanMoney_span">（不包邮商品每单需支付10元运费押金，任务完成后运费押金将自动退还）</span>
               </Radio>
             </RadioGroup>
           </Form.Item>
           {/* card 复选框 */}
-          <Form.Item label="Specifications" className="form_item" style={{ display: 'flex', alignItems: 'center', height: '30px' }}>
+          <Form.Item label="是否允许使用优惠券和花呗/信用卡付款" className="form_item" style={{ display: 'flex', alignItems: 'center', height: '30px' }}>
             <Checkbox.Group style={{ width: '100%' }} onChange={this.checkboxBtn}>
               <Row style={{ paddingTop: '10px' }}>
-                <Col span={6}><Checkbox value="A">jksdjgodd</Checkbox></Col>
+                <Col span={6}><Checkbox value="A">允许优惠券</Checkbox></Col>
                 <Col span={6}><Checkbox value="B">
-                  <span>自定义</span>
+                  <span>允许花呗/信用卡</span>
                   {/* <span className="xaidanMoney_span">（几多的价格的观点，大概的感觉文件柜欧文）</span> */}
                 </Checkbox></Col>
-                <span className="xaidanMoney_span">（几多的价格的观点，大概的感觉文件柜欧文）</span>
+                <span className="xaidanMoney_span">（允许使用则自行承担手续费）</span>
               </Row>
             </Checkbox.Group>
           </Form.Item>
-          <p className="button_p">djiodjgsdoujopwejjfoiwejmlkjoiujio</p>
+          <p className="button_p">根据您的设置买家下单包邮价预计为元</p>
           {/* 提交按钮 */}
           <Form.Item className="submit_btn">
-            <Button className="bottom_btns" type="danger" ghost>danger</Button>
-            <Button className="bottom_btns" type="primary" htmlType="submit">Submit</Button>
+            <Button className="bottom_btns" type="danger" ghost>取消</Button>
+            <Button className="bottom_btns" type="primary" htmlType="submit">保存</Button>
           </Form.Item>
         </Form>
       </div>

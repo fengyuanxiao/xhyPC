@@ -73,7 +73,20 @@
 }
 .addplan {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+}
+.addplanWidth {
+  width: 100%;
+}
+.inputWidth {
+  width: 13%;
+  margin: 0 10px;
+}
+.addplan > div:first-child {
+  width: 22%;
+}
+.addplan > div:nth-child(2) {
+  width: 80%;
 }
 .addplan > td > div {
   padding: 23% 0;
@@ -132,10 +145,6 @@
 .dashed:last-child {
   border-bottom: none;
 }
-.inputWidth {
-  width: 13%;
-  margin: 0 10px;
-}
 .childBoxs {
   border-bottom: 1px solid #cfcfcf;
   padding: 15px;
@@ -144,4 +153,32 @@
 }
 .childBoxs:last-child {
   border-bottom: none;
+}
+.good_reputationBox {
+  padding-left: 20px;
+  margin: 10px 0;
+}
+.good_reputation {
+  padding: 10px;
+  background-color: #FFF8F8;
+  border: 1px solid #D70000;
+  border-radius: 6px;
+}
+.graphic {
+  border: 1px solid #cfcfcf;
+  margin-left: 25px;
+  margin-bottom: 15px;
+}
+.graphic > div:first-child {
+  background-color: #f5f5fa;
+  padding: 13px;
+  border-bottom: 1px solid #cfcfcf;
+}
+.graphic > div:nth-child(2) {
+  padding: 15px;
+}
+.graphic_child {
+  margin-bottom: 0;
+  width: 13%;
+  margin-right: 10px;
 }

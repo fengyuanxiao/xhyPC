@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox, DatePicker, message, Radio, Select, Row, Col } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, DatePicker, Radio, Select, Row, Col, Upload } from 'antd';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
 
 import './serve.css';
@@ -8,6 +8,9 @@ const { TextArea } = Input;         //文本框
 const RadioGroup = Radio.Group;     //单选框
 const Option = Select.Option;       //选择器
 let nums = [1];                     //app关键字组数
+let buyerNum = [1,2,3];             //买手评价关键词
+let merchantNum = [1];              //商家提供评价内容
+let graphicNum = [1];              //商家提供评价内容
 
 class AppreciationServes extends Component {
   constructor() {
@@ -15,11 +18,17 @@ class AppreciationServes extends Component {
     this.state = {
       mode: 'time',                         //时间日期
       nums: [1],                            //添加计划数组
+      buyerNum: [1,2,3],                    //买手评价关键词
+      merchantNum: [1],                     //商家提供评价内容
+      graphicNum: [1],                      //图文好评
       value: 1,                             //选择快递类型
       speedNum: 1,                          //快速完成的速度 单选选中的浮点
       shoppingNum: 1,                       //延长买家购物周期 单选框选中数
       goodreputationShow: true,             //好评优化默认选中显示
       additionalReviewShow: false,          //追评服务显示
+      fileList: [],                         //没有默认图片，空数组
+      previewVisible: false,                //关闭观看图片状态
+      previewImage: '',
     }
   }
 
@@ -62,15 +71,11 @@ class AppreciationServes extends Component {
   }
   // 删除投放数量
   deleteBtn = (index) => {
-    if ( index === 0 ) {                        //索引为0的不能删除
-      message.warning('关键词1不能删除！');
-    } else {                                    //删除多余的值
-      let as = this.state.nums;
-      as.splice(index,1)
-      this.setState({
-        nums: as
-      })
-    }
+    let as = this.state.nums;
+    as.splice(index,1)
+    this.setState({
+      nums: as
+    })
   }
 
   // 选择快递类型
@@ -133,7 +138,94 @@ class AppreciationServes extends Component {
     })
   }// 默认好评、买手评价、商家提供评价、图文好评
   onGoodreputation = (checkedValues) => {
-    console.log('checked = ', checkedValues);
+    // console.log('checked = ', checkedValues);
+    if ( checkedValues.indexOf('B') === -1 ) {
+      this.setState({//买手评价关键词
+        show1: false,
+      })
+    } else {
+      this.setState({//买手评价关键词
+        show1: true,
+      })
+    }
+    if ( checkedValues.indexOf('C') === -1 ) {
+      this.setState({//商家提供评价内容
+        show2: false,
+      })
+    } else {
+      this.setState({//商家提供评价内容
+        show2: true,
+      })
+    }
+    if ( checkedValues.indexOf('D') === -1 ) {
+      this.setState({//商家提供评价内容
+        show3: false,
+      })
+    } else {
+      this.setState({//商家提供评价内容
+        show3: true,
+      })
+    }
+  }
+  // 添加买手评价关键词input框
+  addBuyer = () => {
+    buyerNum.push(1)
+    this.setState({
+      buyerNum: buyerNum,
+    })
+  }//删除买手评价关键词input框
+  delBuyer = (index) => {
+    let delB = this.state.buyerNum;
+    delB.splice(index,1)
+    this.setState({
+      buyerNum: delB
+    })
+  }
+  // 添加商家提供的评价内容input框
+  addMerchant = () => {
+    merchantNum.push(1)
+    this.setState({
+      merchantNum: merchantNum,
+    })
+  }//删除商家提供的评价内容input框
+  delMerchant = (index) => {
+    let delM = this.state.merchantNum;
+    delM.splice(index,1)
+    this.setState({
+      merchantNum: delM
+    })
+  }
+  // 图文好评项
+  // 关闭图片按钮
+  handleCancel = () => this.setState({ previewVisible: false })
+  // 查看图片按钮
+  handlePreview = (file) => {
+    console.log(file);
+    this.setState({
+      previewImage: file.url || file.thumbUrl,
+      previewVisible: true,
+    });
+  }
+  // 上传图片按钮
+  handleUpload = ({fileList}) => {
+    console.log(fileList);
+    this.setState({
+      fileList,
+    })
+  }
+  // 添加图文好评
+  addGraphic = () => {
+    graphicNum.push(1)
+    this.setState({
+      graphicNum: graphicNum,
+    })
+  }// 删除图文好评
+  delGraphic = (index) => {
+    let delG = this.state.graphicNum;
+    delG.splice(index,1)
+    this.setState({
+      graphicNum: delG
+    })
   }
   //追评服务
   onAdditional = (e) => {
@@ -154,13 +246,19 @@ class AppreciationServes extends Component {
   }
 
   render(){
-    const { dateShow, nums,goodreputationShow,additionalReviewShow } = this.state;
+    const { dateShow, nums,goodreputationShow,additionalReviewShow,show1,show2,show3,buyerNum,merchantNum,graphicNum,fileList } = this.state;
     const { getFieldDecorator } = this.props.form;
     const radioStyle = {
       display: 'block',
       height: '30px',
       lineHeight: '30px',
     };
+    const uploadButton = (
+      <div>
+        <Icon type="plus" />
+        <div className="ant-upload-text">上传图片</div>
+      </div>
+    );
     return(
       <div>
         {/* 1.设置计划 */}
@@ -184,7 +282,13 @@ class AppreciationServes extends Component {
                   return(
                     <tr key={index}>
                       <td style={{ position: 'relative' }}>
-                        <span>第一天（05月07日）</span><Icon onClick={()=>this.deleteBtn(index)} className="tdI" type="close" />
+                        <span>第一天（05月07日）</span>
+                        {
+                          index > 0?
+                            <Icon onClick={()=>this.deleteBtn(index)} className="tdI" type="close" />
+                          :
+                          ''
+                        }
                         {/* dateShow为true 选择定时时间 */}
                         {
                           dateShow ?
@@ -344,10 +448,206 @@ class AppreciationServes extends Component {
                             <p style={{ padding: '13px' }}>可设置任务投放总数：<span>3</span>单，当前已设置：<span>0</span>单</p>
                             <Checkbox.Group style={{ width: '100%' }} onChange={this.onGoodreputation}>
                               <Row>
-                                <Col className="dashed"><Checkbox className="labels" value="A">默认好评:<Input className="inputWidth"/>单（免费） 选择此服务后，接手任务买手将对商品5分默认好评</Checkbox></Col>
-                                <Col className="dashed"><Checkbox className="labels" value="B">买手写评价:<Input className="inputWidth"/>单（1符点/单） 选择此项服务后，将有助于提升评价质量并优化您商品评价映像关键词</Checkbox></Col>
-                                <Col className="dashed"><Checkbox className="labels" value="C">商家提供评价:<Input className="inputWidth"/>单（2符点/单） 选择此项服务后，将有助于提升评价质量</Checkbox></Col>
-                                <Col className="dashed"><Checkbox className="labels" value="D">图文好评:<Input className="inputWidth"/>单（4符点/单） 选择此项服务后，买手会根据商家提供的好评图片进行评价，有利于优化评价内容及转化率</Checkbox></Col>
+                                <Col className="dashed">
+                                  <Checkbox className="labels" value="A">默认好评:<Input className="inputWidth"/>单（免费） 选择此服务后，接手任务买手将对商品5分默认好评</Checkbox>
+                                </Col>
+                                <Col className="dashed">
+                                  <Checkbox className="labels" value="B">买手写评价:<Input className="inputWidth"/>单（1符点/单） 选择此项服务后，将有助于提升评价质量并优化您商品评价映像关键词</Checkbox>
+                                  {//买手评价关键词
+                                    show1 ?
+                                      <div>
+                                        <p className="good_reputation">
+                                          请根据您发布任务的商品设定<span>几个关键词</span>作为买手的<span>评价范围</span>独自发挥撰写评价，例如<span>"手感很舒服，款式很漂亮，包装很讲究，物流很快，性价比高"</span>等... 注意：请不要填写完整的评价内容，避免所有买手评价商品的内容一模一样
+                                        </p>
+                                        {
+                                          buyerNum.map((item, index) => {
+                                            return(
+                                              <div key={index} className="good_reputationBox">
+                                                <div style={{ display: 'flex' }}>
+                                                  <Form.Item
+                                                    className="serveInput addplan"
+                                                    label=<span>买手评价关键词{index+1}</span>
+                                                    style={{ width: '70%' }}
+                                                  >
+                                                    {getFieldDecorator('buyer'+(index+1), {
+                                                      rules: [{ required: true, message: 'Please input your username!' }],
+                                                    })(
+                                                      <Input className="addplanWidth" />
+                                                    )}
+                                                  </Form.Item>
+                                                  {
+                                                    index === 0?
+                                                      <span style={{ paddingTop: '9px' }}>（每个关键词最多输入10个字）</span>
+                                                    :
+                                                    ''
+                                                  }
+                                                  {
+                                                    index > 2?
+                                                      <Button onClick={()=>this.delBuyer(index)} type="primary" style={{ marginTop: '4px', marginLeft: '20px' }}>删除</Button>
+                                                    :
+                                                      ''
+                                                  }
+                                                </div>
+                                              </div>
+                                            )
+                                          })
+                                        }
+                                        {//添加到了十组的时候 去掉添加按钮
+                                          buyerNum.length === 10?
+                                            ''
+                                          :
+                                          <p onClick={this.addBuyer} style={{ paddingLeft: '50px', cursor: 'pointer' }}>
+                                            <span style={{ color: '#007eff' }}>+添加1个关键词</span>
+                                            <span>（最多可添加10个关键词）</span>
+                                          </p>
+                                        }
+                                      </div>
+                                    :
+                                    ''
+                                  }
+                                </Col>
+                                <Col className="dashed">
+                                  <Checkbox className="labels" value="C">商家提供评价:<Input className="inputWidth"/>单（2符点/单） 选择此项服务后，将有助于提升评价质量</Checkbox>
+                                  {//商家提供评价内容
+                                    show2 ?
+                                      <div>
+                                        <p className="good_reputation">
+                                          请根据您发布商品的实际情况提供评价内容<span>注意：发布多单任务时务必保证评价内容不同，避免重复</span>
+                                        </p>
+                                        {
+                                          merchantNum.map((item, index) => {
+                                            return(
+                                              <div key={index} className="good_reputationBox">
+                                                <div style={{ display: 'flex' }}>
+                                                  <Form.Item
+                                                    className="serveInput addplan"
+                                                    label=<span>商家提供评价内容{index+1}</span>
+                                                    style={{ width: '70%' }}
+                                                  >
+                                                    {getFieldDecorator('merchant'+(index+1), {
+                                                      rules: [{ required: true, message: 'Please input your username!' }],
+                                                    })(
+                                                      <Input className="addplanWidth" />
+                                                    )}
+                                                  </Form.Item>
+                                                  {
+                                                    index === 0?
+                                                      <span style={{ paddingTop: '9px' }}>（最多输入500个字）</span>
+                                                    :
+                                                      ''
+                                                  }
+                                                  {
+                                                    index > 0?
+                                                      <Button onClick={()=>this.delMerchant(index)} type="primary" style={{ marginTop: '4px', marginLeft: '20px' }}>删除</Button>
+                                                    :
+                                                      ''
+                                                  }
+                                                </div>
+                                              </div>
+                                            )
+                                          })
+                                        }
+                                        {//添加到了十组的时候 去掉添加按钮
+                                          merchantNum.length === 10?
+                                            ''
+                                          :
+                                          <p onClick={this.addMerchant} style={{ paddingLeft: '50px', cursor: 'pointer' }}>
+                                            <span style={{ color: '#007eff' }}>+添加1个关键词</span>
+                                            <span>（最多可添加10个关键词）</span>
+                                          </p>
+                                        }
+                                      </div>
+                                    :
+                                    ''
+                                  }
+                                </Col>
+                                <Col className="dashed">
+                                  <Checkbox className="labels" value="D">图文好评:<Input className="inputWidth"/>单（4符点/单） 选择此项服务后，买手会根据商家提供的好评图片进行评价，有利于优化评价内容及转化率</Checkbox>
+                                  {
+                                    show3 ?
+                                      <div>
+                                        {
+                                          graphicNum.map((item, index) =>{
+                                            return(
+                                              <div key={index} className="graphic">
+                                                <div>第{index+1}单</div>
+                                                <div>
+                                                  <div className="labels">
+                                                    <span>选择评价方式：</span>
+                                                    <RadioGroup onChange={this.onAccomplishChild} value={this.state.speedNum}>
+                                                      <Radio value={1}>买手写评价</Radio>
+                                                      <Radio value={2}>商家提供评价</Radio>
+                                                    </RadioGroup>
+                                                  </div>
+                                                  <div style={{ display: 'flex', alignItems: 'center', margin: '7px 0' }}>
+                                                    <span style={{ width: '8%' }}>商品规格：</span>
+                                                    <Form.Item
+                                                      className="graphic_child"
+                                                    >
+                                                      {getFieldDecorator('color'+(index+1), {
+                                                        rules: [{ required: false, message: 'Please input your username!' }],
+                                                      })(
+                                                        <Input placeholder="如：颜色" style={{width: '100%' }} />
+                                                      )}
+                                                    </Form.Item>
+                                                    <Form.Item
+                                                      className="graphic_child"
+                                                    >
+                                                      {getFieldDecorator('size'+(index+1), {
+                                                        rules: [{ required: false, message: 'Please input your username!' }],
+                                                      })(
+                                                        <Input placeholder="如：尺寸" style={{width: '100%' }} />
+                                                      )}
+                                                    </Form.Item>
+                                                    <span>提示：主要针对商品规格不同颜色、花色、款式进行设置和好评图片保持一致</span>
+                                                  </div>
+                                                  <div style={{ display: 'flex', margin: '7px 0' }}>
+                                                    <Form.Item
+                                                      className="serveInput addplan"
+                                                      label=<span>商家提供评价内容</span>
+                                                      style={{ width: '70%' }}
+                                                    >
+                                                      {getFieldDecorator('contents'+(index+1), {
+                                                        rules: [{ required: true, message: 'Please input your username!' }],
+                                                      })(
+                                                        <Input className="addplanWidth" />
+                                                      )}
+                                                    </Form.Item>
+                                                    <span style={{ paddingTop: '9px' }}>（最多输入500个字）</span>
+                                                  </div>
+                                                  <div style={{ paddingLeft: '15px', margin: '7px 0' }}>
+                                                    <p style={{ margin: '10px 0' }}>评价图片：请将你的商品根据你要的图文评价数量，拍摄不同的组数，每组可传1-5张商品图片，每张图片不可大于2Mb</p>
+                                                    <Form.Item>
+                                                      {getFieldDecorator('upload'+(index+1), {
+                                                        rules: [{ required: true, message: 'Please input your username!' }],
+                                                        getValueFromEvent: this.normFile,
+                                                      })(
+                                                        <Upload
+                                                          action="//jsonplaceholder.typicode.com/posts/"
+                                                          listType="picture-card"
+                                                          fileList={fileList}
+                                                          onPreview={this.handlePreview}
+                                                          onChange={this.handleUpload}
+                                                        >
+                                                          {fileList.length >= 5 ? null : uploadButton}
+                                                        </Upload>
+                                                      )}
+                                                    </Form.Item>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            )
+                                          })
+                                        }
+                                        <p onClick={this.addGraphic} style={{ paddingLeft: '50px', cursor: 'pointer', paddingTop: '10px' }}>
+                                          <span style={{ color: '#007eff' }}>+添加1个关键词</span>
+                                          <span>（最多可添加10个关键词）</span>
+                                        </p>
+                                      </div>
+                                    :
+                                    ''
+                                  }
+                                </Col>
                               </Row>
                             </Checkbox.Group>
                           </div>
@@ -365,7 +665,9 @@ class AppreciationServes extends Component {
                             <p style={{ padding: '13px' }}>可设置任务投放总数：<span>3</span>单，当前已设置：<span>0</span>单</p>
                             <Checkbox.Group style={{ width: '100%' }} onChange={this.onGoodreputation}>
                               <Row>
-                                <Col className="dashed"><Checkbox className="labels" value="A">默认好评:<Input className="inputWidth"/>单（免费） 选择此服务后，接手任务买手将对商品5分默认好评</Checkbox></Col>
+                                <Col className="dashed">
+                                  <Checkbox className="labels" value="A">默认好评:<Input className="inputWidth"/>单（免费） 选择此服务后，接手任务买手将对商品5分默认好评</Checkbox>
+                                </Col>
                                 <Col className="dashed"><Checkbox className="labels" value="B">买手写评价:<Input className="inputWidth"/>单（1符点/单） 选择此项服务后，将有助于提升评价质量并优化您商品评价映像关键词</Checkbox></Col>
                                 <Col className="dashed"><Checkbox className="labels" value="C">商家提供评价:<Input className="inputWidth"/>单（2符点/单） 选择此项服务后，将有助于提升评价质量</Checkbox></Col>
                                 <Col className="dashed"><Checkbox className="labels" value="D">图文好评:<Input className="inputWidth"/>单（4符点/单） 选择此项服务后，买手会根据商家提供的好评图片进行评价，有利于优化评价内容及转化率</Checkbox></Col>
