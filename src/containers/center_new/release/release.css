@@ -29,7 +29,7 @@
 }
 
 /* 单选框 */
-.releaseLabel > div > label {
+.releaseLabel > label {
   font-size: 19px;
   padding: 0 30px;
 }
@@ -38,12 +38,15 @@
   box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);
   border-radius: 5px;
   margin-top: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 35px;
+}
+.nones {
+  box-shadow: none !important;
+  margin: 0;
 }
 .goodsBtns {
   margin: 20px 20px;
   font-size: 18px;
-  width: 150px;
   height: 50px;
 }
 .commodity_div {
@@ -64,7 +67,7 @@
 }
 .commodity_div1 {
   border: none;
-  padding: 35px 0;
+  padding: 20px 0;
 }
 .addGoodComponents_style {
   box-shadow: 0 0 8px 1px rgba(0,0,0,0.2);
@@ -76,10 +79,17 @@
   width: 70% !important;
 }
 .key_scheme {
-  padding: 15px 0;
+  padding: 16px 0;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+.key_scheme > div {
+  width: 20%;
+  text-align: center;
 }
 .Keyword_3 {
   padding: 20px 17px;
@@ -146,6 +156,13 @@
   height: 50px;
   width: 110px;
   margin: 0 30px;
+}
+.keyword_handle > span {
+  margin: 0 15px;
+  cursor: pointer;
+}
+.keyword_handle > span:first-child {
+  color: #007eff;
 }
 .goodsKu {
   display: flex;

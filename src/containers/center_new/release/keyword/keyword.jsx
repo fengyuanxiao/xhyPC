@@ -27,9 +27,13 @@ class KeywordComponents extends Component  {
       nums1: [1],                                 //淘口令组数
       nums2: [1],                                 //pc关键字组数
     }
+    console.log(props);
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    this.props.form.setFieldsValue({
+
+    })
   }
 
   // 单选框 选择pingtai
@@ -157,10 +161,16 @@ class KeywordComponents extends Component  {
         values.is_kouling_search = this.state.is_kouling_search;        //是否淘口令搜索宝贝
         values.is_qrcode_search = this.state.is_qrcode_search;          //是否二维码搜索宝贝
         values.phone_key_word_type = this.state.keyword1;               //关键词类型
-        console.log(values);
+        // console.log(values);
         _holdKeyWay(values)
         .then(res=> {
-          console.log(res.data);
+          // console.log(res.data.data);
+          if ( res.data.code === 200 ) {
+            this.props.hidden(res.data.data);
+            message.success(res.data.msg);
+          } else {
+            message.success(res.data.msg);
+          }
         })
         .catch(err => {
           console.log(err);

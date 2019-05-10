@@ -9,7 +9,7 @@ import Type1 from './type1';                                                //ta
 import Type2 from './type2';                                                //taobao
 import KeywordComponent from './keyword/keyword';                             //KeywordComponent
 import AppreciationServe from './appreciation/appreciationServe';            //增值服务
-import { _Publishindex, _GoodsInfoList } from '../../../component/api';                        //引入ajax接口
+import { _Publishindex, _GoodsInfoList, _keyWayList, _getHoldKeyWay } from '../../../component/api';                        //引入ajax接口
 
 import './release.css';
 
@@ -29,6 +29,8 @@ class ReleaseTask extends Component  {
       commodity1: 1,                              //为1的时候 不显示关键词方案编辑板 商品关键词或成交词编辑板
       additionalReview: false,                    //是否是追评单 默认是否
       publish_type: false,                        //发布单类型  回访单和追评单只有天猫和淘宝值为true
+      recentlyShow: true,                         //一件发布任务
+      fanganShow: false,                          //方案列表点击编辑改变状态
     }
   }
 
@@ -36,7 +38,10 @@ class ReleaseTask extends Component  {
     // 发布任务显示平台和任务类型接口
     _Publishindex()
     .then(res => {
-      console.log(res.data.data);
+      // console.log(res.data.data);
+      this.setState({
+        Ecommerce_type: res.data.data,                    //平台类型
+      })
     })
     .catch(err => {
       console.log(err);
@@ -83,14 +88,14 @@ class ReleaseTask extends Component  {
   }
   FudianBtn = (e) => {
     console.log(e.target.value);
-    if ( e.target.value === '2' ) {
+    if ( e.target.value === 201 ) {
       this.setState({
         additionalReview: true,
         commodity_div: false,
         publish_type: true,
         commodity1: 1,
       })
-    } else if ( e.target.value === '3' ) {
+    } else if ( e.target.value === 202 ) {
       this.setState({
         publish_type: true,
         additionalReview: false,
@@ -138,7 +143,28 @@ class ReleaseTask extends Component  {
   }
   // 商品库选中的商品
   goodSelectBtn = (id) => {
-    // console.log(id);
+    // 获取关键词方案列表接口
+    let goods_id = {
+      goods_id: id
+    };
+    _keyWayList(goods_id)
+    .then(res=> {
+      // console.log(res.data.data);
+      if ( res.data.data === "" ) {
+        this.setState({
+          commodity1: 2,                      //显示商品关键词或成交词编辑板
+        })
+      } else {
+        this.setState({
+          commodity1: 1,
+          keyWayLists: res.data.data,         //储存关键词方案列表
+        })
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    // 在商品库中选中的商品 显示在页面上
     this.setState({
       goods_id: id,
     })
@@ -152,17 +178,16 @@ class ReleaseTask extends Component  {
     }
     this.setState({
       visible: false,                     //关闭商品库
-      commodity1: 2,                      //显示商品关键词或成交词编辑板
       commodity_div: true,                //显示选中的商品块
     });
   }
-  // 新增baobei
+  // 新增宝贝
   addGoodsBtn = () => {
     this.setState({
       addGoodsNum: true,                     //更改addGoodsNum 状态
     })
   }
-  // 编辑baobei
+  // 编辑宝贝
   compileGoods = () => {
     this.setState({
       addGoodsNum: true,                     //更改addGoodsNum 状态
@@ -173,11 +198,34 @@ class ReleaseTask extends Component  {
       addGoodsNum: false,
     })
   }
+  // 关键词方案编辑
+  handleCompilekeyW = (id) => {
+    console.log(id);
+    let ids = {
+      id: id
+    }
+    // 获得关键词方案详细信息
+    _getHoldKeyWay(ids)
+    .then(res => {
+      console.log(res.data.data);
+      this.setState({
+        holdKeyWayList: res.data.data,        //方案详细信息
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    this.setState({
+      fanganShow: true,
+    })
+  }
 
   // 子组件控制父组件的状态，
-  hiddenFangan = () => {
+  hiddenFangan = (keyWayLists) => {//keyWayLists由子组件传递过来的数据
     this.setState({
       commodity1: 1,              ////为1的时候 不显示关键词方案编辑板 商品关键词或成交词编辑板
+      fanganShow: false,
+      keyWayLists: keyWayLists,
     })
   }
   // 新增关键词方案
@@ -196,7 +244,7 @@ class ReleaseTask extends Component  {
   }
 
   render() {
-    const { total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
+    const { fanganShow,keyWayLists,Ecommerce_type,total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
     return(
       <div>
         {/* 头部组件 */}
@@ -228,53 +276,58 @@ class ReleaseTask extends Component  {
                 <div className="releasetop">
                   <div>
                     <Icon type="alert" />
-                    <span className="releasetop_span">Hil lkKowiwy sojlij</span>
-                    <span>jo</span>
+                    <span className="releasetop_span">一键发布往期任务</span>
+                    <span>为保障商家资金安全，平台只保留近15天内数据，请商家及时保存</span>
                   </div>
-                  <Button>Click to expand the previous task</Button>
+                  <Button>点击展开往期任务</Button>
                 </div>
               :
                 ''
             }
-            <h1 style={{ color: '#e96262' }}>releaseTask</h1>
-            <Tabs onChange={this.onTabs} className="releaseHeader" defaultActiveKey="2">
-              {/* <TabPane tab={<span className="releaseSpan">第一步：选择任务类型和商品信息</span>} key="1">Tab 1</TabPane>
-                <TabPane tab={<span className="releaseSpan">第二步：设置活动计划和增值服务</span>} disabled key="2">Tab 2</TabPane>
-              <TabPane tab={<span className="releaseSpan">第三步：支付</span>} disabled key="3">Tab 3</TabPane> */}
-              {/* 第一步 */}
-              <TabPane tab={<span className="releaseSpan">gwee</span>} key="1">
-                <h2>1.Select the platform and task type</h2>
+            <h1 style={{ color: '#e96262' }}>发布任务</h1>
+            <Tabs onChange={this.onTabs} className="releaseHeader" defaultActiveKey="1">
+              <TabPane tab={<span className="releaseSpan">第一步：选择任务类型和商品信息</span>} key="1">
+                <h2>1.选择平台和任务类型</h2>
                 <RadioGroup className="releaseLabel" onChange={this.onSpell} value={spell}>
                   {
                     publish_type ?
-                      <div>
-                        <Radio value={100}>taobao</Radio>
-                        <Radio value={101}>tianmao</Radio>
-                      </div>
+                      Ecommerce_type.map((item, index) => {
+                        return(
+                          <Radio key={index} value={item.platform}>{item.platform_name}</Radio>
+                        )
+                      })
                     :
-                    <div>
-                      <Radio value={100}>taobao</Radio>
-                      <Radio value={101}>tianmao</Radio>
-                      <Radio value={3}>jingdong</Radio>
-                      <Radio value={4}>pinduoduo</Radio>
-                    </div>
+                    Ecommerce_type ?
+                      Ecommerce_type.map((item, index) => {
+                        return(
+                          <Radio key={index} value={item.platform}>{item.platform_name}</Radio>
+                        )
+                      })
+                    :
+                    ''
                   }
                 </RadioGroup>
                 {/* 判断单选框 平台类型显示 */}
                 {
                   spell === 100 || spell === 101 ?
-                    <Type1 FudianBtn={this.FudianBtn} />
+                    Ecommerce_type ?
+                      <Type1 FudianBtn={this.FudianBtn} Ecommerce_type={Ecommerce_type[0].task_type_list} />
+                    :
+                      ''
                   :
-                  <Type2 />
+                  Ecommerce_type ?
+                    <Type2 Ecommerce_type={Ecommerce_type} />
+                  :
+                    ''
                 }
-                <h2>2.Xuan ze goods</h2>
-                <Button className="goodsBtns" onClick={ this.xuanzeBtn }>jdioowljh</Button>
+                <h2>2.选择任务宝贝</h2>
+                <Button className="goodsBtns" onClick={ this.xuanzeBtn }>从商品库中选择宝贝</Button>
                 {/* //是否是追评单 默认是否  如果选择追评则会隐藏关键词编辑板 和 新增宝贝按钮 */}
                 {
                   additionalReview ?
                     ''
                   :
-                  <Button className="goodsBtns" onClick={ this.addGoodsBtn }>addGoods</Button>
+                  <Button className="goodsBtns" onClick={ this.addGoodsBtn }>新增宝贝</Button>
                 }
                 {/* commodity_div为true的时候 商品库选择的模板则会显示出来 */}
                 {
@@ -294,15 +347,15 @@ class ReleaseTask extends Component  {
                               <img style={{ width: '16%' }} src={item.phone_img1} alt='typeTu'/>
                               <p>{item.goods_name}</p>
                             </div>
-                            <p>ds：{item.pay_price}</p>
-                            <p>ds：{item.show_price}</p>
-                            <p>ds：{item.pay_nums}</p>
-                            <p>ds：{item.rules}</p>
+                            <p>下单价：{item.pay_price}</p>
+                            <p>搜索价：{item.show_price}</p>
+                            <p>下单拍：{item.pay_nums}</p>
+                            <p>下单规格：{item.rules}</p>
                             {
                               item.free_post === 1?
-                                <p>bao</p>
+                                <p>商品包邮</p>
                               :
-                              <p>sdfsw</p>
+                              <p>商品不包邮</p>
                             }
                           </div>
                         </div>
@@ -312,7 +365,7 @@ class ReleaseTask extends Component  {
                     ""
                 }
 
-                {/* addGoodsNum为true的时候 显示新增goods模板 */}
+                {/* addGoodsNum为true的时候 显示新增商品模板 */}
                 {
                   addGoodsNum ?
                     <div style={{ position: 'relative' }} className="addGoodComponents_style">
@@ -329,17 +382,57 @@ class ReleaseTask extends Component  {
                     ''
                   :
                   <div className="typestyle">
-                    <h2>3.guanjianchi fankgjioajo</h2>
+                    <span style={{ display: 'flex', alignItems:'center' }}><h2>3.选择关键词方案</h2><span style={{ color:'gray', paddingLeft: '15px' }}>平台默认保存最近5套关键词方案</span></span>
                     {/* 在商品库选中了商品 则会显示方案编辑板 */}
                     {
                       commodity1 === 1 ?
-                        <div className="key_scheme">
-                          <span>方案名称</span>
-                          <span>APP搜索词</span>
-                          <span>PC搜索词</span>
-                          <span>淘口令下单</span>
-                          <span>二维码下单</span>
-                          <span>操作</span>
+                        <div className="nones">
+                          <div className="key_scheme">
+                            <div>方案名称</div>
+                            <div>APP搜索词</div>
+                            {/* <span>PC搜索词</span> */}
+                            <div>淘口令下单</div>
+                            <div>二维码下单</div>
+                            <div>操作</div>
+                          </div>
+                          {//获取关键词方案列表
+                            keyWayLists ?
+                              keyWayLists.map((item, index) => {
+                                return(
+                                  <div key={index} className="key_scheme">
+                                    <div>{item.key_way_name}</div>
+                                    <div>
+                                      {
+                                        item.key_world.map((item, index) => {
+                                          return(
+                                            <p key={index}>{item}</p>
+                                          )
+                                        })
+                                      }
+                                    </div>
+                                    {/* <span>PC搜索词</span> */}
+                                    {
+                                      item.is_kouling_search ?
+                                        <div>有</div>
+                                      :
+                                      <div>无</div>
+                                    }
+                                    {
+                                      item.is_qrcode_search ?
+                                        <div>有</div>
+                                      :
+                                      <div>无</div>
+                                    }
+                                    <div className="keyword_handle">
+                                      <span onClick={()=>this.handleCompilekeyW(item.id)}>编辑</span>
+                                      <span>删除</span>
+                                    </div>
+                                  </div>
+                                )
+                              })
+                            :
+                              ''
+                          }
                         </div>
                       :
                       <KeywordComponent goods_id={goods_id} hidden={this.hiddenFangan} />
@@ -347,6 +440,12 @@ class ReleaseTask extends Component  {
                     {
                       commodity1 === 1 ?
                         <Button onClick={this.showCommodity1} style={{ marginBottom: '20px' }} type="danger">新增关键词方案</Button>
+                      :
+                        ''
+                    }
+                    {
+                      fanganShow ?
+                        <KeywordComponent goods_id={goods_id} hidden={this.hiddenFangan} />
                       :
                         ''
                     }
@@ -358,11 +457,11 @@ class ReleaseTask extends Component  {
                 </div>
               </TabPane>
               {/* 第二步 */}
-              <TabPane tab={<span className="releaseSpan">yjk7y</span>} key="2">
+              <TabPane tab={<span className="releaseSpan">第二步：设置活动计划和增值服务</span>} key="2">
                 <AppreciationServe />
               </TabPane>
               {/* 第三步 */}
-              <TabPane tab={<span className="releaseSpan">ykll,</span>} disabled key="3">Tab 3</TabPane>
+              <TabPane tab={<span className="releaseSpan">第三步：支付</span>} disabled key="3">Tab 3</TabPane>
             </Tabs>
           </div>
         </div>

@@ -61,6 +61,19 @@ export function _getnfo(data) {
 export function _holdKeyWay(data) {
   return axios.post(api+'/merchant/Publish/holdKeyWay',data, {headers: {AppAuthorization: tokens}})
 }
+// 新建/编辑宝贝时的店铺名称下拉列表
+export function _getStoreList(data) {
+  return axios.post(api+'/merchant/Publish/getStoreList',data, {headers: {AppAuthorization: tokens}})
+}
+// 关键词方案列表
+export function _keyWayList(data) {
+  return axios.post(api+'/merchant/Publish/keyWayList',data, {headers: {AppAuthorization: tokens}})
+}
+// 获得关键词方案详细信息
+export function _getHoldKeyWay(data) {
+  return axios.post(api+'/merchant/Publish/getHoldKeyWay',data, {headers: {AppAuthorization: tokens}})
+}
+
 
 
 // global.constants = {

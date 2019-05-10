@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Icon, Select, Form, Button, Input, Upload, Modal, Radio, Checkbox, Row, Col, message } from 'antd';
 import { Link } from 'react-router-dom';
-import { _getnfo } from '../../../component/api';                        //引入ajax接口
+import { _getnfo, _getStoreList } from '../../../component/api';                        //引入ajax接口
 
 
 import './addGoods.css';                                                        //引入的样式
@@ -23,7 +23,17 @@ class addGoodComponents extends Component {
   }
 
   componentWillMount() {
-
+    let platform = {}
+    _getStoreList(platform)
+    .then(res=> {
+      console.log(res.data.data);
+      this.setState({
+        storeList: res.data.data.list,                     //获取店铺列表
+      })
+    })
+    .catch(err=> {
+      console.log(err);
+    })
   }
 
   // xuanze shops
@@ -138,7 +148,7 @@ class addGoodComponents extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { previewVisible, previewImage, fileList, mobileImg } = this.state;
+    const { previewVisible, previewImage, fileList, mobileImg, storeList } = this.state;
     const uploadButton = (
       <div>
         <Icon type="plus" />
@@ -170,10 +180,18 @@ class addGoodComponents extends Component {
               {getFieldDecorator('gender', {
                 rules: [{ required: true, message: '请选择店铺!' }],
               })(
+
                 <Select placeholder="请选择店铺" style={{ width: 250, marginRight:'10px' }} onChange={this.handleChange}>
-                  <Option value="jack">Jack</Option>
-                  <Option value="lucy">Lucy</Option>
-                  <Option value="Yiminghe">yiminghe</Option>
+                  {
+                    storeList ?
+                      storeList.map((item, index) => {
+                        return(
+                          <Option key={index} value={item.id}>{item.store_name}</Option>
+                        )
+                      })
+                    :
+                    <Option value="先绑定店铺">先绑定店铺</Option>
+                  }
                 </Select>
               )}
             </Form.Item>
