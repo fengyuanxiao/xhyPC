@@ -9,7 +9,8 @@ import Type1 from './type1';                                                //ta
 import Type2 from './type2';                                                //taobao
 import KeywordComponent from './keyword/keyword';                             //KeywordComponent
 import AppreciationServe from './appreciation/appreciationServe';            //增值服务
-import { _Publishindex, _GoodsInfoList, _keyWayList, _getHoldKeyWay } from '../../../component/api';                        //引入ajax接口
+import { _Publishindex, _GoodsInfoList, _keyWayList, _getHoldKeyWay } from '../../../component/api';                     //引入ajax接口
+import { functionName } from './keyword/keyword';
 
 import './release.css';
 
@@ -26,7 +27,7 @@ class ReleaseTask extends Component  {
       visible: false,                              //visible 为true 的时候  弹出商品库
       addGoodsNum: false,                         //点击新增按钮 addGoodsNum为 true
       commodity_div: false,                       //从商品库选择商品块 commodity_div 为true 显示出来
-      commodity1: 1,                              //为1的时候 不显示关键词方案编辑板 商品关键词或成交词编辑板
+      commodity1: false,                          //为false的时候 不显示关键词方案编辑板 商品关键词或成交词编辑板
       additionalReview: false,                    //是否是追评单 默认是否
       publish_type: false,                        //发布单类型  回访单和追评单只有天猫和淘宝值为true
       recentlyShow: true,                         //一件发布任务
@@ -83,7 +84,7 @@ class ReleaseTask extends Component  {
     this.setState({
       spell: e.target.value,
       commodity_div: false,
-      commodity1: 1,
+      commodity1: false,
     });
   }
   FudianBtn = (e) => {
@@ -93,7 +94,7 @@ class ReleaseTask extends Component  {
         additionalReview: true,
         commodity_div: false,
         publish_type: true,
-        commodity1: 1,
+        commodity1: false,
       })
     } else if ( e.target.value === 202 ) {
       this.setState({
@@ -105,7 +106,7 @@ class ReleaseTask extends Component  {
         additionalReview: false,
         publish_type: false,
         commodity_div: false,
-        commodity1: 1,
+        commodity1: false,
       })
     }
   }
@@ -152,11 +153,11 @@ class ReleaseTask extends Component  {
       // console.log(res.data.data);
       if ( res.data.data === "" ) {
         this.setState({
-          commodity1: 2,                      //显示商品关键词或成交词编辑板
+          commodity1: true,                      //显示商品关键词或成交词编辑板
         })
       } else {
         this.setState({
-          commodity1: 1,
+          commodity1: false,
           keyWayLists: res.data.data,         //储存关键词方案列表
         })
       }
@@ -198,41 +199,46 @@ class ReleaseTask extends Component  {
       addGoodsNum: false,
     })
   }
-  // 关键词方案编辑
-  handleCompilekeyW = (id) => {
-    console.log(id);
-    let ids = {
-      id: id
-    }
-    // 获得关键词方案详细信息
-    _getHoldKeyWay(ids)
-    .then(res => {
-      console.log(res.data.data);
-      this.setState({
-        holdKeyWayList: res.data.data,        //方案详细信息
-      })
-    })
-    .catch(err => {
-      console.log(err);
-    })
-    this.setState({
-      fanganShow: true,
-    })
-  }
+  // // 关键词方案编辑
+  // handleCompilekeyW = (id) => {
+  //   // functionName(id)
+  //   let ids = {
+  //     id: id
+  //   }
+  //   // 获得关键词方案详细信息
+  //   _getHoldKeyWay(ids)
+  //   .then(res => {
+  //     // console.log(res.data.data);
+  //     this.setState({
+  //       holdKeyWayList: res.data.data,        //方案详细信息
+  //     })
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   })
+  //   this.setState({
+  //     fanganShow: true,
+  //   })
+  // }
 
   // 子组件控制父组件的状态，
-  hiddenFangan = (keyWayLists) => {//keyWayLists由子组件传递过来的数据
-    this.setState({
-      commodity1: 1,              ////为1的时候 不显示关键词方案编辑板 商品关键词或成交词编辑板
-      fanganShow: false,
-      keyWayLists: keyWayLists,
-    })
+  hiddenFangan = (commodity1,keyWayLists) => {//keyWayLists由子组件传递过来的数据
+    if ( commodity1 ) {
+      this.setState({
+        commodity1: false,              ////为false的时候 不显示关键词方案编辑板 商品关键词或成交词编辑板
+        keyWayLists: keyWayLists,
+      })
+    } else {
+      this.setState({
+        commodity1: true,              ////为false的时候 不显示关键词方案编辑板 商品关键词或成交词编辑板
+      })
+    }
   }
   // 新增关键词方案
   showCommodity1 = () => {
     if ( this.state.commodity_div ) {
       this.setState({
-        commodity1: 2,
+        commodity1: true,
       })
     } else {
       message.warning('先从商品库选择宝贝！');
@@ -244,7 +250,7 @@ class ReleaseTask extends Component  {
   }
 
   render() {
-    const { fanganShow,keyWayLists,Ecommerce_type,total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
+    const { holdKeyWayList,fanganShow,keyWayLists,Ecommerce_type,total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
     return(
       <div>
         {/* 头部组件 */}
@@ -381,75 +387,90 @@ class ReleaseTask extends Component  {
                   additionalReview ?
                     ''
                   :
-                  <div className="typestyle">
-                    <span style={{ display: 'flex', alignItems:'center' }}><h2>3.选择关键词方案</h2><span style={{ color:'gray', paddingLeft: '15px' }}>平台默认保存最近5套关键词方案</span></span>
-                    {/* 在商品库选中了商品 则会显示方案编辑板 */}
-                    {
-                      commodity1 === 1 ?
-                        <div className="nones">
-                          <div className="key_scheme">
-                            <div>方案名称</div>
-                            <div>APP搜索词</div>
-                            {/* <span>PC搜索词</span> */}
-                            <div>淘口令下单</div>
-                            <div>二维码下单</div>
-                            <div>操作</div>
-                          </div>
-                          {//获取关键词方案列表
-                            keyWayLists ?
-                              keyWayLists.map((item, index) => {
-                                return(
-                                  <div key={index} className="key_scheme">
-                                    <div>{item.key_way_name}</div>
-                                    <div>
-                                      {
-                                        item.key_world.map((item, index) => {
-                                          return(
-                                            <p key={index}>{item}</p>
-                                          )
-                                        })
-                                      }
-                                    </div>
-                                    {/* <span>PC搜索词</span> */}
-                                    {
-                                      item.is_kouling_search ?
-                                        <div>有</div>
-                                      :
-                                      <div>无</div>
-                                    }
-                                    {
-                                      item.is_qrcode_search ?
-                                        <div>有</div>
-                                      :
-                                      <div>无</div>
-                                    }
-                                    <div className="keyword_handle">
-                                      <span onClick={()=>this.handleCompilekeyW(item.id)}>编辑</span>
-                                      <span>删除</span>
-                                    </div>
-                                  </div>
-                                )
-                              })
-                            :
-                              ''
-                          }
-                        </div>
-                      :
-                      <KeywordComponent goods_id={goods_id} hidden={this.hiddenFangan} />
-                    }
-                    {
-                      commodity1 === 1 ?
-                        <Button onClick={this.showCommodity1} style={{ marginBottom: '20px' }} type="danger">新增关键词方案</Button>
-                      :
-                        ''
-                    }
-                    {
-                      fanganShow ?
-                        <KeywordComponent goods_id={goods_id} hidden={this.hiddenFangan} />
-                      :
-                        ''
-                    }
-                  </div>
+                  <KeywordComponent commodity_div={commodity_div} keyWayLists={keyWayLists} commodity1={commodity1} goods_id={goods_id} hidden={this.hiddenFangan} />
+
+                  //   {/* <div className="typestyle">
+                  //     <span style={{ display: 'flex', alignItems:'center' }}><h2>3.选择关键词方案</h2><span style={{ color:'gray', paddingLeft: '15px' }}>平台默认保存最近5套关键词方案</span></span>
+                  //   {/* 在商品库选中了商品 则会显示方案编辑板 */}
+                  //   {
+                  //     commodity1 === 1 ?
+                  //       <div className="nones">
+                  //         <div className="key_scheme">
+                  //           <div>方案名称</div>
+                  //           <div>APP搜索词</div>
+                  //           {/* <span>PC搜索词</span> */}
+                  //           <div>淘口令下单</div>
+                  //           <div>二维码下单</div>
+                  //           <div>操作</div>
+                  //         </div>
+                  //         {//获取关键词方案列表
+                  //           keyWayLists ?
+                  //             keyWayLists.map((item, index) => {
+                  //               return(
+                  //                 <div key={index} className="key_scheme">
+                  //                   <div>{item.key_way_name}</div>
+                  //                   <div>
+                  //                     {
+                  //                       item.key_world.map((item, index) => {
+                  //                         return(
+                  //                           <p key={index}>{item}</p>
+                  //                         )
+                  //                       })
+                  //                     }
+                  //                   </div>
+                  //                   {/* <span>PC搜索词</span> */}
+                  //                   {
+                  //                     item.is_kouling_search ?
+                  //                       <div>有</div>
+                  //                     :
+                  //                     <div>无</div>
+                  //                   }
+                  //                   {
+                  //                     item.is_qrcode_search ?
+                  //                       <div>有</div>
+                  //                     :
+                  //                     <div>无</div>
+                  //                   }
+                  //                   <div className="keyword_handle">
+                  //                     <span onClick={()=>this.handleCompilekeyW(item.id)}>编辑</span>
+                  //                     <span>删除</span>
+                  //                   </div>
+                  //                 </div>
+                  //               )
+                  //             })
+                  //           :
+                  //           ''
+                  //         }
+                  //       </div>
+                  //     :
+                  //     holdKeyWayList ?
+                  //       <KeywordComponent key={Math.random()} holdKeyWayList={holdKeyWayList} goods_id={goods_id} hidden={this.hiddenFangan} />
+                  //     :
+                  //       ''
+                  //   }
+                  //   {
+                  //     commodity1 === 1 ?
+                  //       <Button onClick={this.showCommodity1} style={{ marginBottom: '20px' }} type="danger">新增关键词方案</Button>
+                  //     :
+                  //     ''
+                  //   }
+                  //   {
+                  //     fanganShow ?
+                  //       holdKeyWayList ?
+                  //         <KeywordComponent key={Math.random()} holdKeyWayList={holdKeyWayList} goods_id={goods_id} hidden={this.hiddenFangan} />
+                  //       :
+                  //         ''
+                  //     :
+                  //     ''
+                  //   }
+                  // </div> */}
+                }
+                {/* 新增关键词方案按钮 */}
+                {
+                  !commodity1 ?
+                    <Button onClick={this.showCommodity1} style={{ marginBottom: '20px', marginTop: '20px' }} type="danger">新增关键词方案</Button>
+                  :
+                    ''
                 }
                 <div style={{ padding: '50px 0' }} className="releaseBtnok">
                   <Button>取消</Button>

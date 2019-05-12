@@ -93,6 +93,9 @@
 }
 .Keyword_3 {
   padding: 20px 17px;
+  box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  margin-top: 20px;
 }
 .Keyword_3_header {
   display: flex;
@@ -107,6 +110,9 @@
 }
 .inputs {
   width: 35%;
+}
+.inputw {
+  width: 100%;
 }
 .inputs_child {
   width: 70%;

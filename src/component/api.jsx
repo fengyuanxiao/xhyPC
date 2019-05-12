@@ -73,6 +73,10 @@ export function _keyWayList(data) {
 export function _getHoldKeyWay(data) {
   return axios.post(api+'/merchant/Publish/getHoldKeyWay',data, {headers: {AppAuthorization: tokens}})
 }
+// 删除关键词方案详细信息
+export function _delKeyWay(data) {
+  return axios.post(api+'/merchant/Publish/delKeyWay',data, {headers: {AppAuthorization: tokens}})
+}
 
 
 
