@@ -22,8 +22,8 @@ class KeywordComponents extends Component  {
       pcPick: 1,                                  //pc找查goods
       is_kouling_search: false,                   //淘口令
       is_qrcode_search: false,                    //是否二维码搜索宝贝
-      nums: [1,1,1,1,1],                                  //app关键字组数
-      nums1: [1,1,1,1,1],                                 //淘口令组数
+      nums: [1],                                  //关键字组数
+      nums1: [1],                                 //淘口令组数
       fanganShow: false,                          //方案列表点击编辑改变状态
     }
     // console.log(props);
@@ -134,6 +134,11 @@ class KeywordComponents extends Component  {
     .then(res => {
       let datas = res.data.data;
       console.log(res.data.data);
+      this.setState({
+        keyword1: res.data.data.phone_key_word_type,            //获取是否是单关键词或者双关键词
+        nums: res.data.data.world_total,                        //关键字组数
+        nums1:res.data.data.tao_kl_total,                       //淘口令组数
+      })
       this.props.form.setFieldsValue({
         key_way_name: datas.key_way_name,                       //方案名称
         search_key_world0: datas.search_key_world0,
@@ -141,17 +146,66 @@ class KeywordComponents extends Component  {
         search_key_world2: datas.search_key_world2,
         search_key_world3: datas.search_key_world3,
         search_key_world4: datas.search_key_world4,
-        search_discount_text0: datas.search_discount_text0,
+        search_discount_text0: datas.search_discount_text0,     //多关键词折扣服务数组
+        search_discount_text1: datas.search_discount_text1,
+        search_discount_text2: datas.search_discount_text2,
+        search_discount_text3: datas.search_discount_text3,
+        search_discount_text4: datas.search_discount_text4,
         search_max_price0: datas.search_max_price0,             //0搜索词的最大价格
         search_max_price1: datas.search_max_price1,             //1搜索词的最大价格
         search_max_price2: datas.search_max_price2,
         search_max_price3: datas.search_max_price3,
         search_max_price4: datas.search_max_price4,
-        search_send_addr0: datas.search_send_addr0,
+        search_send_addr0: datas.search_send_addr0,              //
         search_send_addr1: datas.search_send_addr1,
         search_send_addr2: datas.search_send_addr2,
         search_send_addr3: datas.search_send_addr3,
         search_send_addr4: datas.search_send_addr4,
+        make_key_world0: datas.make_key_world0,                 //成交词
+        make_key_world1: datas.make_key_world1,
+        make_key_world2: datas.make_key_world2,
+        make_key_world3: datas.make_key_world3,
+        make_key_world4: datas.make_key_world4,
+        make_classify00: datas.make_classify00,                 //成交词的筛选
+        make_classify01: datas.make_classify01,
+        make_classify02: datas.make_classify02,
+        make_classify03: datas.make_classify03,
+        make_classify04: datas.make_classify04,
+        make_classify10: datas.make_classify10,
+        make_classify11: datas.make_classify11,
+        make_classify12: datas.make_classify12,
+        make_classify13: datas.make_classify13,
+        make_classify14: datas.make_classify14,
+        make_classify20: datas.make_classify20,
+        make_classify21: datas.make_classify21,
+        make_classify22: datas.make_classify22,
+        make_classify23: datas.make_classify23,
+        make_classify24: datas.make_classify23,
+        make_classify30: datas.make_classify30,
+        make_classify31: datas.make_classify31,
+        make_classify32: datas.make_classify32,
+        make_classify33: datas.make_classify33,
+        make_classify34: datas.make_classify34,
+        search_classify00: datas.search_classify00,               //关键词的筛选
+        search_classify01: datas.search_classify01,
+        search_classify02: datas.search_classify02,
+        search_classify03: datas.search_classify03,
+        search_classify04: datas.search_classify04,
+        search_classify10: datas.search_classify10,
+        search_classify11: datas.search_classify11,
+        search_classify12: datas.search_classify12,
+        search_classify13: datas.search_classify13,
+        search_classify14: datas.search_classify14,
+        search_classify20: datas.search_classify20,
+        search_classify21: datas.search_classify21,
+        search_classify22: datas.search_classify22,
+        search_classify23: datas.search_classify23,
+        search_classify24: datas.search_classify24,
+        search_classify30: datas.search_classify30,
+        search_classify31: datas.search_classify31,
+        search_classify32: datas.search_classify32,
+        search_classify33: datas.search_classify33,
+        search_classify34: datas.search_classify34,
         tao_kl0: datas.tao_kl0,
         tao_kl1: datas.tao_kl1,
         tao_kl2: datas.tao_kl2,
@@ -190,20 +244,20 @@ class KeywordComponents extends Component  {
         values.is_kouling_search = this.state.is_kouling_search;        //是否淘口令搜索宝贝
         values.is_qrcode_search = this.state.is_qrcode_search;          //是否二维码搜索宝贝
         values.phone_key_word_type = this.state.keyword1;               //关键词类型
-        // console.log(values);
+        console.log(values);
         _holdKeyWay(values)
-        .then(res=> {
-          // console.log(res.data.data);
-          if ( res.data.code === 200 ) {
-            this.props.hidden(this.props.commodity1,res.data.data);
-            message.success(res.data.msg);
-          } else {
-            message.success(res.data.msg);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        })
+        // .then(res=> {
+        //   // console.log(res.data.data);
+        //   if ( res.data.code === 200 ) {
+        //     this.props.hidden(this.props.commodity1,res.data.data);
+        //     message.success(res.data.msg);
+        //   } else {
+        //     message.success(res.data.msg);
+        //   }
+        // })
+        // .catch(err => {
+        //   console.log(err);
+        // })
       }
     });
   }
@@ -723,21 +777,24 @@ class KeywordComponents extends Component  {
                         <div style={{ paddingBottom: '15px' }}><Checkbox onChange={this.onChange4}>通过“淘口令”查找宝贝</Checkbox></div>
                         {/* 循环口令长度 */}
                         {
-                          nums1.map((itme,index) => {
-                            return(
-                              <div key={index} className="Keyword_3_header" style={{ alignItems: 'normal' }}>
-                                <span style={{ lineHeight: '37px' }}>淘口令{index+1}：</span>
-                                <Form.Item style={{ marginBottom: '0', width: '50%', marginRight: '15px' }}>
-                                  {getFieldDecorator('tao_kl'+index, {
-                                    rules: [{ required: is_kouling_search ? true : false, message: '不能为空，请填写商品淘口令!' }],
-                                  })(
-                                    <TextArea style={{ width: '100%' }} rows={4} />
-                                  )}
-                                </Form.Item>
-                                <Button disabled={index === 0 ? 'disabled' : ''} type="primary" onClick={()=>this.deteNewPassword(index)}>删除</Button>
-                              </div>
-                            )
-                          })
+                          nums1 ?
+                            nums1.map((itme,index) => {
+                              return(
+                                <div key={index} className="Keyword_3_header" style={{ alignItems: 'normal' }}>
+                                  <span style={{ lineHeight: '37px' }}>淘口令{index+1}：</span>
+                                  <Form.Item style={{ marginBottom: '0', width: '50%', marginRight: '15px' }}>
+                                    {getFieldDecorator('tao_kl'+index, {
+                                      rules: [{ required: is_kouling_search ? true : false, message: '不能为空，请填写商品淘口令!' }],
+                                    })(
+                                      <TextArea style={{ width: '100%' }} rows={4} />
+                                    )}
+                                  </Form.Item>
+                                  <Button disabled={index === 0 ? 'disabled' : ''} type="primary" onClick={()=>this.deteNewPassword(index)}>删除</Button>
+                                </div>
+                              )
+                            })
+                          :
+                          ''
                         }
                         {
                           nums1.length === 5 ?
