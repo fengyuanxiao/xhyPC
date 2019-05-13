@@ -7,7 +7,6 @@ const { TextArea } = Input;                     //文本框
 const CheckboxGroup = Checkbox.Group;           //复选框默认选中
 const Option = Select.Option;                   //选择器
 const plainOptions1 = ['APP端查找宝贝'];
-const plainOptions2 = ['通过“关键词”查找宝贝'];
 let nums = [1];                     //app关键字组数
 let nums1 = [1];                    //淘口令组数
 
@@ -17,10 +16,10 @@ class KeywordComponents extends Component  {
     this.state = {
       spell: 1,                                   //单选框的值 选择哪个平台类型
       keyword1: 1,                                //是否多关键词
+      scenarioNum: 0,                             //关键词方案的选择
       appPick: 1,                                 //app找查goods
       keywordPick: true,                          //是否通过“关键词”查找宝贝
-      pcPick: 1,                                  //pc找查goods
-      is_kouling_search: false,                   //淘口令
+      is_kouling_search: false,                   //是否通过淘口令
       is_qrcode_search: false,                    //是否二维码搜索宝贝
       nums: [1],                                  //关键字组数
       nums1: [1],                                 //淘口令组数
@@ -32,7 +31,7 @@ class KeywordComponents extends Component  {
   componentDidMount() {
   }
 
-  // 单选框 选择pingtai
+  // 单选框 选择平台
   onSpell = (e) => {
     console.log('radio checked', e.target.value);
     this.setState({
@@ -50,30 +49,35 @@ class KeywordComponents extends Component  {
       appPick: !this.state.appPick,
     })
   }
-  onChange2 = (e) => {
+  onChange2 = (e) => {//是否通过关键词找查
+    console.log('关键词', e.target.checked);
     this.setState({
       keywordPick: !this.state.keywordPick,
     })
   }
-  onChange3 = (e) => {
-    this.setState({
-      pcPick: !this.state.pcPick,
-    })
-  }
-  onChange4 = () => {
+  onChange4 = (e) => {//是否通过淘口令找查
+    console.log('口令', e.target.checked);
     this.setState({
       is_kouling_search: !this.state.is_kouling_search,
     })
   }
-  onChange5 = () => {
+  onChange5 = (e) => {//是否二维码找查
+    console.log('二维码', e.target.checked);
     this.setState({
       is_qrcode_search: !this.state.is_qrcode_search,
     })
   }
+  // 3关键词方案项
+  onScenarioNum = (e) => {
+    // console.log('radio checked', e.target.value);
+    this.setState({
+      scenarioNum: e.target.value,
+    });
+  }
 
   // onKeyword 单  或者 多
   onKeyword1 = (e) => {
-    // console.log('radio checked', e.target.value);
+    console.log('radio checked', e.target.value);
     this.setState({
       keyword1: e.target.value,
     });
@@ -124,7 +128,12 @@ class KeywordComponents extends Component  {
   }
 
   // 编辑关键词方案
-  handleCompilekeyW = (id) => {
+  handleCompilekeyW = (id,index) => {
+    console.log(id);
+    this.setState({
+      scenarioNum: index,
+      compileId: id,                                  //编辑时候的id
+    })
     let ids = {
       id: id
     }
@@ -135,83 +144,183 @@ class KeywordComponents extends Component  {
       let datas = res.data.data;
       console.log(res.data.data);
       this.setState({
-        keyword1: res.data.data.phone_key_word_type,            //获取是否是单关键词或者双关键词
-        nums: res.data.data.world_total,                        //关键字组数
-        nums1:res.data.data.tao_kl_total,                       //淘口令组数
+        keyword1: datas.phone_key_word_type,            //是双关键词还是单关键词
+        nums: datas.world_total,                        //关键字组数
+        nums1:datas.tao_kl_total,                       //淘口令组数
+        keywordPick: datas.is_key_world_search,         //是否通过关键词找查
+        is_qrcode_search: datas.is_qrcode_search,       //是否通过二维码查找
+        is_kouling_search: datas.is_kouling_search,     //是否通过淘口令找查
       })
-      this.props.form.setFieldsValue({
-        key_way_name: datas.key_way_name,                       //方案名称
-        search_key_world0: datas.search_key_world0,
-        search_key_world1: datas.search_key_world1,
-        search_key_world2: datas.search_key_world2,
-        search_key_world3: datas.search_key_world3,
-        search_key_world4: datas.search_key_world4,
-        search_discount_text0: datas.search_discount_text0,     //多关键词折扣服务数组
-        search_discount_text1: datas.search_discount_text1,
-        search_discount_text2: datas.search_discount_text2,
-        search_discount_text3: datas.search_discount_text3,
-        search_discount_text4: datas.search_discount_text4,
-        search_max_price0: datas.search_max_price0,             //0搜索词的最大价格
-        search_max_price1: datas.search_max_price1,             //1搜索词的最大价格
-        search_max_price2: datas.search_max_price2,
-        search_max_price3: datas.search_max_price3,
-        search_max_price4: datas.search_max_price4,
-        search_send_addr0: datas.search_send_addr0,              //
-        search_send_addr1: datas.search_send_addr1,
-        search_send_addr2: datas.search_send_addr2,
-        search_send_addr3: datas.search_send_addr3,
-        search_send_addr4: datas.search_send_addr4,
-        make_key_world0: datas.make_key_world0,                 //成交词
-        make_key_world1: datas.make_key_world1,
-        make_key_world2: datas.make_key_world2,
-        make_key_world3: datas.make_key_world3,
-        make_key_world4: datas.make_key_world4,
-        make_classify00: datas.make_classify00,                 //成交词的筛选
-        make_classify01: datas.make_classify01,
-        make_classify02: datas.make_classify02,
-        make_classify03: datas.make_classify03,
-        make_classify04: datas.make_classify04,
-        make_classify10: datas.make_classify10,
-        make_classify11: datas.make_classify11,
-        make_classify12: datas.make_classify12,
-        make_classify13: datas.make_classify13,
-        make_classify14: datas.make_classify14,
-        make_classify20: datas.make_classify20,
-        make_classify21: datas.make_classify21,
-        make_classify22: datas.make_classify22,
-        make_classify23: datas.make_classify23,
-        make_classify24: datas.make_classify23,
-        make_classify30: datas.make_classify30,
-        make_classify31: datas.make_classify31,
-        make_classify32: datas.make_classify32,
-        make_classify33: datas.make_classify33,
-        make_classify34: datas.make_classify34,
-        search_classify00: datas.search_classify00,               //关键词的筛选
-        search_classify01: datas.search_classify01,
-        search_classify02: datas.search_classify02,
-        search_classify03: datas.search_classify03,
-        search_classify04: datas.search_classify04,
-        search_classify10: datas.search_classify10,
-        search_classify11: datas.search_classify11,
-        search_classify12: datas.search_classify12,
-        search_classify13: datas.search_classify13,
-        search_classify14: datas.search_classify14,
-        search_classify20: datas.search_classify20,
-        search_classify21: datas.search_classify21,
-        search_classify22: datas.search_classify22,
-        search_classify23: datas.search_classify23,
-        search_classify24: datas.search_classify24,
-        search_classify30: datas.search_classify30,
-        search_classify31: datas.search_classify31,
-        search_classify32: datas.search_classify32,
-        search_classify33: datas.search_classify33,
-        search_classify34: datas.search_classify34,
-        tao_kl0: datas.tao_kl0,
-        tao_kl1: datas.tao_kl1,
-        tao_kl2: datas.tao_kl2,
-        tao_kl3: datas.tao_kl3,
-        tao_kl4: datas.tao_kl4,
-      })
+      if ( this.state.keyword1 === 1 ) {
+        this.props.form.setFieldsValue({
+          key_way_name: datas.key_way_name,                       //方案名称
+          search_key_world0: datas.search_key_world0,             //关键词
+          search_key_world1: datas.search_key_world1,
+          search_key_world2: datas.search_key_world2,
+          search_key_world3: datas.search_key_world3,
+          search_key_world4: datas.search_key_world4,
+          search_discount_text0: datas.search_discount_text0,     //关键词折扣服务数组
+          search_discount_text1: datas.search_discount_text1,
+          search_discount_text2: datas.search_discount_text2,
+          search_discount_text3: datas.search_discount_text3,
+          search_discount_text4: datas.search_discount_text4,
+          search_classify00: datas.search_classify00,               //关键词的筛选
+          search_classify01: datas.search_classify01,
+          search_classify02: datas.search_classify02,
+          search_classify03: datas.search_classify03,
+          search_classify04: datas.search_classify04,
+          search_classify10: datas.search_classify10,
+          search_classify11: datas.search_classify11,
+          search_classify12: datas.search_classify12,
+          search_classify13: datas.search_classify13,
+          search_classify14: datas.search_classify14,
+          search_classify20: datas.search_classify20,
+          search_classify21: datas.search_classify21,
+          search_classify22: datas.search_classify22,
+          search_classify23: datas.search_classify23,
+          search_classify24: datas.search_classify24,
+          search_classify30: datas.search_classify30,
+          search_classify31: datas.search_classify31,
+          search_classify32: datas.search_classify32,
+          search_classify33: datas.search_classify33,
+          search_classify34: datas.search_classify34,
+          search_order_way0: datas.search_order_way0,             //关键词的综合排序
+          search_order_way1: datas.search_order_way1,
+          search_order_way2: datas.search_order_way2,
+          search_order_way3: datas.search_order_way3,
+          search_order_way4: datas.search_order_way4,
+          search_max_price0: datas.search_max_price0,             //关键词的最大价格
+          search_max_price1: datas.search_max_price1,
+          search_max_price2: datas.search_max_price2,
+          search_max_price3: datas.search_max_price3,
+          search_max_price4: datas.search_max_price4,
+          search_min_price0: datas.search_min_price0,              //关键词的最小价格
+          search_min_price1: datas.search_min_price1,
+          search_min_price2: datas.search_min_price2,
+          search_min_price3: datas.search_min_price3,
+          search_min_price4: datas.search_min_price4,
+          search_send_addr0: datas.search_send_addr0,              //关键词的地址
+          search_send_addr1: datas.search_send_addr1,
+          search_send_addr2: datas.search_send_addr2,
+          search_send_addr3: datas.search_send_addr3,
+          search_send_addr4: datas.search_send_addr4,
+          tao_kl0: datas.tao_kl0,                                   //淘口令
+          tao_kl1: datas.tao_kl1,
+          tao_kl2: datas.tao_kl2,
+          tao_kl3: datas.tao_kl3,
+          tao_kl4: datas.tao_kl4,
+        })
+      } else {
+        this.props.form.setFieldsValue({
+          key_way_name: datas.key_way_name,                       //方案名称
+          search_key_world0: datas.search_key_world0,             //关键词
+          search_key_world1: datas.search_key_world1,
+          search_key_world2: datas.search_key_world2,
+          search_key_world3: datas.search_key_world3,
+          search_key_world4: datas.search_key_world4,
+          search_discount_text0: datas.search_discount_text0,     //关键词折扣服务数组
+          search_discount_text1: datas.search_discount_text1,
+          search_discount_text2: datas.search_discount_text2,
+          search_discount_text3: datas.search_discount_text3,
+          search_discount_text4: datas.search_discount_text4,
+          search_classify00: datas.search_classify00,               //关键词的筛选
+          search_classify01: datas.search_classify01,
+          search_classify02: datas.search_classify02,
+          search_classify03: datas.search_classify03,
+          search_classify04: datas.search_classify04,
+          search_classify10: datas.search_classify10,
+          search_classify11: datas.search_classify11,
+          search_classify12: datas.search_classify12,
+          search_classify13: datas.search_classify13,
+          search_classify14: datas.search_classify14,
+          search_classify20: datas.search_classify20,
+          search_classify21: datas.search_classify21,
+          search_classify22: datas.search_classify22,
+          search_classify23: datas.search_classify23,
+          search_classify24: datas.search_classify24,
+          search_classify30: datas.search_classify30,
+          search_classify31: datas.search_classify31,
+          search_classify32: datas.search_classify32,
+          search_classify33: datas.search_classify33,
+          search_classify34: datas.search_classify34,
+          search_order_way0: datas.search_order_way0,             //关键词的综合排序
+          search_order_way1: datas.search_order_way1,
+          search_order_way2: datas.search_order_way2,
+          search_order_way3: datas.search_order_way3,
+          search_order_way4: datas.search_order_way4,
+          search_max_price0: datas.search_max_price0,             //关键词的最大价格
+          search_max_price1: datas.search_max_price1,
+          search_max_price2: datas.search_max_price2,
+          search_max_price3: datas.search_max_price3,
+          search_max_price4: datas.search_max_price4,
+          search_min_price0: datas.search_min_price0,              //关键词的最小价格
+          search_min_price1: datas.search_min_price1,
+          search_min_price2: datas.search_min_price2,
+          search_min_price3: datas.search_min_price3,
+          search_min_price4: datas.search_min_price4,
+          search_send_addr0: datas.search_send_addr0,              //关键词的地址
+          search_send_addr1: datas.search_send_addr1,
+          search_send_addr2: datas.search_send_addr2,
+          search_send_addr3: datas.search_send_addr3,
+          search_send_addr4: datas.search_send_addr4,
+
+          make_key_world0: datas.make_key_world0,                 //成交词
+          make_key_world1: datas.make_key_world1,
+          make_key_world2: datas.make_key_world2,
+          make_key_world3: datas.make_key_world3,
+          make_key_world4: datas.make_key_world4,
+          make_discount_text0: datas.make_discount_text0,         //成交词折扣服务组数
+          make_discount_text1: datas.make_discount_text1,
+          make_discount_text2: datas.make_discount_text2,
+          make_discount_text3: datas.make_discount_text3,
+          make_discount_text4: datas.make_discount_text4,
+          make_classify00: datas.make_classify00,                 //成交词的筛选
+          make_classify01: datas.make_classify01,
+          make_classify02: datas.make_classify02,
+          make_classify03: datas.make_classify03,
+          make_classify04: datas.make_classify04,
+          make_classify10: datas.make_classify10,
+          make_classify11: datas.make_classify11,
+          make_classify12: datas.make_classify12,
+          make_classify13: datas.make_classify13,
+          make_classify14: datas.make_classify14,
+          make_classify20: datas.make_classify20,
+          make_classify21: datas.make_classify21,
+          make_classify22: datas.make_classify22,
+          make_classify23: datas.make_classify23,
+          make_classify24: datas.make_classify23,
+          make_classify30: datas.make_classify30,
+          make_classify31: datas.make_classify31,
+          make_classify32: datas.make_classify32,
+          make_classify33: datas.make_classify33,
+          make_classify34: datas.make_classify34,
+          make_order_way0: datas.search_order_way0,               //成交词的综合排序
+          make_order_way1: datas.make_order_way1,
+          make_order_way2: datas.make_order_way2,
+          make_order_way3: datas.make_order_way3,
+          make_order_way4: datas.make_order_way4,
+          make_max_price0: datas.make_max_price0,                 //成交词的最大价格
+          make_max_price1: datas.make_max_price1,
+          make_max_price2: datas.make_max_price2,
+          make_max_price3: datas.make_max_price3,
+          make_max_price4: datas.make_max_price4,
+          make_min_price0: datas.make_min_price0,                 //成交词的最小价格
+          make_min_price1: datas.make_min_price1,
+          make_min_price2: datas.make_min_price2,
+          make_min_price3: datas.make_min_price3,
+          make_min_price4: datas.make_min_price4,
+          make_send_addr0: datas.make_send_addr0,                 //成交词的地址
+          make_send_addr1: datas.make_send_addr1,
+          make_send_addr2: datas.make_send_addr2,
+          make_send_addr3: datas.make_send_addr3,
+          make_send_addr4: datas.make_send_addr4,
+          tao_kl0: datas.tao_kl0,                                   //淘口令
+          tao_kl1: datas.tao_kl1,
+          tao_kl2: datas.tao_kl2,
+          tao_kl3: datas.tao_kl3,
+          tao_kl4: datas.tao_kl4,
+        })
+      }
     })
     .catch(err => {
       console.log(err);
@@ -222,7 +331,7 @@ class KeywordComponents extends Component  {
     let aids = {
       id: id
     }
-    console.log(id);
+    // console.log(id);
     // 删除关键词方案详细信息
     _delKeyWay(aids)
     .then(res => {
@@ -239,6 +348,7 @@ class KeywordComponents extends Component  {
     e.preventDefault(e);
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        values.id = this.state.compileId;                               //编辑时候的id
         values.goods_id = this.props.goods_id;                          //任务宝贝ID
         values.is_key_world_search = this.state.keywordPick;            //是否关键词搜索宝贝
         values.is_kouling_search = this.state.is_kouling_search;        //是否淘口令搜索宝贝
@@ -246,25 +356,25 @@ class KeywordComponents extends Component  {
         values.phone_key_word_type = this.state.keyword1;               //关键词类型
         console.log(values);
         _holdKeyWay(values)
-        // .then(res=> {
-        //   // console.log(res.data.data);
-        //   if ( res.data.code === 200 ) {
-        //     this.props.hidden(this.props.commodity1,res.data.data);
-        //     message.success(res.data.msg);
-        //   } else {
-        //     message.success(res.data.msg);
-        //   }
-        // })
-        // .catch(err => {
-        //   console.log(err);
-        // })
+        .then(res=> {
+          // console.log(res.data.data);
+          if ( res.data.code === 200 ) {
+            this.props.hidden(this.props.commodity1,res.data.data);
+            message.success(res.data.msg);
+          } else {
+            message.success(res.data.msg);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        })
       }
     });
   }
 
   render() {
     const { commodity1, keyWayLists } = this.props;
-    const { keyword1,appPick,keywordPick,is_kouling_search, nums, nums1 } = this.state;
+    const { keyword1,scenarioNum,appPick,keywordPick,is_kouling_search, nums, nums1,is_qrcode_search } = this.state;
     const { getFieldDecorator } = this.props.form;
     return(
       <div>
@@ -286,7 +396,9 @@ class KeywordComponents extends Component  {
               keyWayLists.map((item, index) => {
                 return(
                   <div key={index} style={{ marginBottom: '0', marginTop: '10px' }} className="key_scheme">
-                    <div>{item.key_way_name}</div>
+                    <RadioGroup onChange={this.onScenarioNum} value={scenarioNum}>
+                      <Radio value={index}>{item.key_way_name}</Radio>
+                    </RadioGroup>
                     <div>
                       {
                         item.key_world.map((item, index) => {
@@ -310,7 +422,7 @@ class KeywordComponents extends Component  {
                       <div>无</div>
                     }
                     <div className="keyword_handle">
-                      <span onClick={()=>this.handleCompilekeyW(item.id)}>编辑</span>
+                      <span onClick={()=>this.handleCompilekeyW(item.id,index)}>编辑</span>
                       <span onClick={()=>this.handleRemovekeyW(item.id)}>删除</span>
                     </div>
                   </div>
@@ -349,7 +461,8 @@ class KeywordComponents extends Component  {
                   {/* appPick为1的时候 显示一下内容 */}
                   {
                     appPick ?
-                      <div className="Keyword_3_child1"><CheckboxGroup options={plainOptions2} onChange={this.onChange2} defaultValue={['通过“关键词”查找宝贝']}>通过“关键词”查找宝贝</CheckboxGroup>
+                      <div className="Keyword_3_child1">
+                        <Checkbox onChange={this.onChange2} defaultChecked={keywordPick}>通过“关键词”查找宝贝</Checkbox>
                         <div>
                           <RadioGroup onChange={this.onKeyword1} value={keyword1}>
                             <Radio value={1}>单关键词<span>（搜索词和成交词相同）</span></Radio>
@@ -635,20 +748,6 @@ class KeywordComponents extends Component  {
                                       )}
                                     </Form.Item>
                                   </div>
-                                  {/* <Form.Item style={{ marginBottom: '0', paddingLeft: '60px' }}>
-                                    {getFieldDecorator('make_key_world'+index, {
-                                      rules: [{ required: true, message: '不能为空，请填写成交关键词!' }],
-                                    })(
-                                      <div>
-                                    <div className="keyword_input">
-                                    <span>chengjiao{index+1}</span>
-                                    <div className="inputs">
-                                    <Input style={{ width: '75%' }}  placeholder="成交词" className="inputs_child" />
-                                    </div>
-                                    </div>
-                                      </div>
-                                    )}
-                                  </Form.Item> */}
                                   {/* 折扣服务 */}
                                   <div>
                                     <div className="triangle_border_up">
@@ -771,10 +870,12 @@ class KeywordComponents extends Component  {
                           :
                           <div onClick={this.addKeywords} className="addKeyword">
                             <Icon type="plus-circle" theme="twoTone" />
-                            <span>tianjia（最多5组）</span>
+                            <span>加关键词（最多5组）</span>
                           </div>
                         }
-                        <div style={{ paddingBottom: '15px' }}><Checkbox onChange={this.onChange4}>通过“淘口令”查找宝贝</Checkbox></div>
+                        <div style={{ paddingBottom: '15px' }}>
+                          <Checkbox defaultChecked={is_kouling_search} onChange={this.onChange4}>通过“淘口令”查找宝贝</Checkbox>
+                        </div>
                         {/* 循环口令长度 */}
                         {
                           nums1 ?
@@ -802,10 +903,12 @@ class KeywordComponents extends Component  {
                           :
                           <div onClick={this.addNewPassword} className="addKeyword">
                             <Icon type="plus-circle" theme="twoTone" />
-                            <span>tianjia（最多5组）</span>
+                            <span>加淘口令（最多5组）</span>
                           </div>
                         }
-                        <div style={{ paddingBottom: '15px' }}><Checkbox onChange={this.onChange5}>通过“宝贝二维码”查找商品，选择后系统将自动生成二维码供买手使用</Checkbox></div>
+                        <div style={{ paddingBottom: '15px' }}>
+                          <Checkbox defaultChecked={is_qrcode_search} onChange={this.onChange5}>通过“宝贝二维码”查找商品，选择后系统将自动生成二维码供买手使用</Checkbox>
+                        </div>
                       </div>
                     :
                     ''

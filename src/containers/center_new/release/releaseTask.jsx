@@ -9,8 +9,7 @@ import Type1 from './type1';                                                //ta
 import Type2 from './type2';                                                //taobao
 import KeywordComponent from './keyword/keyword';                             //KeywordComponent
 import AppreciationServe from './appreciation/appreciationServe';            //增值服务
-import { _Publishindex, _GoodsInfoList, _keyWayList, _getHoldKeyWay } from '../../../component/api';                     //引入ajax接口
-import { functionName } from './keyword/keyword';
+import { _Publishindex, _GoodsInfoList, _keyWayList } from '../../../component/api';                     //引入ajax接口
 
 import './release.css';
 
@@ -22,10 +21,9 @@ class ReleaseTask extends Component  {
   constructor() {
     super();
     this.state = {
-      spell: 100,                                   //单选框的值 选择哪个平台类型
-      keyword: 1,                                 //是否多关键词
-      visible: false,                              //visible 为true 的时候  弹出商品库
-      addGoodsNum: false,                         //点击新增按钮 addGoodsNum为 true
+      spell: 100,                                 //单选框的值 选择哪个平台类型
+      visible: false,                             //visible 为true 的时候  弹出商品库
+      addGoodsNum: true,                         //点击新增按钮 addGoodsNum为 true
       commodity_div: false,                       //从商品库选择商品块 commodity_div 为true 显示出来
       commodity1: false,                          //为false的时候 不显示关键词方案编辑板 商品关键词或成交词编辑板
       additionalReview: false,                    //是否是追评单 默认是否
@@ -150,7 +148,7 @@ class ReleaseTask extends Component  {
     };
     _keyWayList(goods_id)
     .then(res=> {
-      // console.log(res.data.data);
+      console.log(res.data.data);
       if ( res.data.data === "" ) {
         this.setState({
           commodity1: true,                      //显示商品关键词或成交词编辑板
@@ -250,7 +248,7 @@ class ReleaseTask extends Component  {
   }
 
   render() {
-    const { holdKeyWayList,fanganShow,keyWayLists,Ecommerce_type,total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
+    const { keyWayLists,Ecommerce_type,total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
     return(
       <div>
         {/* 头部组件 */}
@@ -291,7 +289,7 @@ class ReleaseTask extends Component  {
                 ''
             }
             <h1 style={{ color: '#e96262' }}>发布任务</h1>
-            <Tabs onChange={this.onTabs} className="releaseHeader" defaultActiveKey="1">
+            <Tabs onChange={this.onTabs} className="releaseHeader" defaultActiveKey="2">
               <TabPane tab={<span className="releaseSpan">第一步：选择任务类型和商品信息</span>} key="1">
                 <h2>1.选择平台和任务类型</h2>
                 <RadioGroup className="releaseLabel" onChange={this.onSpell} value={spell}>
@@ -388,82 +386,6 @@ class ReleaseTask extends Component  {
                     ''
                   :
                   <KeywordComponent commodity_div={commodity_div} keyWayLists={keyWayLists} commodity1={commodity1} goods_id={goods_id} hidden={this.hiddenFangan} />
-
-                  //   {/* <div className="typestyle">
-                  //     <span style={{ display: 'flex', alignItems:'center' }}><h2>3.选择关键词方案</h2><span style={{ color:'gray', paddingLeft: '15px' }}>平台默认保存最近5套关键词方案</span></span>
-                  //   {/* 在商品库选中了商品 则会显示方案编辑板 */}
-                  //   {
-                  //     commodity1 === 1 ?
-                  //       <div className="nones">
-                  //         <div className="key_scheme">
-                  //           <div>方案名称</div>
-                  //           <div>APP搜索词</div>
-                  //           {/* <span>PC搜索词</span> */}
-                  //           <div>淘口令下单</div>
-                  //           <div>二维码下单</div>
-                  //           <div>操作</div>
-                  //         </div>
-                  //         {//获取关键词方案列表
-                  //           keyWayLists ?
-                  //             keyWayLists.map((item, index) => {
-                  //               return(
-                  //                 <div key={index} className="key_scheme">
-                  //                   <div>{item.key_way_name}</div>
-                  //                   <div>
-                  //                     {
-                  //                       item.key_world.map((item, index) => {
-                  //                         return(
-                  //                           <p key={index}>{item}</p>
-                  //                         )
-                  //                       })
-                  //                     }
-                  //                   </div>
-                  //                   {/* <span>PC搜索词</span> */}
-                  //                   {
-                  //                     item.is_kouling_search ?
-                  //                       <div>有</div>
-                  //                     :
-                  //                     <div>无</div>
-                  //                   }
-                  //                   {
-                  //                     item.is_qrcode_search ?
-                  //                       <div>有</div>
-                  //                     :
-                  //                     <div>无</div>
-                  //                   }
-                  //                   <div className="keyword_handle">
-                  //                     <span onClick={()=>this.handleCompilekeyW(item.id)}>编辑</span>
-                  //                     <span>删除</span>
-                  //                   </div>
-                  //                 </div>
-                  //               )
-                  //             })
-                  //           :
-                  //           ''
-                  //         }
-                  //       </div>
-                  //     :
-                  //     holdKeyWayList ?
-                  //       <KeywordComponent key={Math.random()} holdKeyWayList={holdKeyWayList} goods_id={goods_id} hidden={this.hiddenFangan} />
-                  //     :
-                  //       ''
-                  //   }
-                  //   {
-                  //     commodity1 === 1 ?
-                  //       <Button onClick={this.showCommodity1} style={{ marginBottom: '20px' }} type="danger">新增关键词方案</Button>
-                  //     :
-                  //     ''
-                  //   }
-                  //   {
-                  //     fanganShow ?
-                  //       holdKeyWayList ?
-                  //         <KeywordComponent key={Math.random()} holdKeyWayList={holdKeyWayList} goods_id={goods_id} hidden={this.hiddenFangan} />
-                  //       :
-                  //         ''
-                  //     :
-                  //     ''
-                  //   }
-                  // </div> */}
                 }
                 {/* 新增关键词方案按钮 */}
                 {

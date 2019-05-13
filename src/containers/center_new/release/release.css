@@ -107,6 +107,7 @@
 }
 .addKeyword > span {
   margin-left: 5px;
+  color: #007eff;
 }
 .inputs {
   width: 35%;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox, DatePicker, Radio, Select, Row, Col, Upload } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, DatePicker, Radio, Select, Row, Col, Upload, InputNumber } from 'antd';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
 
 import './serve.css';
@@ -60,6 +60,10 @@ class AppreciationServes extends Component {
   }
   handleChange = (e) => {
     console.log(e);
+  }
+  // 单量增加
+  onInputNumber = (value) => {
+    console.log('changed', value);
   }
 
   // 添加投放数量
@@ -207,10 +211,10 @@ class AppreciationServes extends Component {
     });
   }
   // 上传图片按钮
-  handleUpload = ({fileList}) => {
-    console.log(fileList);
+  handleUpload = ({fileList1}) => {
+    console.log(fileList1);
     this.setState({
-      fileList,
+      fileList1,
     })
   }
   // 添加图文好评
@@ -270,12 +274,13 @@ class AppreciationServes extends Component {
             <tbody>
               <tr>
                 <td className="bgslash">
-                  <p className={dateShow? "p_heigth" : ''}>上线time</p>
-                  <p className={dateShow? "p_heigth" : ''}>keyWord</p>
+                  <p className={dateShow? "p_heigth" : ''}>任务上线时间</p>
+                  <p className={dateShow? "p_heigth" : ''}>关键词</p>
                 </td>
                 {/* 这里循环keyWord */}
-                <td>keyWord1</td>
-                <td>keyWord2</td>
+                <td>单关键词1</td>
+                {/* 小计 */}
+                <td>小计</td>
               </tr>
               {
                 nums.map((item, index) => {
@@ -305,8 +310,10 @@ class AppreciationServes extends Component {
                           ''
                         }
                       </td>
-                      <td>5</td>
-                      <td><span className="colors">2</span>鸡</td>
+                      <td>
+                        <InputNumber min={1} onChange={this.onInputNumber} />单
+                      </td>
+                      <td><span className="colors">2</span>单</td>
                     </tr>
                   )
                 })
@@ -322,8 +329,8 @@ class AppreciationServes extends Component {
             </tbody>
           </table>
           <div className="subtotalBox">
-            <p>1231321</p>
-            <p>1231321</p>
+            <p>投放：2单</p>
+            <p>总计投放：2单×16.3符点 + 0单×15.80符点 =32.60符点</p>
           </div>
         </div>
         <Form onSubmit={this.handleSubmit}>
@@ -570,7 +577,15 @@ class AppreciationServes extends Component {
                                           graphicNum.map((item, index) =>{
                                             return(
                                               <div key={index} className="graphic">
-                                                <div>第{index+1}单</div>
+                                                <div>
+                                                  <span>第{index+1}单</span>
+                                                  {
+                                                    index > 0?
+                                                      <Icon onClick={()=>this.delGraphic(index)} className="tdI" type="close" />
+                                                    :
+                                                    ''
+                                                  }
+                                                </div>
                                                 <div>
                                                   <div className="labels">
                                                     <span>选择评价方式：</span>
@@ -625,7 +640,7 @@ class AppreciationServes extends Component {
                                                         <Upload
                                                           action="//jsonplaceholder.typicode.com/posts/"
                                                           listType="picture-card"
-                                                          fileList={fileList}
+                                                          fileList1={fileList}
                                                           onPreview={this.handlePreview}
                                                           onChange={this.handleUpload}
                                                         >
@@ -639,10 +654,15 @@ class AppreciationServes extends Component {
                                             )
                                           })
                                         }
-                                        <p onClick={this.addGraphic} style={{ paddingLeft: '50px', cursor: 'pointer', paddingTop: '10px' }}>
-                                          <span style={{ color: '#007eff' }}>+添加1个关键词</span>
-                                          <span>（最多可添加10个关键词）</span>
-                                        </p>
+                                        {
+                                          graphicNum.length === 10 ?
+                                            ""
+                                          :
+                                          <p onClick={this.addGraphic} style={{ paddingLeft: '50px', cursor: 'pointer', paddingTop: '10px' }}>
+                                            <span style={{ color: '#007eff' }}>+添加1个关键词</span>
+                                            <span>（最多可添加10个关键词）</span>
+                                          </p>
+                                        }
                                       </div>
                                     :
                                     ''
@@ -677,6 +697,19 @@ class AppreciationServes extends Component {
                         :
                           ''
                       }
+                    </div>
+                  </div>
+                </div>
+                {/* 千人千面 */}
+                <div className="four_serveBox_child">
+                  <div>千人千面</div>
+                  <div style={{ padding: '11px', width: '100%' }}>
+                    <div className="childBoxs">
+                      <Checkbox onChange={this.onToreward}>Checkbox</Checkbox>
+                      <span>每单加赏佣金</span>
+                      <Input className="inputWidth"/>
+                      <span>符点，共计：3单 x 3万运符点 = 9.00符点</span>
+                      <span>（最低为2符点）</span>
                     </div>
                   </div>
                 </div>
