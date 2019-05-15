@@ -182,3 +182,29 @@
   width: 13%;
   margin-right: 10px;
 }
+.serve_footer {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #cfcfcf;
+}
+.serve_footer:last-child {
+  border-bottom: none;
+}
+.serve_footer > div:first-child {
+  width: 10%;
+  border-right: 1px solid #cfcfcf;
+}
+.serve_footer > div:nth-child(2) {
+  width: 40%;
+  border-right: 1px solid #cfcfcf;
+}
+.serve_footer > div:nth-child(3) {
+  width: 15%;
+  border-right: 1px solid #cfcfcf;
+}
+.serve_footer > div:last-child {
+  width: 35%;
+}

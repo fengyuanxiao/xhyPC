@@ -37,32 +37,32 @@ class Menus extends Component {
         selectedKeys={[selectedKeys]}
         mode="inline"
       >
-        <SubMenu key="sub1" title={<span><Icon type="shop" /><span>ShopAdmin</span></span>}>
+        <SubMenu key="sub1" title={<span><Icon type="shop" /><span>店铺管理</span></span>}>
           <MenuItemGroup key="g1" title="Is binding">
             <Menu.Item key="6" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}><Link to="/bind/taobao" target="_blank">taobao</Link><Badge count={1} style={{ backgroundColor: '#e96262' }} /></Menu.Item>
           </MenuItemGroup>
           <MenuItemGroup key="g2" title="Go Shop Bind">
-            <Menu.Item key="7"><Link style={{ color: '#1890ff' }} to="/bind/bindShops" target="_blank">+ BindShop</Link></Menu.Item>
+            <Menu.Item key="7"><Link style={{ color: '#1890ff' }} to="/bind/bindShops" target="_blank">+ 绑定店铺</Link></Menu.Item>
           </MenuItemGroup>
         </SubMenu>
-        <SubMenu key="sub2" title={<span><Icon type="shopping" /><span>MerchandiseAdmin</span></span>}>
-          <Menu.Item key="8"><Link to="/myGoods">My Merchandise</Link></Menu.Item>
-          <Menu.Item key="9"><Link to="/addGoods">New Merchandise</Link></Menu.Item>
+        <SubMenu key="sub2" title={<span><Icon type="shopping" /><span>商品管理</span></span>}>
+          <Menu.Item key="8"><Link to="/myGoods">我的商品</Link></Menu.Item>
+          <Menu.Item key="9"><Link to="/addGoods">新增商品</Link></Menu.Item>
         </SubMenu>
-        <SubMenu key="sub4" title={<span><Icon type="profile" /><span>TaskAdmin</span></span>}>
-          <Menu.Item key="1"><Link to="/completedTasks">Completed tasks</Link></Menu.Item>
-          <Menu.Item key="2"><Link to="/completedTasks2">Outstanding task</Link></Menu.Item>
-          <Menu.Item key="3"><Link to="/completedTasks3">Task in progress</Link></Menu.Item>
-          <Menu.Item key="4"><Link to="/completedTasks4">Task management</Link></Menu.Item>
-          <Menu.Item key="5"><Link to="/publishTasks">Publish tasks with one click</Link></Menu.Item>
+        <SubMenu key="sub4" title={<span><Icon type="profile" /><span>任务管理</span></span>}>
+          <Menu.Item key="1"><Link to="/completedTasks">已完成的任务</Link></Menu.Item>
+          <Menu.Item key="2"><Link to="/completedTasks2">待付款任务</Link></Menu.Item>
+          <Menu.Item key="3"><Link to="/completedTasks3">待处理的任务</Link></Menu.Item>
+          <Menu.Item key="4"><Link to="/completedTasks4">任务管理</Link></Menu.Item>
+          <Menu.Item key="5"><Link to="/publishTasks">一键发布往期任务</Link></Menu.Item>
         </SubMenu>
-        <SubMenu key="sub5" title={<span><Icon type="red-envelope" /><span>Invite Friends</span></span>}>
-          <Menu.Item key="10"><Link to="/inviteFriend">Invite friends</Link></Menu.Item>
-          <Menu.Item key="11"><Link to="/inviteFriendR">Invite friends record</Link></Menu.Item>
-          <Menu.Item key="12"><Link to="/questRewards">Quest Rewards</Link></Menu.Item>
-          <Menu.Item key="13"><Link to="/lapsedReward">Lapsed reward</Link></Menu.Item>
+        <SubMenu key="sub5" title={<span><Icon type="red-envelope" /><span>邀请好友</span></span>}>
+          <Menu.Item key="10"><Link to="/inviteFriend">邀请好友记录</Link></Menu.Item>
+          <Menu.Item key="11"><Link to="/inviteFriendR">邀请好友记录</Link></Menu.Item>
+          <Menu.Item key="12"><Link to="/questRewards">任务奖励记录</Link></Menu.Item>
+          <Menu.Item key="13"><Link to="/lapsedReward">失效的奖励</Link></Menu.Item>
         </SubMenu>
-        <SubMenu key="sub6" title={<span><Icon type="money-collect" /><span>Money record</span></span>}>
+        <SubMenu key="sub6" title={<span><Icon type="money-collect" /><span>资金记录</span></span>}>
           <Menu.Item key="14"><Link to="/Top-upDeposit" target="_blank">Top-up Deposit</Link></Menu.Item>
           <Menu.Item key="15"><Link to="/postpone">Postpone</Link></Menu.Item>
           <Menu.Item key="16"><Link to="/yajinRecord">YajinRecord</Link></Menu.Item>
