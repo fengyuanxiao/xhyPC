@@ -26,7 +26,7 @@ class addGoodComponents extends Component {
     let platform = {}
     _getStoreList(platform)
     .then(res=> {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       this.setState({
         storeList: res.data.data.list,                     //获取店铺列表
       })

@@ -16,7 +16,6 @@ class KeywordComponents extends Component  {
     this.state = {
       spell: 1,                                   //单选框的值 选择哪个平台类型
       keyword1: 1,                                //是否多关键词
-      scenarioNum: 0,                             //关键词方案的选择
       appPick: 1,                                 //app找查goods
       keywordPick: true,                          //是否通过“关键词”查找宝贝
       is_kouling_search: false,                   //是否通过淘口令
@@ -25,10 +24,12 @@ class KeywordComponents extends Component  {
       nums1: [1],                                 //淘口令组数
       fanganShow: false,                          //方案列表点击编辑改变状态
     }
-    // console.log(props);
   }
 
   componentDidMount() {
+    this.setState({
+      scenarioNum: this.props.defaultValues,       //选中的方案名称
+    })
   }
 
   // 单选框 选择平台
@@ -69,7 +70,8 @@ class KeywordComponents extends Component  {
   }
   // 3关键词方案项
   onScenarioNum = (e) => {
-    // console.log('radio checked', e.target.value);
+    console.log('radio checked', e.target.value);
+    this.props.handleValue(e.target.value);
     this.setState({
       scenarioNum: e.target.value,
     });
@@ -131,7 +133,7 @@ class KeywordComponents extends Component  {
   handleCompilekeyW = (id,index) => {
     console.log(id);
     this.setState({
-      scenarioNum: index,
+      scenarioNum: id,
       compileId: id,                                  //编辑时候的id
     })
     let ids = {
@@ -397,7 +399,7 @@ class KeywordComponents extends Component  {
                 return(
                   <div key={index} style={{ marginBottom: '0', marginTop: '10px' }} className="key_scheme">
                     <RadioGroup onChange={this.onScenarioNum} value={scenarioNum}>
-                      <Radio value={index}>{item.key_way_name}</Radio>
+                      <Radio value={item.id}>{item.key_way_name}</Radio>
                     </RadioGroup>
                     <div>
                       {

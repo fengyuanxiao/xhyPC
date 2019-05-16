@@ -77,7 +77,10 @@ export function _getHoldKeyWay(data) {
 export function _delKeyWay(data) {
   return axios.post(api+'/merchant/Publish/delKeyWay',data, {headers: {AppAuthorization: tokens}})
 }
-
+// 淘宝搜索单各项增值服务收费
+export function _PublishTBSearch(data) {
+  return axios.post(api+'/merchant/publish_t_b_search/index',data, {headers: {AppAuthorization: tokens}})
+}
 
 
 // global.constants = {

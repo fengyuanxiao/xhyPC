@@ -72,14 +72,29 @@ class AppreciationServes extends Component {
     this.setState({ mode });
   }
   handleOk = (e) => {//日期点击确认回调
-    console.log(e);
+    console.log(e._d);
   }
-  // handleChange = (e) => {
-  //   console.log(e);
-  // }
+  handleChange = (e) => {
+    console.log(e._d);
+  }
   // 单量增加
-  onInputNumber = (value) => {
+  onInputNumber1 = (value) => {
     console.log('changed', value);
+    this.setState({
+      oneNum1: value,
+    })
+  }
+  onInputNumber2 = (value) => {
+    console.log('changed', value);
+    this.setState({
+      oneNum2: value,
+    })
+  }
+  onInputNumber3 = (value) => {
+    console.log('changed', value);
+    this.setState({
+      oneNum3: value,
+    })
   }
 
   // 添加投放数量
@@ -88,6 +103,9 @@ class AppreciationServes extends Component {
     this.setState({
       nums: nums,
     })
+    // this.props.form.setFieldsValue({
+    //   bill_2: 1,
+    // })
   }
   // 删除投放数量
   deleteBtn = (index) => {
@@ -391,12 +409,14 @@ class AppreciationServes extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        // console.log(values.dates1._d);
+        // console.log(values.dates2._d);
       }
     });
   }
 
   render(){
-    const { region,category,badcomment,getMonth,getDate,evaluateNum,dateShow, nums,goodreputationShow,additionalReviewShow,show1,show2,show3,show4,show5,buyerNum,buyerNum1,merchantNum,merchantNum1,merchantNum2,graphicNum,fileList } = this.state;
+    const { oneNum1,oneNum2,oneNum3,region,category,badcomment,getMonth,getDate,evaluateNum,dateShow, nums,goodreputationShow,additionalReviewShow,show1,show2,show3,show4,show5,buyerNum,buyerNum1,merchantNum,merchantNum1,merchantNum2,graphicNum,fileList } = this.state;
     const { getFieldDecorator } = this.props.form;
     const radioStyle = {
       display: 'block',
@@ -448,34 +468,68 @@ class AppreciationServes extends Component {
                         {/* dateShow为true 选择定时时间 */}
                         {
                           dateShow ?
-                            <DatePicker
-                              mode={this.state.mode}
-                              showTime
-                              onOpenChange={this.handleOpenChange}
-                              onPanelChange={this.handlePanelChange}
-                              onOk={this.handleOk}
-                              onChange={this.handleChange}
-                              locale={locale}
-                            />
+                            <Form.Item
+                              style={{ height: '48px', marginBottom: '0', paddingTop: '4px' }}
+                            >
+                              {getFieldDecorator('dates_'+(index+1), {
+                                rules: [{ type: 'object', required: false, message: 'Please input your username!' }],
+                              })(
+                                <DatePicker
+                                  showTime
+                                  locale={locale}
+                                />
+                              )}
+                            </Form.Item>
                           :
                           ''
                         }
                       </td>
                       <td>
                         <div style={{ display: 'flex' }}>
-                          <Form.Item
-                            style={{ height: '48px', marginBottom: '0', paddingTop: '4px' }}
-                          >
-                            {getFieldDecorator('bill'+(index+1), {
-                              rules: [{ required: false, message: 'Please input your username!' }],
-                            })(
-                              <InputNumber style={{ marginRight: '5px', width: '80%' }} initialValue={1} min={1} onChange={this.onInputNumber} />
-                            )}
-                          </Form.Item>
+                          {
+                            index === 0?
+                              <Form.Item
+                                style={{ height: '48px', marginBottom: '0', paddingTop: '4px' }}
+                              >
+                                {getFieldDecorator('bill_1', {
+                                  rules: [{ required: false, message: 'Please input your username!' }],
+                                })(
+                                  <InputNumber style={{ marginRight: '5px', width: '80%' }} min={1} setFieldsValue={3} onChange={this.onInputNumber1} />
+                                )}
+                              </Form.Item>
+                            :(index === 1?
+                              <Form.Item
+                                style={{ height: '48px', marginBottom: '0', paddingTop: '4px' }}
+                              >
+                                {getFieldDecorator('bill_2', {
+                                  rules: [{ required: false, message: 'Please input your username!' }],
+                                })(
+                                  <InputNumber style={{ marginRight: '5px', width: '80%' }} min={1} setFieldsValue={3} onChange={this.onInputNumber2} />
+                                )}
+                              </Form.Item>
+                            :
+                            <Form.Item
+                              style={{ height: '48px', marginBottom: '0', paddingTop: '4px' }}
+                            >
+                              {getFieldDecorator('bill_3', {
+                                rules: [{ required: false, message: 'Please input your username!' }],
+                              })(
+                                <InputNumber style={{ marginRight: '5px', width: '80%' }} min={1} setFieldsValue={3} onChange={this.onInputNumber3} />
+                              )}
+                            </Form.Item>)
+                          }
                           <span>单</span>
                         </div>
                       </td>
-                      <td><span className="colors">2</span>单</td>
+                      <td>
+                        {
+                          index === 0?
+                            <span className="colors">{oneNum1}单</span>
+                          :(index === 1?
+                            <span className="colors">{oneNum2}单</span>
+                          :<span className="colors">{oneNum3}单</span>)
+                        }
+                      </td>
                     </tr>
                   )
                 })
@@ -500,7 +554,7 @@ class AppreciationServes extends Component {
             </tbody>
           </table>
           <div className="subtotalBox">
-            <p>投放：2单</p>
+            <p>投放：{oneNum1+oneNum2+oneNum3}单</p>
             <p>总计投放：2单×16.3符点 + 0单×15.80符点 =32.60符点</p>
           </div>
         </div>
@@ -1163,7 +1217,7 @@ class AppreciationServes extends Component {
                     </div>
                   </div>
                 </div>
-                {/* 聊天服务 */}
+                {/* 返款方式 */}
                 <div className="four_serveBox_child">
                   <div>返款方式</div>
                   <div style={{ width: '100%' }}>
@@ -1178,7 +1232,7 @@ class AppreciationServes extends Component {
           {/* 第四步 */}
           <h2>3.请选择增值服务</h2>
           <div className="first_header">
-            <div className="four_serveBox" style={{ borderRadius: '6px' }}>
+            <div className="four_serveBox" style={{ borderRadius: '6px', fontSize: '15px' }}>
               <div className="serve_footer" style={{ backgroundColor: '#F5F5FA' }}>
                 <div>分类</div>
                 <div>费用明细</div>
@@ -1188,11 +1242,37 @@ class AppreciationServes extends Component {
               <div className="serve_footer">
                 <div>押金</div>
                 <div>
-                  <div>费用明细</div>
-                  <div>费用明细</div>
+                  <div>商品： 100元/单×1单</div>
+                  <div>任务保证金<Icon type="question-circle" /> ：5元/单（100.00元/单×1单×0.05）</div>
                 </div>
-                <div>小计</div>
-                <div>合计</div>
+                <div>105元</div>
+                <div>105×6 = <span className="colors">630.00</span>元</div>
+              </div>
+              <div className="serve_footer">
+                <div>文字好评</div>
+                <div>
+                  <div>套餐服务费<Icon type="question-circle" />：15.8符点/单</div>
+                </div>
+                <div>
+                  <div>15.8符点 </div>
+                </div>
+                <div>15.8×6 = <span className="colors">94.80</span>符点</div>
+              </div>
+              <div className="serve_footer">
+                <div>增值服务</div>
+                <div>
+                  <div>自定义快递/重量：0符点</div>
+                  <div>好评优化：0符点</div>
+                  <div>默认假聊：0符点</div>
+                  <div>平台返款<Icon type="question-circle" /> ：3.90符点</div>
+                </div>
+                <div>
+                  <div>20.90符点</div>
+                </div>
+                <div><span className="colors">20.90</span>符点</div>
+              </div>
+              <div className="serve_footer" style={{ display: 'block', textAlign: 'center', padding: '30px 0', fontSize: '18px' }}>
+                <p>合计：押金：<span>630.00</span>元    万运符：<span>118.70</span>符点</p>
               </div>
             </div>
           </div>

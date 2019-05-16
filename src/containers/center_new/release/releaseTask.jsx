@@ -9,7 +9,7 @@ import Type1 from './type1';                                                //ta
 import Type2 from './type2';                                                //taobao
 import KeywordComponent from './keyword/keyword';                             //KeywordComponent
 import AppreciationServe from './appreciation/appreciationServe';            //增值服务
-import { _Publishindex, _GoodsInfoList, _keyWayList } from '../../../component/api';                     //引入ajax接口
+import { _Publishindex, _GoodsInfoList, _keyWayList, _PublishTBSearch } from '../../../component/api';                     //引入ajax接口
 
 import './release.css';
 
@@ -21,6 +21,7 @@ class ReleaseTask extends Component  {
   constructor() {
     super();
     this.state = {
+      activeKey: '1',                        //第一步：选择任务类型和商品信息
       spell: 100,                                 //单选框的值 选择哪个平台类型
       visible: false,                             //visible 为true 的时候  弹出商品库
       addGoodsNum: true,                         //点击新增按钮 addGoodsNum为 true
@@ -64,7 +65,7 @@ class ReleaseTask extends Component  {
   }
   // 发布task进度步骤
   onTabs = (key) => {
-    // console.log(key);
+    console.log(key);
     if ( key === '1' ) {
       this.setState({
         recentlyShow: true,
@@ -148,7 +149,7 @@ class ReleaseTask extends Component  {
     };
     _keyWayList(goods_id)
     .then(res=> {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       if ( res.data.data === "" ) {
         this.setState({
           commodity1: true,                      //显示商品关键词或成交词编辑板
@@ -157,6 +158,7 @@ class ReleaseTask extends Component  {
         this.setState({
           commodity1: false,
           keyWayLists: res.data.data,         //储存关键词方案列表
+          defaultValues: res.data.data[0].id,
         })
       }
     })
@@ -178,6 +180,7 @@ class ReleaseTask extends Component  {
     this.setState({
       visible: false,                     //关闭商品库
       commodity_div: true,                //显示选中的商品块
+      addGoodsNum: false,
     });
   }
   // 新增宝贝
@@ -242,13 +245,39 @@ class ReleaseTask extends Component  {
       message.warning('先从商品库选择宝贝！');
     }
   }
+  // 选中的方案id 点击下一步掉接口进入增值服务
+  handleValues = (value) => {//子组件给父组件传值，通过子组件触发调用传选中的value过来
+    // console.log(value);
+    this.setState({
+      defaultValues: value,
+    })
+  }
+  //下一步
+  handleOneSubmit = () => {
+    // console.log(this.state.defaultValues);
+    let defaultValues = {
+      id: this.state.defaultValues
+    };
+    // 淘宝搜索单各项增值服务收费
+    _PublishTBSearch(defaultValues)
+    .then(res => {
+      console.log(res.data);
+      if ( res.data.code === 200 ) {
+        this.onTabs("2")
+        this.setState({
+          activeKey: '2',
+        })
+      } else {
 
-  // 发布下一步
-  handleSubmit = () => {
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   render() {
-    const { keyWayLists,Ecommerce_type,total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
+    const { activeKey,defaultValues,keyWayLists,Ecommerce_type,total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
     return(
       <div>
         {/* 头部组件 */}
@@ -289,7 +318,7 @@ class ReleaseTask extends Component  {
                 ''
             }
             <h1 style={{ color: '#e96262' }}>发布任务</h1>
-            <Tabs onChange={this.onTabs} className="releaseHeader" defaultActiveKey="2">
+            <Tabs onChange={this.onTabs} className="releaseHeader" defaultActiveKey={activeKey}>
               <TabPane tab={<span className="releaseSpan">第一步：选择任务类型和商品信息</span>} key="1">
                 <h2>1.选择平台和任务类型</h2>
                 <RadioGroup className="releaseLabel" onChange={this.onSpell} value={spell}>
@@ -342,7 +371,7 @@ class ReleaseTask extends Component  {
                           <div className="commodity_div">
                             <p>
                               <img src={item.icon_img} alt='typeTu'/>
-                              <span>taoba：{item.store_name}</span>
+                              <span>淘宝店铺：{item.store_name}</span>
                             </p>
                             <p style={{ cursor: 'pointer' }} onClick={this.compileGoods}>编辑</p>
                           </div>
@@ -385,7 +414,7 @@ class ReleaseTask extends Component  {
                   additionalReview ?
                     ''
                   :
-                  <KeywordComponent commodity_div={commodity_div} keyWayLists={keyWayLists} commodity1={commodity1} goods_id={goods_id} hidden={this.hiddenFangan} />
+                  <KeywordComponent handleValue={this.handleValues} hidden={this.hiddenFangan} key={Math.random()} defaultValues={defaultValues} commodity_div={commodity_div} keyWayLists={keyWayLists} commodity1={commodity1} goods_id={goods_id} />
                 }
                 {/* 新增关键词方案按钮 */}
                 {
@@ -396,7 +425,7 @@ class ReleaseTask extends Component  {
                 }
                 <div style={{ padding: '50px 0' }} className="releaseBtnok">
                   <Button>取消</Button>
-                  <Button onClick={this.handleSubmit} type="primary">下一步</Button>
+                  <Button onClick={this.handleOneSubmit} type="primary">下一步</Button>
                 </div>
               </TabPane>
               {/* 第二步 */}

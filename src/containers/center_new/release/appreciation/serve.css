@@ -200,6 +200,8 @@
 .serve_footer > div:nth-child(2) {
   width: 40%;
   border-right: 1px solid #cfcfcf;
+}.serve_footer > div:nth-child(2) > div {
+  padding: 8px 0;
 }
 .serve_footer > div:nth-child(3) {
   width: 15%;
