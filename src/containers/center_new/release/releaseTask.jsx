@@ -21,7 +21,9 @@ class ReleaseTask extends Component  {
   constructor() {
     super();
     this.state = {
-      activeKey: '1',                        //第一步：选择任务类型和商品信息
+      activeKey1: '1',                            //第一步：选择任务类型和商品信息
+      activeKey2: '2',                            //第一步：选择任务类型和商品信息
+      activeKey3: '3',                            //第一步：选择任务类型和商品信息
       spell: 100,                                 //单选框的值 选择哪个平台类型
       visible: false,                             //visible 为true 的时候  弹出商品库
       addGoodsNum: true,                         //点击新增按钮 addGoodsNum为 true
@@ -263,10 +265,10 @@ class ReleaseTask extends Component  {
     .then(res => {
       console.log(res.data);
       if ( res.data.code === 200 ) {
-        this.onTabs("2")
-        this.setState({
-          activeKey: '2',
-        })
+        this.onTabs(this.state.activeKey2)
+        // this.setState({
+        //   activeKey: '2',
+        // })
       } else {
 
       }
@@ -275,9 +277,12 @@ class ReleaseTask extends Component  {
       console.log(err);
     })
   }
+  onTabClick = () => {
+    console.log(11);
+  }
 
   render() {
-    const { activeKey,defaultValues,keyWayLists,Ecommerce_type,total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
+    const { activeKey1,activeKey2,activeKey3,defaultValues,keyWayLists,Ecommerce_type,total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
     return(
       <div>
         {/* 头部组件 */}
@@ -318,8 +323,8 @@ class ReleaseTask extends Component  {
                 ''
             }
             <h1 style={{ color: '#e96262' }}>发布任务</h1>
-            <Tabs onChange={this.onTabs} className="releaseHeader" defaultActiveKey={activeKey}>
-              <TabPane tab={<span className="releaseSpan">第一步：选择任务类型和商品信息</span>} key="1">
+            <Tabs onChange={this.onTabs} onTabClick={this.onTabClick} className="releaseHeader" defaultActiveKey="1">
+              <TabPane tab={<span className="releaseSpan">第一步：选择任务类型和商品信息</span>} key={activeKey1}>
                 <h2>1.选择平台和任务类型</h2>
                 <RadioGroup className="releaseLabel" onChange={this.onSpell} value={spell}>
                   {
@@ -429,11 +434,11 @@ class ReleaseTask extends Component  {
                 </div>
               </TabPane>
               {/* 第二步 */}
-              <TabPane tab={<span className="releaseSpan">第二步：设置活动计划和增值服务</span>} key="2">
+              <TabPane tab={<span className="releaseSpan">第二步：设置活动计划和增值服务</span>} key={activeKey2}>
                 <AppreciationServe />
               </TabPane>
               {/* 第三步 */}
-              <TabPane tab={<span className="releaseSpan">第三步：支付</span>} disabled key="3">Tab 3</TabPane>
+              <TabPane tab={<span className="releaseSpan">第三步：支付</span>} disabled key={activeKey3}>Tab 3</TabPane>
             </Tabs>
           </div>
         </div>
