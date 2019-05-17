@@ -20,9 +20,10 @@ let graphicNum = [1];              //商家提供评价内容
 let myDate = new Date();            //获取月日
 
 class AppreciationServes extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      object: {},
       mode: 'date',                         //时间日期
       nums: [1],                            //添加计划数组
       buyerNum: [1,2,3],                    //好评优化里面，，，买手评价关键词
@@ -32,7 +33,7 @@ class AppreciationServes extends Component {
       merchantNum2: [1],                     //自定义差评，，，商家提供评价内容
       graphicNum: [1],                      //图文好评
       value: 1,                             //选择快递类型
-      speedNum: 1,                          //快速完成的速度 单选选中的浮点
+      speedNum: '',                          //快速完成的速度 单选选中的浮点
       shoppingNum: 1,                       //延长买家购物周期 单选框选中数
       evaluateNum: 1,                       //1是买手写评价，，，2是商家提供评价
       goodreputationShow: true,             //好评优化默认选中显示
@@ -41,12 +42,16 @@ class AppreciationServes extends Component {
       previewVisible: false,                //关闭观看图片状态
       previewImage: '',
     }
+    console.log(props.firstDatas);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({
       getMonth: myDate.getMonth()+1,        //获取这个月
       getDate: myDate.getDate(),            //获取今天
+    })
+    this.props.form.setFieldsValue({
+
     })
   }
 
@@ -78,22 +83,13 @@ class AppreciationServes extends Component {
     console.log(e._d);
   }
   // 单量增加
-  onInputNumber1 = (value) => {
-    console.log('changed', value);
+  onInputNumber = (type,value) => {
+    console.log(type,value);
+    const newObject = Object.assign({}, this.state.object, {
+      [type]: value
+    });
     this.setState({
-      oneNum1: value,
-    })
-  }
-  onInputNumber2 = (value) => {
-    console.log('changed', value);
-    this.setState({
-      oneNum2: value,
-    })
-  }
-  onInputNumber3 = (value) => {
-    console.log('changed', value);
-    this.setState({
-      oneNum3: value,
+      object: newObject,
     })
   }
 
@@ -127,6 +123,15 @@ class AppreciationServes extends Component {
   // 提升任务完成速度
   onAccomplish = (e) => {
     console.log(`提升任务完成速度 = ${e.target.checked}`);
+    if ( e.target.checked ) {
+      this.setState({
+        speedNum: 1,
+      })
+    } else {
+      this.setState({
+        speedNum: '',
+      })
+    }
   }//提升任务完成速度选中的浮点单选框
   onAccomplishChild = (e) => {
     console.log('选择的浮点', e.target.value);
@@ -405,18 +410,20 @@ class AppreciationServes extends Component {
 
   // 提交表单
   handleSubmit = (e) => {
+    let sDatas = this.state;
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        // console.log(values.dates1._d);
-        // console.log(values.dates2._d);
+        console.log('提升任务完成速度', sDatas.speedNum);
+        console.log(this.state.object);
       }
     });
   }
 
   render(){
-    const { oneNum1,oneNum2,oneNum3,region,category,badcomment,getMonth,getDate,evaluateNum,dateShow, nums,goodreputationShow,additionalReviewShow,show1,show2,show3,show4,show5,buyerNum,buyerNum1,merchantNum,merchantNum1,merchantNum2,graphicNum,fileList } = this.state;
+    const { key,ADD_QUICK_FINISH_COST } = this.props.firstDatas;
+    const { speedNum,oneNum,region,category,badcomment,getMonth,getDate,evaluateNum,dateShow, nums,goodreputationShow,additionalReviewShow,show1,show2,show3,show4,show5,buyerNum,buyerNum1,merchantNum,merchantNum1,merchantNum2,graphicNum,fileList } = this.state;
     const { getFieldDecorator } = this.props.form;
     const radioStyle = {
       display: 'block',
@@ -444,7 +451,13 @@ class AppreciationServes extends Component {
                   <p className={dateShow? "p_heigth" : ''}>关键词</p>
                 </td>
                 {/* 这里循环keyWord */}
-                <td>单关键词1</td>
+                {
+                  key.map((item, index) => {
+                    return(
+                      <td key={index}>{item}</td>
+                    )
+                  })
+                }
                 {/* 小计 */}
                 <td>小计</td>
               </tr>
@@ -484,51 +497,30 @@ class AppreciationServes extends Component {
                           ''
                         }
                       </td>
+                      {/* 关键词选择的单数 */}
+                      {
+                        key.map((item, indexs) => {
+                          return(
+                            <td key={indexs}>
+                              <div style={{ display: 'flex' }}>
+                                <Form.Item
+                                  style={{ height: '48px', marginBottom: '0', paddingTop: '4px' }}
+                                >
+                                  {getFieldDecorator('bill_'+(indexs+1)+'_'+(index+1), {
+                                    rules: [{ required: false, message: 'Please input your username!' }],
+                                  })(
+                                    <InputNumber style={{ marginRight: '5px', width: '80%' }} setFieldsValue={this.state.object[indexs+1]} min={1} max={9999} onChange={(event)=>this.onInputNumber('Change'+(indexs+1)+(index+1),event)} />
+                                  )}
+                                </Form.Item>
+                                <span>单</span>
+                              </div>
+                            </td>
+                          )
+                        })
+                      }
+                      {/* 小计的多少单 */}
                       <td>
-                        <div style={{ display: 'flex' }}>
-                          {
-                            index === 0?
-                              <Form.Item
-                                style={{ height: '48px', marginBottom: '0', paddingTop: '4px' }}
-                              >
-                                {getFieldDecorator('bill_1', {
-                                  rules: [{ required: false, message: 'Please input your username!' }],
-                                })(
-                                  <InputNumber style={{ marginRight: '5px', width: '80%' }} min={1} setFieldsValue={3} onChange={this.onInputNumber1} />
-                                )}
-                              </Form.Item>
-                            :(index === 1?
-                              <Form.Item
-                                style={{ height: '48px', marginBottom: '0', paddingTop: '4px' }}
-                              >
-                                {getFieldDecorator('bill_2', {
-                                  rules: [{ required: false, message: 'Please input your username!' }],
-                                })(
-                                  <InputNumber style={{ marginRight: '5px', width: '80%' }} min={1} setFieldsValue={3} onChange={this.onInputNumber2} />
-                                )}
-                              </Form.Item>
-                            :
-                            <Form.Item
-                              style={{ height: '48px', marginBottom: '0', paddingTop: '4px' }}
-                            >
-                              {getFieldDecorator('bill_3', {
-                                rules: [{ required: false, message: 'Please input your username!' }],
-                              })(
-                                <InputNumber style={{ marginRight: '5px', width: '80%' }} min={1} setFieldsValue={3} onChange={this.onInputNumber3} />
-                              )}
-                            </Form.Item>)
-                          }
-                          <span>单</span>
-                        </div>
-                      </td>
-                      <td>
-                        {
-                          index === 0?
-                            <span className="colors">{oneNum1}单</span>
-                          :(index === 1?
-                            <span className="colors">{oneNum2}单</span>
-                          :<span className="colors">{oneNum3}单</span>)
-                        }
+                        <span className="colors">{oneNum}单</span>
                       </td>
                     </tr>
                   )
@@ -554,7 +546,7 @@ class AppreciationServes extends Component {
             </tbody>
           </table>
           <div className="subtotalBox">
-            <p>投放：{oneNum1+oneNum2+oneNum3}单</p>
+            <p>投放：{oneNum}单</p>
             <p>总计投放：2单×16.3符点 + 0单×15.80符点 =32.60符点</p>
           </div>
         </div>
@@ -606,10 +598,14 @@ class AppreciationServes extends Component {
                     {/*提升任务完成速度*/}
                     <div className="childBoxs">
                       <Checkbox onChange={this.onAccomplish}>提升任务完成速度</Checkbox>
-                      <RadioGroup onChange={this.onAccomplishChild} value={this.state.speedNum}>
-                        <Radio value={1}>+10符点</Radio>
-                        <Radio value={2}>+15符点</Radio>
-                        <Radio value={3}>+20符点</Radio>
+                      <RadioGroup onChange={this.onAccomplishChild} value={speedNum}>
+                        {
+                          ADD_QUICK_FINISH_COST.map((item, index)=> {
+                            return(
+                              <Radio disabled={speedNum? false: true} key={index} value={index+1}>+{item}符点</Radio>
+                            )
+                          })
+                        }
                       </RadioGroup>
                       <span>增加符点数越多，排名越靠前，任务完成更快</span>
                     </div>

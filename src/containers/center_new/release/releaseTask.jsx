@@ -21,12 +21,10 @@ class ReleaseTask extends Component  {
   constructor() {
     super();
     this.state = {
-      activeKey1: '1',                            //第一步：选择任务类型和商品信息
-      activeKey2: '2',                            //第一步：选择任务类型和商品信息
-      activeKey3: '3',                            //第一步：选择任务类型和商品信息
+      activeKey: '1',                             //第一步：选择任务类型和商品信息
       spell: 100,                                 //单选框的值 选择哪个平台类型
       visible: false,                             //visible 为true 的时候  弹出商品库
-      addGoodsNum: true,                         //点击新增按钮 addGoodsNum为 true
+      addGoodsNum: true,                          //点击新增按钮 addGoodsNum为 true
       commodity_div: false,                       //从商品库选择商品块 commodity_div 为true 显示出来
       commodity1: false,                          //为false的时候 不显示关键词方案编辑板 商品关键词或成交词编辑板
       additionalReview: false,                    //是否是追评单 默认是否
@@ -67,7 +65,7 @@ class ReleaseTask extends Component  {
   }
   // 发布task进度步骤
   onTabs = (key) => {
-    console.log(key);
+    // console.log(key);
     if ( key === '1' ) {
       this.setState({
         recentlyShow: true,
@@ -263,26 +261,24 @@ class ReleaseTask extends Component  {
     // 淘宝搜索单各项增值服务收费
     _PublishTBSearch(defaultValues)
     .then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       if ( res.data.code === 200 ) {
-        this.onTabs(this.state.activeKey2)
-        // this.setState({
-        //   activeKey: '2',
-        // })
+        this.onTabs()
+        this.setState({
+          firstDatas: res.data.data,
+          activeKey: '2',
+        })
       } else {
-
+        message.error(res.data.msg)
       }
     })
     .catch(err => {
       console.log(err);
     })
   }
-  onTabClick = () => {
-    console.log(11);
-  }
 
   render() {
-    const { activeKey1,activeKey2,activeKey3,defaultValues,keyWayLists,Ecommerce_type,total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
+    const { firstDatas,activeKey,defaultValues,keyWayLists,Ecommerce_type,total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
     return(
       <div>
         {/* 头部组件 */}
@@ -323,8 +319,8 @@ class ReleaseTask extends Component  {
                 ''
             }
             <h1 style={{ color: '#e96262' }}>发布任务</h1>
-            <Tabs onChange={this.onTabs} onTabClick={this.onTabClick} className="releaseHeader" defaultActiveKey="1">
-              <TabPane tab={<span className="releaseSpan">第一步：选择任务类型和商品信息</span>} key={activeKey1}>
+            <Tabs onChange={this.onTabs} onTabClick={this.onTabClick} className="releaseHeader" activeKey={activeKey} defaultActiveKey="1">
+              <TabPane tab={<span className="releaseSpan">第一步：选择任务类型和商品信息</span>} key='1'>
                 <h2>1.选择平台和任务类型</h2>
                 <RadioGroup className="releaseLabel" onChange={this.onSpell} value={spell}>
                   {
@@ -434,11 +430,11 @@ class ReleaseTask extends Component  {
                 </div>
               </TabPane>
               {/* 第二步 */}
-              <TabPane tab={<span className="releaseSpan">第二步：设置活动计划和增值服务</span>} key={activeKey2}>
-                <AppreciationServe />
+              <TabPane tab={<span className="releaseSpan">第二步：设置活动计划和增值服务</span>} key='2'>
+                <AppreciationServe firstDatas={firstDatas} />
               </TabPane>
               {/* 第三步 */}
-              <TabPane tab={<span className="releaseSpan">第三步：支付</span>} disabled key={activeKey3}>Tab 3</TabPane>
+              <TabPane tab={<span className="releaseSpan">第三步：支付</span>} disabled key='3'>Tab 3</TabPane>
             </Tabs>
           </div>
         </div>
