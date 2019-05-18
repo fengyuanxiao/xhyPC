@@ -16,14 +16,14 @@ let buyerNum1 = [1,2,3];            //追评里面，，，买手评价关键词
 let merchantNum = [1];              //好评优化里面，，，商家提供评价内容
 let merchantNum1 = [1];             //追评里面，，，商家提供评价内容
 let merchantNum2 = [1];             //自定义差评，，，商家提供评价内容
-let graphicNum = [1];              //商家提供评价内容
+let graphicNum = [1];               //商家提供评价内容
 let myDate = new Date();            //获取月日
 
 class AppreciationServes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      object: {},
+      object: {},                           //增值服务 第一步设置计划 关键词选择的单数对象
       mode: 'date',                         //时间日期
       nums: [1],                            //添加计划数组
       buyerNum: [1,2,3],                    //好评优化里面，，，买手评价关键词
@@ -142,7 +142,18 @@ class AppreciationServes extends Component {
   // 加赏任务佣金
   onToreward = (e) => {
     console.log(`加赏任务佣金 = ${e.target.checked}`);
+    this.setState({
+      toreward_state: e.target.checked,
+      toreward: 3,
+    })
+  }//每单加上的佣金
+  handleToreward = (e) => {
+    // console.log(e.target.value);
+    this.setState({
+      toreward: e.target.value
+    })
   }
+
   // 优化审核
   onOptimizeaudit = (e) => {
     console.log(`优化审核 = ${e.target.checked}`);
@@ -414,8 +425,9 @@ class AppreciationServes extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        console.log('传给后端的值: ', values);
         console.log('提升任务完成速度', sDatas.speedNum);
+        console.log('加赏任务佣金 每单加赏佣金',sDatas.toreward);
         console.log(this.state.object);
       }
     });
@@ -423,7 +435,7 @@ class AppreciationServes extends Component {
 
   render(){
     const { key,ADD_QUICK_FINISH_COST } = this.props.firstDatas;
-    const { speedNum,oneNum,region,category,badcomment,getMonth,getDate,evaluateNum,dateShow, nums,goodreputationShow,additionalReviewShow,show1,show2,show3,show4,show5,buyerNum,buyerNum1,merchantNum,merchantNum1,merchantNum2,graphicNum,fileList } = this.state;
+    const { toreward_state,toreward,speedNum,oneNum,region,category,badcomment,getMonth,getDate,evaluateNum,dateShow, nums,goodreputationShow,additionalReviewShow,show1,show2,show3,show4,show5,buyerNum,buyerNum1,merchantNum,merchantNum1,merchantNum2,graphicNum,fileList } = this.state;
     const { getFieldDecorator } = this.props.form;
     const radioStyle = {
       display: 'block',
@@ -613,13 +625,13 @@ class AppreciationServes extends Component {
                     <div className="childBoxs">
                       <Checkbox onChange={this.onToreward}>加赏任务佣金</Checkbox>
                       <span>每单加赏佣金</span>
-                      <Input className="inputWidth"/>
-                      <span>符点，共计：3单 x 3万运符点 = 9.00符点</span>
+                      <Input disabled={toreward_state?false:true} onChange={this.handleToreward} defaultValue={toreward} className="inputWidth"/>
+                      <span>符点，共计：<span className="colors">3</span>单 x <span className="colors">3</span>万运符点 = <span className="colors">9.00</span>符点</span>
                       <span>（最低为2符点）</span>
                     </div>
                     {/* 优先审核 */}
                     <div className="childBoxs">
-                      <Checkbox defaultChecked={true} onChange={this.onOptimizeaudit}>优先审核（3符点）</Checkbox>
+                      <Checkbox defaultChecked={true} onChange={this.onOptimizeaudit}>优先审核<span className="colors">（3符点）</span></Checkbox>
                       <span>每单加赏佣金</span>
                       <span>选择此服务后，万运符将会优先审核您发布的任务</span>
                     </div>
