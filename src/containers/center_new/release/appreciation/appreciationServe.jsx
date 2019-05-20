@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox, DatePicker, Radio, Select, Row, Col, Upload, InputNumber } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, DatePicker, Radio, Select, Row, Col, Upload, InputNumber, Tree } from 'antd';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
@@ -8,6 +8,7 @@ import './serve.css';
 moment.locale('zh-cn');
 
 const { TextArea } = Input;         //文本框
+const { TreeNode } = Tree;          //树形控件
 const RadioGroup = Radio.Group;     //单选框
 const Option = Select.Option;       //选择器
 let nums = [1];                     //app关键字组数
@@ -406,6 +407,28 @@ class AppreciationServes extends Component {
       region: e.target.checked,
     })
   }
+  onCheck0 = (checkedKeys, info) => {
+    console.log(checkedKeys);
+  };
+  onCheck1 = (checkedKeys, info) => {
+    console.log(checkedKeys);
+  };
+  onCheck2 = (checkedKeys, info) => {
+    console.log(checkedKeys);
+  };
+  onCheck3 = (checkedKeys, info) => {
+    console.log(checkedKeys);
+  };
+  onCheck4 = (checkedKeys, info) => {
+    console.log(checkedKeys);
+  };
+  onCheck5 = (checkedKeys, info) => {
+    console.log(checkedKeys);
+  };
+  onCheck6 = (checkedKeys, info) => {
+    console.log(checkedKeys);
+  };
+
   // 聊天服务
   onChitchat = (e) => {
     console.log(`聊天服务 = ${e.target.checked}`);
@@ -434,7 +457,7 @@ class AppreciationServes extends Component {
   }
 
   render(){
-    const { key,ADD_QUICK_FINISH_COST } = this.props.firstDatas;
+    const { key,ADD_QUICK_FINISH_COST,PAY_AGE,PAY_CLASS } = this.props.firstDatas;
     const { toreward_state,toreward,speedNum,oneNum,region,category,badcomment,getMonth,getDate,evaluateNum,dateShow, nums,goodreputationShow,additionalReviewShow,show1,show2,show3,show4,show5,buyerNum,buyerNum1,merchantNum,merchantNum1,merchantNum2,graphicNum,fileList } = this.state;
     const { getFieldDecorator } = this.props.form;
     const radioStyle = {
@@ -1121,10 +1144,13 @@ class AppreciationServes extends Component {
                     <div className="childBoxs">
                       <Checkbox onChange={this.onAgebracket }>需要人群的年龄段（0.5符点/单）</Checkbox>
                       <Select defaultValue="18~25" style={{ width: 120 }} onChange={this.onAgebracketChild }>
-                        <Option value="18~25">18~25</Option>
-                        <Option value="26~30">26~30</Option>
-                        <Option value="31~40">31~40</Option>
-                        <Option value="40~50">40~50</Option>
+                        {
+                          PAY_AGE.map((item, index) => {
+                            return(
+                              <Option key={index} value={item}>{item}</Option>
+                            )
+                          })
+                        }
                       </Select>
                       <span style={{ marginLeft: '10px' }}>岁</span>
                     </div>
@@ -1156,18 +1182,13 @@ class AppreciationServes extends Component {
                             })(
                               <Checkbox.Group style={{ width: '100%' }} onChange={this.discountBtn}>
                                 <Row>
-                                  <Col span={4}><Checkbox value="A">A</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="B">B</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="C">C</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="D">D</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="E">E</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="F">F</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="G">G</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="H">H</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="I">I</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="J">J</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="K">K</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="L">L</Checkbox></Col>
+                                  {
+                                    PAY_CLASS.map((item, index) => {
+                                      return(
+                                        <Col key={index} span={4}><Checkbox value={item}>{item}</Checkbox></Col>
+                                      )
+                                    })
+                                  }
                                 </Row>
                               </Checkbox.Group>
                             )}
@@ -1181,30 +1202,99 @@ class AppreciationServes extends Component {
                       <Checkbox onChange={this.onRegion}>地区限制（0.5浮点/单）</Checkbox>
                       {
                         region ?
-                          <Form.Item style={{ marginBottom: '0', marginTop: '15px' }}>
-                            {getFieldDecorator("search_discount_text", {
-                              initialValue: [],
-                            })(
-                              <Checkbox.Group style={{ width: '100%' }} onChange={this.discountBtn}>
-                                <Row>
-                                  <Col span={4}><Checkbox value="A">A</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="B">B</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="C">C</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="D">D</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="E">E</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="F">F</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="G">G</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="H">H</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="I">I</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="J">J</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="K">K</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="L">L</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="M">M</Checkbox></Col>
-                                  <Col span={4}><Checkbox value="N">N</Checkbox></Col>
-                                </Row>
-                              </Checkbox.Group>
-                            )}
-                          </Form.Item>
+                          <div className="childBoxs dresss" style={{ alignItems: 'flex-start' }}>
+                            <Form.Item label="Radio.Button">
+                              {getFieldDecorator('radio-button')(
+                                <Tree
+                                  checkable
+                                  defaultExpandAll={true}
+                                  onCheck={this.onCheck0}
+                                >
+                                  <TreeNode title="华东" key="0">
+                                    <TreeNode title="上海" key="310000" />
+                                    <TreeNode title="江苏" key="320000" />
+                                    <TreeNode title="浙江" key="330000" />
+                                    <TreeNode title="安徽" key="340000" />
+                                    <TreeNode title="江西" key="360000" />
+                                  </TreeNode>
+                                </Tree>
+                              )}
+                            </Form.Item>
+                            <Tree
+                              checkable
+                              defaultExpandAll={true}
+                              onCheck={this.onCheck1}
+                            >
+                              <TreeNode title="华北" key="1">
+                                <TreeNode title="北京" key="110000" />
+                                <TreeNode title="天津" key="120000" />
+                                <TreeNode title="河北" key="130000" />
+                                <TreeNode title="山西" key="140000" />
+                                <TreeNode title="内蒙古" key="150000" />
+                                <TreeNode title="山东" key="370000" />
+                              </TreeNode>
+                            </Tree>
+                            <Tree
+                              checkable
+                              defaultExpandAll={true}
+                              onCheck={this.onCheck2}
+                            >
+                              <TreeNode title="华中" key="2">
+                                <TreeNode title="河南" key="410000" />
+                                <TreeNode title="湖北" key="420000" />
+                                <TreeNode title="湖南" key="430000" />
+                              </TreeNode>
+                            </Tree>
+                            <Tree
+                              checkable
+                              defaultExpandAll={true}
+                              onCheck={this.onCheck3}
+                            >
+                              <TreeNode title="华南" key="3">
+                                <TreeNode title="福建" key="350000" />
+                                <TreeNode title="广东" key="440000" />
+                                <TreeNode title="广西" key="450000" />
+                                <TreeNode title="海南" key="460000" />
+                              </TreeNode>
+                            </Tree>
+                            <Tree
+                              checkable
+                              defaultExpandAll={true}
+                              onCheck={this.onCheck4}
+                            >
+                              <TreeNode title="东北" key="4">
+                                <TreeNode title="辽宁" key="210000" />
+                                <TreeNode title="吉林" key="220000" />
+                                <TreeNode title="黑龙江" key="230000" />
+                              </TreeNode>
+                            </Tree>
+                            <Tree
+                              checkable
+                              defaultExpandAll={true}
+                              onCheck={this.onCheck5}
+                            >
+                              <TreeNode title="西北" key="5">
+                                <TreeNode title="陕西" key="610000" />
+                                <TreeNode title="甘肃" key="620000" />
+                                <TreeNode title="青海" key="630000" />
+                                <TreeNode title="宁夏" key="640000" />
+                                <TreeNode title="新疆" key="650000" />
+                              </TreeNode>
+                            </Tree>
+                            <Tree
+                              checkable
+                              defaultExpandAll={true}
+                              onCheck={this.onCheck6}
+                            >
+                              <TreeNode title="西南" key="6">
+                                <TreeNode title="重庆" key="500000" />
+                                <TreeNode title="四川" key="510000" />
+                                <TreeNode title="贵州" key="520000" />
+                                <TreeNode title="云南" key="530000" />
+                                <TreeNode title="西藏" key="540000" />
+                              </TreeNode>
+                            </Tree>
+                          </div>
                         :
                           ''
                       }
