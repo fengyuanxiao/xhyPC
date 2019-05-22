@@ -140,35 +140,10 @@ class AppreciationServes extends Component {
       speedNum: e.target.value,
     });
   }
-  // 加赏任务佣金
-  onToreward = (e) => {
-    console.log(`加赏任务佣金 = ${e.target.checked}`);
-    this.setState({
-      toreward_state: e.target.checked,
-    })
-  }//每单加上的佣金
-  handleToreward = (e) => {
-    // console.log(e.target.value);
-    this.setState({
-      toreward: e.target.value
-    })
-  }
-
-  // 优化审核
-  onOptimizeaudit = (e) => {
-    console.log(`优化审核 = ${e.target.checked}`);
-    this.setState({
-      optimizeaudit_state: e.target.checked,
-    })
-  }
-
   // 安全优化项
   // 自动结束任务
   onEndautomatically = (e) => {
     console.log(`自动结束任务 = ${e.target.checked}`);
-    this.setState({
-      endautomatically_state: e.target.checked,
-    })
   }
   // 任务发布间隔
   onPublishinterval = (e) => {
@@ -459,18 +434,14 @@ class AppreciationServes extends Component {
       if (!err) {
         console.log('传给后端的值: ', values);
         console.log('提升任务完成速度', sDatas.speedNum);
-        console.log('是否勾选加上任务佣金', sDatas.toreward_state);
-        console.log('加赏任务佣金 每单加赏佣金', sDatas.toreward);
-        console.log('是否勾选优化审核', sDatas.optimizeaudit_state);
-        console.log('自动结束任务', sDatas.endautomatically_state);
         console.log(this.state.object);
       }
     });
   }
 
   render(){
-    const { key,ADD_QUICK_FINISH_COST,PAY_AGE,PAY_CLASS } = this.props.firstDatas;
-    const { publishinterval_state,toreward_state,speedNum,oneNum,region,category,badcomment,getMonth,getDate,evaluateNum,dateShow, nums,goodreputationShow,additionalReviewShow,show1,show2,show3,show4,show5,buyerNum,buyerNum1,merchantNum,merchantNum1,merchantNum2,graphicNum,fileList } = this.state;
+    const { key,ADD_QUICK_FINISH_COST,PAY_AGE,PAY_CLASS,EXTENDED_CYCLE_MOUTH_COST } = this.props.firstDatas;
+    const { publishinterval_state,speedNum,oneNum,region,category,badcomment,getMonth,getDate,evaluateNum,dateShow, nums,goodreputationShow,additionalReviewShow,show1,show2,show3,show4,show5,buyerNum,buyerNum1,merchantNum,merchantNum1,merchantNum2,graphicNum,fileList } = this.state;
     const { getFieldDecorator } = this.props.form;
     const radioStyle = {
       display: 'block',
@@ -656,15 +627,27 @@ class AppreciationServes extends Component {
                     </div>
                     {/* 加赏任务佣金 */}
                     <div className="childBoxs">
-                      <Checkbox onChange={this.onToreward}>加赏任务佣金</Checkbox>
+                      <Form.Item style={{ marginBottom: '0' }}>
+                        {getFieldDecorator('toreward_state')(
+                          <Checkbox>加赏任务佣金</Checkbox>
+                        )}
+                      </Form.Item>
                       <span>每单加赏佣金</span>
-                      <Input disabled={toreward_state?false:true} onChange={this.handleToreward} defaultValue="3" className="inputWidth"/>
+                      <Form.Item style={{ marginBottom: '0' }}>
+                        {getFieldDecorator('toreward_input',{initialValue: 3})(
+                          <Input style={{ width: '90%' }} className="inputWidth"/>
+                        )}
+                      </Form.Item>
                       <span>符点，共计：<span className="colors">3</span>单 x <span className="colors">3</span>万运符点 = <span className="colors">9.00</span>符点</span>
                       <span>（最低为<span className="colors">2</span>符点）</span>
                     </div>
                     {/* 优先审核 */}
                     <div className="childBoxs">
-                      <Checkbox defaultChecked={true} onChange={this.onOptimizeaudit}>优先审核（<span className="colors">3</span>符点）</Checkbox>
+                      <Form.Item style={{ marginBottom: '0' }}>
+                        {getFieldDecorator('optimizeaudit_state')(
+                          <Checkbox defaultChecked={true}>优先审核（<span className="colors">3</span>符点）</Checkbox>
+                        )}
+                      </Form.Item>
                       <span>每单加赏佣金</span>
                       <span>选择此服务后，万运符将会优先审核您发布的任务</span>
                     </div>
@@ -676,18 +659,22 @@ class AppreciationServes extends Component {
                   <div style={{ width: '100%' }}>
                     {/* 自动结束任务 */}
                     <div className="childBoxs">
-                      <Checkbox onChange={this.onEndautomatically}>自动结束任务（<span className="colors">2</span>符点）</Checkbox>
+                      <Form.Item style={{ marginBottom: '0' }}>
+                        {getFieldDecorator('endautomatically_state')(
+                          <Checkbox onChange={this.onEndautomatically}>自动结束任务（<span className="colors">2</span>符点）</Checkbox>
+                        )}
+                      </Form.Item>
                       <span>当天24点前未完成的订单，系统将自动结算剩余订单的费用到您的账户，不再顺延到第二天发布。</span>
                     </div>
                     {/* 任务发布间隔 */}
                     <div className="childBoxs">
                       <Form.Item style={{ marginBottom: '0' }}>
-                        {getFieldDecorator('checkbox-group')(
+                        {getFieldDecorator('publishinterval_state')(
                           <Checkbox onChange={this.onPublishinterval}>任务发布间隔（<span className="colors">6</span>符点）</Checkbox>
                         )}
                       </Form.Item>
                       <span>每隔</span>
-                      <Form.Item style={{ marginBottom: '0' }}>
+                      <Form.Item style={{ margin: '0 7px', }}>
                         {getFieldDecorator('select_tiem', {
                           rules: [{ required: publishinterval_state?true:false, message: '请选择间隔时间!' }],
                         })(
@@ -702,7 +689,7 @@ class AppreciationServes extends Component {
                         )}
                       </Form.Item>
                       <span>发布</span>
-                      <Form.Item style={{ marginBottom: '0' }}>
+                      <Form.Item style={{ margin: '0 7px', }}>
                         {getFieldDecorator('select_dan', {
                           rules: [{ required: publishinterval_state?true:false, message: '请选择发布的单量!' }],
                         })(
@@ -720,12 +707,24 @@ class AppreciationServes extends Component {
                     </div>
                     {/* 延长买家购物周期 */}
                     <div className="childBoxs">
-                      <Checkbox onChange={this.onShoppingperiod}>延长买家购物周期</Checkbox>
-                      <RadioGroup onChange={this.onShoppingperiodChild} value={this.state.shoppingNum}>
-                        <Radio value={1}>1个月（0.5符点/单/店铺）</Radio>
-                        <Radio value={2}>2个月（1符点/单/店铺）</Radio>
-                        <Radio value={3}>3个月（1.5符点/单/店铺）</Radio>
-                      </RadioGroup>
+                      <Form.Item style={{ marginBottom: '0' }}>
+                        {getFieldDecorator('shoppingperiod_state')(
+                          <Checkbox onChange={this.onShoppingperiod}>延长买家购物周期</Checkbox>
+                        )}
+                      </Form.Item>
+                      <Form.Item style={{ marginBottom: '0' }}>
+                        {getFieldDecorator('shoppingperiodChild')(
+                          <RadioGroup onChange={this.onShoppingperiodChild}>
+                            {
+                              EXTENDED_CYCLE_MOUTH_COST.map((item, index) => {
+                                return(
+                                  <Radio key={index} value={index+1}>1个月（{item}符点/单/店铺）</Radio>
+                                )
+                              })
+                            }
+                          </RadioGroup>
+                        )}
+                      </Form.Item>
                     </div>
                   </div>
                 </div>
@@ -744,10 +743,10 @@ class AppreciationServes extends Component {
                             <Checkbox.Group style={{ width: '100%' }} onChange={this.onGoodreputation}>
                               <Row>
                                 <Col className="dashed">
-                                  <Checkbox className="labels" value="A">默认好评:<Input className="inputWidth"/>单（免费） 选择此服务后，接手任务买手将对商品5分默认好评</Checkbox>
+                                  <Checkbox className="labels" value="A">默认好评:<Input className="inputWidth"/>单（<span className="colors">免费</span>） 选择此服务后，接手任务买手将对商品5分默认好评</Checkbox>
                                 </Col>
                                 <Col className="dashed">
-                                  <Checkbox className="labels" value="B">买手写评价:<Input className="inputWidth"/>单（1符点/单） 选择此项服务后，将有助于提升评价质量并优化您商品评价映像关键词</Checkbox>
+                                  <Checkbox className="labels" value="B">买手写评价:<Input className="inputWidth"/>单（<span className="colors">1</span>符点/单） 选择此项服务后，将有助于提升评价质量并优化您商品评价映像关键词</Checkbox>
                                   {//买手评价关键词
                                     show1 ?
                                       <div>
@@ -802,7 +801,7 @@ class AppreciationServes extends Component {
                                   }
                                 </Col>
                                 <Col className="dashed">
-                                  <Checkbox className="labels" value="C">商家提供评价:<Input className="inputWidth"/>单（2符点/单） 选择此项服务后，将有助于提升评价质量</Checkbox>
+                                  <Checkbox className="labels" value="C">商家提供评价:<Input className="inputWidth"/>单（<span className="colors">2</span>符点/单） 选择此项服务后，将有助于提升评价质量</Checkbox>
                                   {//商家提供评价内容
                                     show2 ?
                                       <div>
@@ -857,7 +856,7 @@ class AppreciationServes extends Component {
                                   }
                                 </Col>
                                 <Col className="dashed">
-                                  <Checkbox className="labels" value="D">图文好评:<Input className="inputWidth"/>单（4符点/单） 选择此项服务后，买手会根据商家提供的好评图片进行评价，有利于优化评价内容及转化率</Checkbox>
+                                  <Checkbox className="labels" value="D">图文好评:<Input className="inputWidth"/>单（<span className="colors">4</span>符点/单） 选择此项服务后，买手会根据商家提供的好评图片进行评价，有利于优化评价内容及转化率</Checkbox>
                                   {
                                     show3 ?
                                       <div>
