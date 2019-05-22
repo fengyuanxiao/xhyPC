@@ -740,232 +740,238 @@ class AppreciationServes extends Component {
                         goodreputationShow ?//goodreputationShow为true 默认展现出来
                           <div style={{ paddingLeft: '15px' }}>
                             <p style={{ padding: '13px' }}>可设置任务投放总数：<span>3</span>单，当前已设置：<span>0</span>单</p>
-                            <Checkbox.Group style={{ width: '100%' }} onChange={this.onGoodreputation}>
-                              <Row>
-                                <Col className="dashed">
-                                  <Checkbox className="labels" value="A">默认好评:<Input className="inputWidth"/>单（<span className="colors">免费</span>） 选择此服务后，接手任务买手将对商品5分默认好评</Checkbox>
-                                </Col>
-                                <Col className="dashed">
-                                  <Checkbox className="labels" value="B">买手写评价:<Input className="inputWidth"/>单（<span className="colors">1</span>符点/单） 选择此项服务后，将有助于提升评价质量并优化您商品评价映像关键词</Checkbox>
-                                  {//买手评价关键词
-                                    show1 ?
-                                      <div>
-                                        <p className="good_reputation">
-                                          请根据您发布任务的商品设定<span>几个关键词</span>作为买手的<span>评价范围</span>独自发挥撰写评价，例如<span>"手感很舒服，款式很漂亮，包装很讲究，物流很快，性价比高"</span>等... 注意：请不要填写完整的评价内容，避免所有买手评价商品的内容一模一样
-                                        </p>
-                                        {
-                                          buyerNum.map((item, index) => {
-                                            return(
-                                              <div key={index} className="good_reputationBox">
-                                                <div style={{ display: 'flex' }}>
-                                                  <Form.Item
-                                                    className="serveInput addplan"
-                                                    label=<span>买手评价关键词{index+1}</span>
-                                                    style={{ width: '70%' }}
-                                                  >
-                                                    {getFieldDecorator('buyer'+(index+1), {
-                                                      rules: [{ required: true, message: 'Please input your username!' }],
-                                                    })(
-                                                      <Input className="addplanWidth" />
-                                                    )}
-                                                  </Form.Item>
-                                                  {
-                                                    index === 0?
-                                                      <span style={{ paddingTop: '9px' }}>（每个关键词最多输入10个字）</span>
-                                                    :
-                                                    ''
-                                                  }
-                                                  {
-                                                    index > 2?
-                                                      <Button onClick={()=>this.delBuyer(index)} type="primary" style={{ marginTop: '4px', marginLeft: '20px' }}>删除</Button>
-                                                    :
-                                                      ''
-                                                  }
-                                                </div>
-                                              </div>
-                                            )
-                                          })
-                                        }
-                                        {//添加到了十组的时候 去掉添加按钮
-                                          buyerNum.length === 10?
-                                            ''
-                                          :
-                                          <p onClick={this.addBuyer} style={{ paddingLeft: '50px', cursor: 'pointer' }}>
-                                            <span style={{ color: '#007eff' }}>+添加1个关键词</span>
-                                            <span>（最多可添加10个关键词）</span>
-                                          </p>
-                                        }
-                                      </div>
-                                    :
-                                    ''
-                                  }
-                                </Col>
-                                <Col className="dashed">
-                                  <Checkbox className="labels" value="C">商家提供评价:<Input className="inputWidth"/>单（<span className="colors">2</span>符点/单） 选择此项服务后，将有助于提升评价质量</Checkbox>
-                                  {//商家提供评价内容
-                                    show2 ?
-                                      <div>
-                                        <p className="good_reputation">
-                                          请根据您发布商品的实际情况提供评价内容<span>注意：发布多单任务时务必保证评价内容不同，避免重复</span>
-                                        </p>
-                                        {
-                                          merchantNum.map((item, index) => {
-                                            return(
-                                              <div key={index} className="good_reputationBox">
-                                                <div style={{ display: 'flex' }}>
-                                                  <Form.Item
-                                                    className="serveInput addplan"
-                                                    label=<span>商家提供评价内容{index+1}</span>
-                                                    style={{ width: '70%' }}
-                                                  >
-                                                    {getFieldDecorator('merchant'+(index+1), {
-                                                      rules: [{ required: true, message: 'Please input your username!' }],
-                                                    })(
-                                                      <Input className="addplanWidth" />
-                                                    )}
-                                                  </Form.Item>
-                                                  {
-                                                    index === 0?
-                                                      <span style={{ paddingTop: '9px' }}>（最多输入500个字）</span>
-                                                    :
-                                                      ''
-                                                  }
-                                                  {
-                                                    index > 0?
-                                                      <Button onClick={()=>this.delMerchant(index)} type="primary" style={{ marginTop: '4px', marginLeft: '20px' }}>删除</Button>
-                                                    :
-                                                      ''
-                                                  }
-                                                </div>
-                                              </div>
-                                            )
-                                          })
-                                        }
-                                        {//添加到了十组的时候 去掉添加按钮
-                                          merchantNum.length === 10?
-                                            ''
-                                          :
-                                          <p onClick={this.addMerchant} style={{ paddingLeft: '50px', cursor: 'pointer' }}>
-                                            <span style={{ color: '#007eff' }}>+添加1个关键词</span>
-                                            <span>（最多可添加10个关键词）</span>
-                                          </p>
-                                        }
-                                      </div>
-                                    :
-                                    ''
-                                  }
-                                </Col>
-                                <Col className="dashed">
-                                  <Checkbox className="labels" value="D">图文好评:<Input className="inputWidth"/>单（<span className="colors">4</span>符点/单） 选择此项服务后，买手会根据商家提供的好评图片进行评价，有利于优化评价内容及转化率</Checkbox>
-                                  {
-                                    show3 ?
-                                      <div>
-                                        {
-                                          graphicNum.map((item, index) =>{
-                                            return(
-                                              <div key={index} className="graphic">
-                                                <div>
-                                                  <span>第{index+1}单</span>
-                                                  {
-                                                    index > 0?
-                                                      <Icon onClick={()=>this.delGraphic(index)} className="tdI" type="close" />
-                                                    :
-                                                    ''
-                                                  }
-                                                </div>
-                                                <div>
-                                                  <div className="labels">
-                                                    <span>选择评价方式：</span>
-                                                    <RadioGroup onChange={this.onEvaluate } value={evaluateNum}>
-                                                      <Radio value={1}>买手写评价</Radio>
-                                                      <Radio value={2}>商家提供评价</Radio>
-                                                    </RadioGroup>
-                                                  </div>
-                                                  <div style={{ display: 'flex', alignItems: 'center', margin: '7px 0' }}>
-                                                    <span style={{ width: '8%' }}>商品规格：</span>
-                                                    <Form.Item
-                                                      className="graphic_child"
-                                                    >
-                                                      {getFieldDecorator('color'+(index+1), {
-                                                        rules: [{ required: false, message: 'Please input your username!' }],
-                                                      })(
-                                                        <Input placeholder="如：颜色" style={{width: '100%' }} />
-                                                      )}
-                                                    </Form.Item>
-                                                    <Form.Item
-                                                      className="graphic_child"
-                                                    >
-                                                      {getFieldDecorator('size'+(index+1), {
-                                                        rules: [{ required: false, message: 'Please input your username!' }],
-                                                      })(
-                                                        <Input placeholder="如：尺寸" style={{width: '100%' }} />
-                                                      )}
-                                                    </Form.Item>
-                                                    <span>提示：主要针对商品规格不同颜色、花色、款式进行设置和好评图片保持一致</span>
-                                                  </div>
-                                                  <div style={{ display: 'flex', margin: '7px 0' }}>
-                                                    <Form.Item
-                                                      className="serveInput addplan"
-                                                      label={evaluateNum === 1?<span>买手评价关键词</span>:<span>商家提供评价内容</span>}
-                                                      style={{ width: '70%' }}
-                                                    >
-                                                      {getFieldDecorator('contents'+(index+1), {
-                                                        rules: [{ required: true, message: 'Please input your username!' }],
-                                                      })(
-                                                        evaluateNum === 1?
-                                                          <Input maxLength={25} className="addplanWidth" />
+                            <Form.Item label="Checkbox.Group">
+                              {getFieldDecorator('goodreputation_state', {
+                                initialValue: [],
+                              })(
+                                <Checkbox.Group style={{ width: '100%' }} onChange={this.onGoodreputation}>
+                                  <Row>
+                                    <Col className="dashed">
+                                      <Checkbox className="labels" value="A">默认好评:<Input className="inputWidth"/>单（<span className="colors">免费</span>） 选择此服务后，接手任务买手将对商品5分默认好评</Checkbox>
+                                    </Col>
+                                    <Col className="dashed">
+                                      <Checkbox className="labels" value="B">买手写评价:<Input className="inputWidth"/>单（<span className="colors">1</span>符点/单） 选择此项服务后，将有助于提升评价质量并优化您商品评价映像关键词</Checkbox>
+                                      {//买手评价关键词
+                                        show1 ?
+                                          <div>
+                                            <p className="good_reputation">
+                                              请根据您发布任务的商品设定<span>几个关键词</span>作为买手的<span>评价范围</span>独自发挥撰写评价，例如<span>"手感很舒服，款式很漂亮，包装很讲究，物流很快，性价比高"</span>等... 注意：请不要填写完整的评价内容，避免所有买手评价商品的内容一模一样
+                                            </p>
+                                            {
+                                              buyerNum.map((item, index) => {
+                                                return(
+                                                  <div key={index} className="good_reputationBox">
+                                                    <div style={{ display: 'flex' }}>
+                                                      <Form.Item
+                                                        className="serveInput addplan"
+                                                        label=<span>买手评价关键词{index+1}</span>
+                                                        style={{ width: '70%' }}
+                                                      >
+                                                        {getFieldDecorator('buyer'+(index+1), {
+                                                          rules: [{ required: true, message: 'Please input your username!' }],
+                                                        })(
+                                                          <Input className="addplanWidth" />
+                                                        )}
+                                                      </Form.Item>
+                                                      {
+                                                        index === 0?
+                                                          <span style={{ paddingTop: '9px' }}>（每个关键词最多输入10个字）</span>
                                                         :
-                                                        <Input maxLength={500} className="addplanWidth" />
-                                                      )}
-                                                    </Form.Item>
-                                                    {
-                                                      evaluateNum === 1?
-                                                        <span style={{ paddingTop: '9px' }}>（每个关键词最多输入25个字）</span>
-                                                      :
-                                                      <span style={{ paddingTop: '9px' }}>（最多输入500个字）</span>
-                                                    }
+                                                        ''
+                                                      }
+                                                      {
+                                                        index > 2?
+                                                          <Button onClick={()=>this.delBuyer(index)} type="primary" style={{ marginTop: '4px', marginLeft: '20px' }}>删除</Button>
+                                                        :
+                                                        ''
+                                                      }
+                                                    </div>
                                                   </div>
-                                                  <div style={{ paddingLeft: '15px', margin: '7px 0' }}>
-                                                    <p style={{ margin: '10px 0' }}>评价图片：请将你的商品根据你要的图文评价数量，拍摄不同的组数，每组可传1-5张商品图片，每张图片不可大于2Mb</p>
-                                                    <Form.Item>
-                                                      {getFieldDecorator('upload'+(index+1), {
-                                                        rules: [{ required: true, message: 'Please input your username!' }],
-                                                        getValueFromEvent: this.normFile,
-                                                      })(
-                                                        <Upload
-                                                          action="//jsonplaceholder.typicode.com/posts/"
-                                                          listType="picture-card"
-                                                          fileList1={fileList}
-                                                          onPreview={this.handlePreview}
-                                                          onChange={this.handleUpload}
+                                                )
+                                              })
+                                            }
+                                            {//添加到了十组的时候 去掉添加按钮
+                                              buyerNum.length === 10?
+                                                ''
+                                              :
+                                              <p onClick={this.addBuyer} style={{ paddingLeft: '50px', cursor: 'pointer' }}>
+                                                <span style={{ color: '#007eff' }}>+添加1个关键词</span>
+                                                <span>（最多可添加10个关键词）</span>
+                                              </p>
+                                            }
+                                          </div>
+                                        :
+                                        ''
+                                      }
+                                    </Col>
+                                    <Col className="dashed">
+                                      <Checkbox className="labels" value="C">商家提供评价:<Input className="inputWidth"/>单（<span className="colors">2</span>符点/单） 选择此项服务后，将有助于提升评价质量</Checkbox>
+                                      {//商家提供评价内容
+                                        show2 ?
+                                          <div>
+                                            <p className="good_reputation">
+                                              请根据您发布商品的实际情况提供评价内容<span>注意：发布多单任务时务必保证评价内容不同，避免重复</span>
+                                            </p>
+                                            {
+                                              merchantNum.map((item, index) => {
+                                                return(
+                                                  <div key={index} className="good_reputationBox">
+                                                    <div style={{ display: 'flex' }}>
+                                                      <Form.Item
+                                                        className="serveInput addplan"
+                                                        label=<span>商家提供评价内容{index+1}</span>
+                                                        style={{ width: '70%' }}
+                                                      >
+                                                        {getFieldDecorator('merchant'+(index+1), {
+                                                          rules: [{ required: true, message: 'Please input your username!' }],
+                                                        })(
+                                                          <Input className="addplanWidth" />
+                                                        )}
+                                                      </Form.Item>
+                                                      {
+                                                        index === 0?
+                                                          <span style={{ paddingTop: '9px' }}>（最多输入500个字）</span>
+                                                        :
+                                                        ''
+                                                      }
+                                                      {
+                                                        index > 0?
+                                                          <Button onClick={()=>this.delMerchant(index)} type="primary" style={{ marginTop: '4px', marginLeft: '20px' }}>删除</Button>
+                                                        :
+                                                        ''
+                                                      }
+                                                    </div>
+                                                  </div>
+                                                )
+                                              })
+                                            }
+                                            {//添加到了十组的时候 去掉添加按钮
+                                              merchantNum.length === 10?
+                                                ''
+                                              :
+                                              <p onClick={this.addMerchant} style={{ paddingLeft: '50px', cursor: 'pointer' }}>
+                                                <span style={{ color: '#007eff' }}>+添加1个关键词</span>
+                                                <span>（最多可添加10个关键词）</span>
+                                              </p>
+                                            }
+                                          </div>
+                                        :
+                                        ''
+                                      }
+                                    </Col>
+                                    <Col className="dashed">
+                                      <Checkbox className="labels" value="D">图文好评:<Input className="inputWidth"/>单（<span className="colors">4</span>符点/单） 选择此项服务后，买手会根据商家提供的好评图片进行评价，有利于优化评价内容及转化率</Checkbox>
+                                      {
+                                        show3 ?
+                                          <div>
+                                            {
+                                              graphicNum.map((item, index) =>{
+                                                return(
+                                                  <div key={index} className="graphic">
+                                                    <div>
+                                                      <span>第{index+1}单</span>
+                                                      {
+                                                        index > 0?
+                                                          <Icon onClick={()=>this.delGraphic(index)} className="tdI" type="close" />
+                                                        :
+                                                        ''
+                                                      }
+                                                    </div>
+                                                    <div>
+                                                      <div className="labels">
+                                                        <span>选择评价方式：</span>
+                                                        <RadioGroup onChange={this.onEvaluate } value={evaluateNum}>
+                                                          <Radio value={1}>买手写评价</Radio>
+                                                          <Radio value={2}>商家提供评价</Radio>
+                                                        </RadioGroup>
+                                                      </div>
+                                                      <div style={{ display: 'flex', alignItems: 'center', margin: '7px 0' }}>
+                                                        <span style={{ width: '8%' }}>商品规格：</span>
+                                                        <Form.Item
+                                                          className="graphic_child"
                                                         >
-                                                          {/* {fileList.length >= 5 ? null : uploadButton} */}
-                                                          {uploadButton}
-                                                        </Upload>
-                                                      )}
-                                                    </Form.Item>
+                                                          {getFieldDecorator('color'+(index+1), {
+                                                            rules: [{ required: false, message: 'Please input your username!' }],
+                                                          })(
+                                                            <Input placeholder="如：颜色" style={{width: '100%' }} />
+                                                          )}
+                                                        </Form.Item>
+                                                        <Form.Item
+                                                          className="graphic_child"
+                                                        >
+                                                          {getFieldDecorator('size'+(index+1), {
+                                                            rules: [{ required: false, message: 'Please input your username!' }],
+                                                          })(
+                                                            <Input placeholder="如：尺寸" style={{width: '100%' }} />
+                                                          )}
+                                                        </Form.Item>
+                                                        <span>提示：主要针对商品规格不同颜色、花色、款式进行设置和好评图片保持一致</span>
+                                                      </div>
+                                                      <div style={{ display: 'flex', margin: '7px 0' }}>
+                                                        <Form.Item
+                                                          className="serveInput addplan"
+                                                          label={evaluateNum === 1?<span>买手评价关键词</span>:<span>商家提供评价内容</span>}
+                                                          style={{ width: '70%' }}
+                                                        >
+                                                          {getFieldDecorator('contents'+(index+1), {
+                                                            rules: [{ required: true, message: 'Please input your username!' }],
+                                                          })(
+                                                            evaluateNum === 1?
+                                                              <Input maxLength={25} className="addplanWidth" />
+                                                            :
+                                                            <Input maxLength={500} className="addplanWidth" />
+                                                          )}
+                                                        </Form.Item>
+                                                        {
+                                                          evaluateNum === 1?
+                                                            <span style={{ paddingTop: '9px' }}>（每个关键词最多输入25个字）</span>
+                                                          :
+                                                          <span style={{ paddingTop: '9px' }}>（最多输入500个字）</span>
+                                                        }
+                                                      </div>
+                                                      <div style={{ paddingLeft: '15px', margin: '7px 0' }}>
+                                                        <p style={{ margin: '10px 0' }}>评价图片：请将你的商品根据你要的图文评价数量，拍摄不同的组数，每组可传1-5张商品图片，每张图片不可大于2Mb</p>
+                                                        <Form.Item>
+                                                          {getFieldDecorator('upload'+(index+1), {
+                                                            rules: [{ required: true, message: 'Please input your username!' }],
+                                                            getValueFromEvent: this.normFile,
+                                                          })(
+                                                            <Upload
+                                                              action="//jsonplaceholder.typicode.com/posts/"
+                                                              listType="picture-card"
+                                                              fileList1={fileList}
+                                                              onPreview={this.handlePreview}
+                                                              onChange={this.handleUpload}
+                                                            >
+                                                              {/* {fileList.length >= 5 ? null : uploadButton} */}
+                                                              {uploadButton}
+                                                            </Upload>
+                                                          )}
+                                                        </Form.Item>
+                                                      </div>
+                                                    </div>
                                                   </div>
-                                                </div>
-                                              </div>
-                                            )
-                                          })
-                                        }
-                                        {
-                                          graphicNum.length === 10 ?
-                                            ""
-                                          :
-                                          <p onClick={this.addGraphic} style={{ paddingLeft: '50px', cursor: 'pointer', paddingTop: '10px' }}>
-                                            <span style={{ color: '#007eff' }}>+添加1个关键词</span>
-                                            <span>（最多可添加10个关键词）</span>
-                                          </p>
-                                        }
-                                      </div>
-                                    :
-                                    ''
-                                  }
-                                </Col>
-                              </Row>
-                            </Checkbox.Group>
+                                                )
+                                              })
+                                            }
+                                            {
+                                              graphicNum.length === 10 ?
+                                                ""
+                                              :
+                                              <p onClick={this.addGraphic} style={{ paddingLeft: '50px', cursor: 'pointer', paddingTop: '10px' }}>
+                                                <span style={{ color: '#007eff' }}>+添加1个关键词</span>
+                                                <span>（最多可添加10个关键词）</span>
+                                              </p>
+                                            }
+                                          </div>
+                                        :
+                                        ''
+                                      }
+                                    </Col>
+                                  </Row>
+                                </Checkbox.Group>
+                              )}
+                            </Form.Item>
                           </div>
                         :
                         ''
