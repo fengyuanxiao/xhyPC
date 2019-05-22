@@ -145,7 +145,6 @@ class AppreciationServes extends Component {
     console.log(`加赏任务佣金 = ${e.target.checked}`);
     this.setState({
       toreward_state: e.target.checked,
-      toreward: 3,
     })
   }//每单加上的佣金
   handleToreward = (e) => {
@@ -158,23 +157,33 @@ class AppreciationServes extends Component {
   // 优化审核
   onOptimizeaudit = (e) => {
     console.log(`优化审核 = ${e.target.checked}`);
+    this.setState({
+      optimizeaudit_state: e.target.checked,
+    })
   }
 
   // 安全优化项
   // 自动结束任务
   onEndautomatically = (e) => {
     console.log(`自动结束任务 = ${e.target.checked}`);
+    this.setState({
+      endautomatically_state: e.target.checked,
+    })
   }
   // 任务发布间隔
   onPublishinterval = (e) => {
     console.log(`任务发布间隔 = ${e.target.checked}`);
-  }//选择每隔多少分钟
-  handleInterval = (value) => {
-    console.log(`多少分钟 ${value}`);
-  }//每隔多少分钟发布多少单
-  handleTasks = (value) => {
-    console.log(`多少单 ${value}`);
-  }//延长买家购物周期
+    if ( e.target.checked ) {
+      this.setState({
+        publishinterval_state: e.target.checked,
+      })
+    } else {
+      this.setState({
+        publishinterval_state: e.target.checked,
+      })
+    }
+  }
+  //延长买家购物周期
   onShoppingperiod = (e) => {
     console.log(`延长买家购物周期 = ${e.target.checked}`);
   }//延长买家购物周期 单选框选中数
@@ -450,7 +459,10 @@ class AppreciationServes extends Component {
       if (!err) {
         console.log('传给后端的值: ', values);
         console.log('提升任务完成速度', sDatas.speedNum);
-        console.log('加赏任务佣金 每单加赏佣金',sDatas.toreward);
+        console.log('是否勾选加上任务佣金', sDatas.toreward_state);
+        console.log('加赏任务佣金 每单加赏佣金', sDatas.toreward);
+        console.log('是否勾选优化审核', sDatas.optimizeaudit_state);
+        console.log('自动结束任务', sDatas.endautomatically_state);
         console.log(this.state.object);
       }
     });
@@ -458,7 +470,7 @@ class AppreciationServes extends Component {
 
   render(){
     const { key,ADD_QUICK_FINISH_COST,PAY_AGE,PAY_CLASS } = this.props.firstDatas;
-    const { toreward_state,toreward,speedNum,oneNum,region,category,badcomment,getMonth,getDate,evaluateNum,dateShow, nums,goodreputationShow,additionalReviewShow,show1,show2,show3,show4,show5,buyerNum,buyerNum1,merchantNum,merchantNum1,merchantNum2,graphicNum,fileList } = this.state;
+    const { publishinterval_state,toreward_state,speedNum,oneNum,region,category,badcomment,getMonth,getDate,evaluateNum,dateShow, nums,goodreputationShow,additionalReviewShow,show1,show2,show3,show4,show5,buyerNum,buyerNum1,merchantNum,merchantNum1,merchantNum2,graphicNum,fileList } = this.state;
     const { getFieldDecorator } = this.props.form;
     const radioStyle = {
       display: 'block',
@@ -541,9 +553,7 @@ class AppreciationServes extends Component {
                                 <Form.Item
                                   style={{ height: '48px', marginBottom: '0', paddingTop: '4px' }}
                                 >
-                                  {getFieldDecorator('bill_'+(indexs+1)+'_'+(index+1), {
-                                    rules: [{ required: false, message: 'Please input your username!' }],
-                                  })(
+                                  {getFieldDecorator('bill_'+(indexs+1)+'_'+(index+1),{initialValue: 1})(
                                     <InputNumber style={{ marginRight: '5px', width: '80%' }} setFieldsValue={this.state.object[indexs+1]} min={1} max={9999} onChange={(event)=>this.onInputNumber('Change'+(indexs+1)+(index+1),event)} />
                                   )}
                                 </Form.Item>
@@ -582,7 +592,7 @@ class AppreciationServes extends Component {
           </table>
           <div className="subtotalBox">
             <p>投放：{oneNum}单</p>
-            <p>总计投放：2单×16.3符点 + 0单×15.80符点 =32.60符点</p>
+            <p>总计投放：<span className="colors">2</span>单×<span className="colors">32.60</span>符点 =<span className="colors">32.60</span>符点</p>
           </div>
         </div>
         <Form onSubmit={this.handleSubmit}>
@@ -615,11 +625,11 @@ class AppreciationServes extends Component {
                     <div style={{ paddingLeft: '15px' }}>
                       <RadioGroup onChange={this.onExpressage} value={this.state.value}>
                         <Radio className="labels" style={radioStyle} value={1}>圆通快递 设置每个订单包裹重量
-                          <Input className="inputWidth"/>
+                          <Input defaultValue="2" className="inputWidth"/>
                           kg <span style={{ paddingLeft: '200px' }}>最大不超过25kg，可设置小数点后两位</span>
                         </Radio>
                         <Radio className="labels" style={radioStyle} value={2}>申通快递 设置每个订单包裹重量
-                          <Input className="inputWidth"/>
+                          <Input defaultValue="2" className="inputWidth"/>
                           kg <span style={{ paddingLeft: '200px' }}>最大不超过25kg，可设置小数点后两位</span>
                         </Radio>
                       </RadioGroup>
@@ -637,7 +647,7 @@ class AppreciationServes extends Component {
                         {
                           ADD_QUICK_FINISH_COST.map((item, index)=> {
                             return(
-                              <Radio disabled={speedNum? false: true} key={index} value={index+1}>+{item}符点</Radio>
+                              <Radio disabled={speedNum? false: true} key={index} value={index+1}><span className="colors">+{item}</span>符点</Radio>
                             )
                           })
                         }
@@ -648,13 +658,13 @@ class AppreciationServes extends Component {
                     <div className="childBoxs">
                       <Checkbox onChange={this.onToreward}>加赏任务佣金</Checkbox>
                       <span>每单加赏佣金</span>
-                      <Input disabled={toreward_state?false:true} onChange={this.handleToreward} defaultValue={toreward} className="inputWidth"/>
+                      <Input disabled={toreward_state?false:true} onChange={this.handleToreward} defaultValue="3" className="inputWidth"/>
                       <span>符点，共计：<span className="colors">3</span>单 x <span className="colors">3</span>万运符点 = <span className="colors">9.00</span>符点</span>
-                      <span>（最低为2符点）</span>
+                      <span>（最低为<span className="colors">2</span>符点）</span>
                     </div>
                     {/* 优先审核 */}
                     <div className="childBoxs">
-                      <Checkbox defaultChecked={true} onChange={this.onOptimizeaudit}>优先审核<span className="colors">（3符点）</span></Checkbox>
+                      <Checkbox defaultChecked={true} onChange={this.onOptimizeaudit}>优先审核（<span className="colors">3</span>符点）</Checkbox>
                       <span>每单加赏佣金</span>
                       <span>选择此服务后，万运符将会优先审核您发布的任务</span>
                     </div>
@@ -666,30 +676,46 @@ class AppreciationServes extends Component {
                   <div style={{ width: '100%' }}>
                     {/* 自动结束任务 */}
                     <div className="childBoxs">
-                      <Checkbox onChange={this.onEndautomatically}>自动结束任务（2符点）</Checkbox>
+                      <Checkbox onChange={this.onEndautomatically}>自动结束任务（<span className="colors">2</span>符点）</Checkbox>
                       <span>当天24点前未完成的订单，系统将自动结算剩余订单的费用到您的账户，不再顺延到第二天发布。</span>
                     </div>
                     {/* 任务发布间隔 */}
                     <div className="childBoxs">
-                      <Checkbox onChange={this.onPublishinterval}>任务发布间隔（6符点）</Checkbox>
+                      <Form.Item style={{ marginBottom: '0' }}>
+                        {getFieldDecorator('checkbox-group')(
+                          <Checkbox onChange={this.onPublishinterval}>任务发布间隔（<span className="colors">6</span>符点）</Checkbox>
+                        )}
+                      </Form.Item>
                       <span>每隔</span>
-                      <Select defaultValue="10分钟" style={{ width: 120 }} onChange={this.handleInterval }>
-                        <Option value="10分钟">10分钟</Option>
-                        <Option value="15分钟">15分钟</Option>
-                        <Option value="30分钟">30分钟</Option>
-                        <Option value="1小时">1小时</Option>
-                        <Option value="2小时">2小时</Option>
-                        <Option value="3小时">3小时</Option>
-                      </Select>
+                      <Form.Item style={{ marginBottom: '0' }}>
+                        {getFieldDecorator('select_tiem', {
+                          rules: [{ required: publishinterval_state?true:false, message: '请选择间隔时间!' }],
+                        })(
+                          <Select placeholder="选择间隔时间" style={{ width: 180 }}>
+                            <Option value="10分钟">10分钟</Option>
+                            <Option value="15分钟">15分钟</Option>
+                            <Option value="30分钟">30分钟</Option>
+                            <Option value="1小时">1小时</Option>
+                            <Option value="2小时">2小时</Option>
+                            <Option value="3小时">3小时</Option>
+                          </Select>
+                        )}
+                      </Form.Item>
                       <span>发布</span>
-                      <Select defaultValue="1单" style={{ width: 120 }} onChange={this.handleTasks}>
-                        <Option value="1单">1单</Option>
-                        <Option value="2单">2单</Option>
-                        <Option value="5单">5单</Option>
-                        <Option value="10单">10单</Option>
-                        <Option value="20单">20单</Option>
-                        <Option value="50单">50单</Option>
-                      </Select>
+                      <Form.Item style={{ marginBottom: '0' }}>
+                        {getFieldDecorator('select_dan', {
+                          rules: [{ required: publishinterval_state?true:false, message: '请选择发布的单量!' }],
+                        })(
+                          <Select placeholder="选择发布的单量" style={{ width: 180 }}>
+                            <Option value="1单">1单</Option>
+                            <Option value="2单">2单</Option>
+                            <Option value="5单">5单</Option>
+                            <Option value="10单">10单</Option>
+                            <Option value="20单">20单</Option>
+                            <Option value="50单">50单</Option>
+                          </Select>
+                        )}
+                      </Form.Item>
                       <span>任务</span>
                     </div>
                     {/* 延长买家购物周期 */}
@@ -1203,7 +1229,7 @@ class AppreciationServes extends Component {
                       {
                         region ?
                           <div className="childBoxs dresss" style={{ alignItems: 'flex-start' }}>
-                            <Form.Item label="Radio.Button">
+                            <Form.Item>
                               {getFieldDecorator('radio-button')(
                                 <Tree
                                   checkable
