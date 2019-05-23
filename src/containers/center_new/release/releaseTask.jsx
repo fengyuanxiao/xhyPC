@@ -27,10 +27,11 @@ class ReleaseTask extends Component  {
       addGoodsNum: true,                          //点击新增按钮 addGoodsNum为 true
       commodity_div: false,                       //从商品库选择商品块 commodity_div 为true 显示出来
       commodity1: false,                          //为false的时候 不显示关键词方案编辑板 商品关键词或成交词编辑板
-      additionalReview: false,                    //是否是追评单 默认是否
+      additionalReview: false,                    //是否是回访单 默认是否
       publish_type: false,                        //发布单类型  回访单和追评单只有天猫和淘宝值为true
       recentlyShow: true,                         //一件发布任务
-      fanganShow: false,                          //方案列表点击编辑改变状态
+      fanganShow: true,                          //关键词方案列表 默认显示
+
     }
   }
 
@@ -84,8 +85,27 @@ class ReleaseTask extends Component  {
       spell: e.target.value,
       commodity_div: false,
       commodity1: false,
+      addGoodsNum: true,
+      fanganShow: false,
     });
+    // 商品库宝贝列表
+    let platform = {  //存储平台类型 传给后台
+      platform: e.target.value,
+    }
+    _GoodsInfoList(platform, 1)
+    .then(res => {
+      // console.log(res.data.data);
+      this.setState({
+        goodsLists: res.data.data.list,                                         //商品列表
+        page_count: res.data.data.page_count,                                   //商品总页数
+        total: res.data.data.total,                                             //商品总条数
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
+
   FudianBtn = (e) => {
     console.log(e.target.value);
     if ( e.target.value === 201 ) {
@@ -181,6 +201,7 @@ class ReleaseTask extends Component  {
       visible: false,                     //关闭商品库
       commodity_div: true,                //显示选中的商品块
       addGoodsNum: false,
+      fanganShow: true,                   //跳转平台隐藏关键词方案列表
     });
   }
   // 新增宝贝
@@ -200,28 +221,6 @@ class ReleaseTask extends Component  {
       addGoodsNum: false,
     })
   }
-  // // 关键词方案编辑
-  // handleCompilekeyW = (id) => {
-  //   // functionName(id)
-  //   let ids = {
-  //     id: id
-  //   }
-  //   // 获得关键词方案详细信息
-  //   _getHoldKeyWay(ids)
-  //   .then(res => {
-  //     // console.log(res.data.data);
-  //     this.setState({
-  //       holdKeyWayList: res.data.data,        //方案详细信息
-  //     })
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   })
-  //   this.setState({
-  //     fanganShow: true,
-  //   })
-  // }
-
   // 子组件控制父组件的状态，
   hiddenFangan = (commodity1,keyWayLists) => {//keyWayLists由子组件传递过来的数据
     if ( commodity1 ) {
@@ -278,7 +277,7 @@ class ReleaseTask extends Component  {
   }
 
   render() {
-    const { firstDatas,activeKey,defaultValues,keyWayLists,Ecommerce_type,total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
+    const { fanganShow,firstDatas,activeKey,defaultValues,keyWayLists,Ecommerce_type,total, goods_id,recentlyShow, spell, addGoodsNum, commodity_div, commodity1, additionalReview, goodsLists,newGoodsLists,publish_type } = this.state;
     return(
       <div>
         {/* 头部组件 */}
@@ -410,12 +409,12 @@ class ReleaseTask extends Component  {
                     ""
                 }
                 {/* 3.guanjianchi方案 */}
-                {/* //是否是追评单 默认是否  如果选择追评则会隐藏关键词编辑板 */}
+                {/* //是否是回访单 默认是否  如果选择回访单则会隐藏关键词编辑板 */}
                 {
                   additionalReview ?
                     ''
                   :
-                  <KeywordComponent handleValue={this.handleValues} hidden={this.hiddenFangan} key={Math.random()} defaultValues={defaultValues} commodity_div={commodity_div} keyWayLists={keyWayLists} commodity1={commodity1} goods_id={goods_id} />
+                  <KeywordComponent fanganShow={fanganShow} handleValue={this.handleValues} hidden={this.hiddenFangan} key={Math.random()} defaultValues={defaultValues} commodity_div={commodity_div} keyWayLists={keyWayLists} commodity1={commodity1} goods_id={goods_id} />
                 }
                 {/* 新增关键词方案按钮 */}
                 {

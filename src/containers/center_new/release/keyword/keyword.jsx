@@ -375,7 +375,7 @@ class KeywordComponents extends Component  {
   }
 
   render() {
-    const { commodity1, keyWayLists } = this.props;
+    const { commodity1, keyWayLists,fanganShow } = this.props;
     const { keyword1,scenarioNum,appPick,keywordPick,is_kouling_search, nums, nums1,is_qrcode_search } = this.state;
     const { getFieldDecorator } = this.props.form;
     return(
@@ -393,45 +393,48 @@ class KeywordComponents extends Component  {
           </div>
           {/* ******** */}
           {
-            //获取关键词方案列表
-            keyWayLists ?
-              keyWayLists.map((item, index) => {
-                return(
-                  <div key={index} style={{ marginBottom: '0', marginTop: '10px' }} className="key_scheme">
-                    <RadioGroup onChange={this.onScenarioNum} value={scenarioNum}>
-                      <Radio value={item.id}>{item.key_way_name}</Radio>
-                    </RadioGroup>
-                    <div>
+            fanganShow ?
+              //获取关键词方案列表
+              keyWayLists ?
+                keyWayLists.map((item, index) => {
+                  return(
+                    <div key={index} style={{ marginBottom: '0', marginTop: '10px' }} className="key_scheme">
+                      <RadioGroup onChange={this.onScenarioNum} value={scenarioNum}>
+                        <Radio value={item.id}>{item.key_way_name}</Radio>
+                      </RadioGroup>
+                      <div>
+                        {
+                          item.key_world.map((item, index) => {
+                            return(
+                              <p key={index}>{item}</p>
+                            )
+                          })
+                        }
+                      </div>
+                      {/* <span>PC搜索词</span> */}
                       {
-                        item.key_world.map((item, index) => {
-                          return(
-                            <p key={index}>{item}</p>
-                          )
-                        })
+                        item.is_kouling_search ?
+                          <div>有</div>
+                        :
+                        <div>无</div>
                       }
+                      {
+                        item.is_qrcode_search ?
+                          <div>有</div>
+                        :
+                        <div>无</div>
+                      }
+                      <div className="keyword_handle">
+                        <span onClick={()=>this.handleCompilekeyW(item.id,index)}>编辑</span>
+                        <span onClick={()=>this.handleRemovekeyW(item.id)}>删除</span>
+                      </div>
                     </div>
-                    {/* <span>PC搜索词</span> */}
-                    {
-                      item.is_kouling_search ?
-                        <div>有</div>
-                      :
-                      <div>无</div>
-                    }
-                    {
-                      item.is_qrcode_search ?
-                        <div>有</div>
-                      :
-                      <div>无</div>
-                    }
-                    <div className="keyword_handle">
-                      <span onClick={()=>this.handleCompilekeyW(item.id,index)}>编辑</span>
-                      <span onClick={()=>this.handleRemovekeyW(item.id)}>删除</span>
-                    </div>
-                  </div>
-                )
-              })
+                  )
+                })
+              :
+              ''
             :
-            ''
+              ''
           }
         </div>
         {

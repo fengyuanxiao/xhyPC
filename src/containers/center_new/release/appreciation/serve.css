@@ -136,6 +136,20 @@
 .labels {
   margin: 7px 0;
   width: 100%;
+  display: flex;
+  align-items: center;
+}
+.labels > span:nth-child(2) {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.labels_input {
+  width: 15%;
+  margin-bottom: 0;
+}
+.labels_input_C {
+  width: 90%;
 }
 .dashed {
   border-bottom: 1px dashed #cfcfcf;
