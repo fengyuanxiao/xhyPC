@@ -26,10 +26,16 @@ class KeywordComponents extends Component  {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.setState({
       scenarioNum: this.props.defaultValues,       //选中的方案名称
     })
+  }
+  // 处理内存泄露
+  componentWillUnmount = () => {
+    this.setState = (state,callback)=>{
+      return;
+    };
   }
 
   // 单选框 选择平台
@@ -131,6 +137,7 @@ class KeywordComponents extends Component  {
 
   // 编辑关键词方案
   handleCompilekeyW = (id,index) => {
+    console.log(this.state);
     console.log(id);
     this.setState({
       scenarioNum: id,
@@ -153,6 +160,10 @@ class KeywordComponents extends Component  {
         is_qrcode_search: datas.is_qrcode_search,       //是否通过二维码查找
         is_kouling_search: datas.is_kouling_search,     //是否通过淘口令找查
       })
+      if ( res.data.code === 200 ) {
+        console.log(this.state);
+        console.log(this.state.aa);
+      }
       if ( this.state.keyword1 === 1 ) {
         this.props.form.setFieldsValue({
           key_way_name: datas.key_way_name,                       //方案名称

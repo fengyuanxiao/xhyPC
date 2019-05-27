@@ -64,6 +64,13 @@ class ReleaseTask extends Component  {
       console.log(err);
     })
   }
+  // 处理内存泄露
+  componentWillUnmount = () => {
+    this.setState = (state,callback)=>{
+      return;
+    };
+  }
+  
   // 发布task进度步骤
   onTabs = (key) => {
     // console.log(key);

@@ -51,9 +51,6 @@ class AppreciationServes extends Component {
       getMonth: myDate.getMonth()+1,        //获取这个月
       getDate: myDate.getDate(),            //获取今天
     })
-    this.props.form.setFieldsValue({
-
-    })
   }
 
   // 设置task上线时间
@@ -92,6 +89,7 @@ class AppreciationServes extends Component {
     this.setState({
       object: newObject,
     })
+    console.log(this.state.object);
   }
 
   // 添加投放数量
@@ -525,7 +523,7 @@ class AppreciationServes extends Component {
                                   style={{ height: '48px', marginBottom: '0', paddingTop: '4px' }}
                                 >
                                   {getFieldDecorator('bill_'+(indexs+1)+'_'+(index+1),{initialValue: 1})(
-                                    <InputNumber style={{ marginRight: '5px', width: '80%' }} setFieldsValue={this.state.object[indexs+1]} min={1} max={9999} onChange={(event)=>this.onInputNumber('Change'+(indexs+1)+(index+1),event)} />
+                                    <InputNumber style={{ marginRight: '5px', width: '80%' }} setFieldsValue={this.state.object[indexs+1]} min={1} max={9999} onChange={(event)=>this.onInputNumber('Change_'+(indexs+1)+'_'+(index+1),event)} />
                                   )}
                                 </Form.Item>
                                 <span>单</span>
@@ -1203,7 +1201,11 @@ class AppreciationServes extends Component {
                   <div>自定义差评</div>
                   <div style={{ padding: '20px', width: '100%' }}>
                     <div>
-                      <Checkbox style={{ marginBottom: '10px' }} onChange={this.onBadcomment }>定义差评</Checkbox>
+                      <Form.Item style={{ marginBottom: '0' }}>
+                        {getFieldDecorator('badcomment_state')(
+                          <Checkbox onChange={this.onBadcomment }>定义差评</Checkbox>
+                        )}
+                      </Form.Item>
                       <div style={{ paddingLeft: '20px' }}>
                         <p className="good_reputation">
                           请根据您发布商品的实际情况提供评价内容<span>注意：发布多单任务时务必保证评价内容不同，避免重复</span>
