@@ -31,41 +31,43 @@ class Logins extends Component {
   // 登录提交按钮
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        // console.log(values);
-        if ( !phoneNum.test(values.mobile)) {
-          message.error("请输入正确的手机号码！")
-        } else {
-          // ajax
-          _login(values)
-          .then(res => {
-            // console.log(res.data);
-            if ( res.data.code === 200 ) {
-              message.success(res.data.msg);
-                // 保存token到本地
-                localStorage.setItem("tokens", res.data.data.token);
-              if ( values.remember ) {                                      //记住密码勾选执行下面
-                localStorage.setItem("mobile", values.mobile);              //将账号保存到本地
-                localStorage.setItem("pwd", values.pwd);               //将密码保存到本地
-              } else {                                                      //记住密码没有勾选
-                localStorage.removeItem("mobile");                          //删除本地账号密码
-                localStorage.removeItem("pwd");
-              }
-              // 登录成功跳转
-              this.props.history.push('../center_new/center_new');
-            } else {
-              message.warning(res.data.msg)
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          })
-          // 删除指定的key储存值
-          localStorage.removeItem("key")
-        }
-      }
-    });
+    // 登录成功跳转
+    this.props.history.push('../center_new/center_new');
+    // this.props.form.validateFields((err, values) => {
+    //   if (!err) {
+    //     // console.log(values);
+    //     if ( !phoneNum.test(values.mobile)) {
+    //       message.error("请输入正确的手机号码！")
+    //     } else {
+    //       // ajax
+    //       _login(values)
+    //       .then(res => {
+    //         // console.log(res.data);
+    //         if ( res.data.code === 200 ) {
+    //           message.success(res.data.msg);
+    //             // 保存token到本地
+    //             localStorage.setItem("tokens", res.data.data.token);
+    //           if ( values.remember ) {                                      //记住密码勾选执行下面
+    //             localStorage.setItem("mobile", values.mobile);              //将账号保存到本地
+    //             localStorage.setItem("pwd", values.pwd);               //将密码保存到本地
+    //           } else {                                                      //记住密码没有勾选
+    //             localStorage.removeItem("mobile");                          //删除本地账号密码
+    //             localStorage.removeItem("pwd");
+    //           }
+    //           // 登录成功跳转
+    //           this.props.history.push('../center_new/center_new');
+    //         } else {
+    //           message.warning(res.data.msg)
+    //         }
+    //       })
+    //       .catch(err => {
+    //         console.log(err);
+    //       })
+    //       // 删除指定的key储存值
+    //       localStorage.removeItem("key")
+    //     }
+    //   }
+    // });
   }
 
   render() {
