@@ -86,10 +86,19 @@ class AppreciationServes extends Component {
     const newObject = Object.assign({}, this.state.object, {
       [type]: value
     });
+    var getSum=function(ar){
+    var arr=ar
+    var sum=arr.reduce(function(prev, curr, idx, arr){
+       return prev + curr;
+       })
+     return  sum;
+    }
+    console.log(newObject);
+    console.log(getSum(Object.values(newObject)));
     this.setState({
       object: newObject,
+      aggregateNum: getSum(Object.values(newObject))
     })
-    console.log(this.state.object);
   }
 
   // 添加投放数量
@@ -439,7 +448,7 @@ class AppreciationServes extends Component {
 
   render(){
     const { key,ADD_QUICK_FINISH_COST,PAY_AGE,PAY_CLASS,EXTENDED_CYCLE_MOUTH_COST } = this.props.firstDatas;
-    const { publishinterval_state,speedNum,oneNum,region,category,badcomment,getMonth,getDate,evaluateNum,dateShow, nums,goodreputationShow,additionalReviewShow,show1,show2,show3,show4,show5,buyerNum,buyerNum1,merchantNum,merchantNum1,merchantNum2,graphicNum,fileList } = this.state;
+    const { aggregateNum,publishinterval_state,speedNum,oneNum,region,category,badcomment,getMonth,getDate,evaluateNum,dateShow, nums,goodreputationShow,additionalReviewShow,show1,show2,show3,show4,show5,buyerNum,buyerNum1,merchantNum,merchantNum1,merchantNum2,graphicNum,fileList } = this.state;
     const { getFieldDecorator } = this.props.form;
     const radioStyle = {
       display: 'block',
@@ -560,8 +569,8 @@ class AppreciationServes extends Component {
             </tbody>
           </table>
           <div className="subtotalBox">
-            <p>投放：{oneNum}单</p>
-            <p>总计投放：<span className="colors">2</span>单×<span className="colors">32.60</span>符点 =<span className="colors">32.60</span>符点</p>
+            <p>投放：{aggregateNum}单</p>
+            <p>总计投放：<span className="colors">{aggregateNum}</span>单×<span className="colors">32.60</span>符点 =<span className="colors">32.60</span>符点</p>
           </div>
         </div>
         <Form onSubmit={this.handleSubmit}>
